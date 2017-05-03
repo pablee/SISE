@@ -2,11 +2,6 @@
 session_start();
 include "../../clases/persona.php";
 
-date_default_timezone_set('America/Argentina/Buenos_Aires');
-setlocale (LC_TIME,"spanish");
-$fecha = date("Y-m-d H:i:s");
-$fecha2 = strftime("%A %e de %B");
-
 if($_SESSION['login'] == FALSE)
 	{
 	header("location: ../../index.php");	
@@ -27,7 +22,7 @@ $profesion=$_POST["profesion"];
 $cod_categoria=$_POST["cod_categoria"];
 $observaciones=$_POST["observaciones"];
 $usr_ult_modif=$_SESSION['cod_usuario'];
-$fec_ult_modif=$fecha;
+$fec_ult_modif=$_SESSION['fecha'];
 
 echo $nombres."<br>";
 echo $apellidos."<br>"; 

@@ -19,6 +19,6 @@ echo"
 */
 
 $persona=new Persona();	
-$persona->verPersona($buscar);
+$persona->buscarPersona($buscar);
 	
 ?>

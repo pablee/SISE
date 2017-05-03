@@ -17,6 +17,7 @@ function buscarPersona(event)
 		xhttp.send();
 		}
 	}
+
 	
 function cargarFormulario(valor)
 	{	
@@ -39,7 +40,7 @@ function cargarFormulario(valor)
 			xhttp.open("GET", "php/proceso/formularioProceso.php", true);	
 			break;
 		case 3:
-			day = "Wednesday";
+			xhttp.open("GET", "php/detalle/formularioDetalle.php", true);
 			break;
 		case 4:
 			day = "Thursday";
@@ -49,8 +50,53 @@ function cargarFormulario(valor)
 			break;
 		case 6:
 			day = "Saturday";
-		} 
-
-		
+		} 		
 	xhttp.send();	
 	}	
+
+	
+function guardarProceso()
+	{
+	var proceso = document.getElementById("proceso").value;	
+	var cantidad_acompaniantes = document.getElementById("cantidad_acompaniantes").value;	
+	var cod_proceso_tipo = document.getElementById("cod_proceso_tipo").value;	
+	var observaciones = document.getElementById("observaciones").value;	
+	
+	//alert(proceso+cantidad_acompaniantes+cod_proceso_tipo+observaciones);
+	
+	xhttp = new XMLHttpRequest();			
+	xhttp.onreadystatechange = function()	
+			{					
+			if (this.readyState == 4 && this.status == 200)
+					{
+					document.getElementById("listado").innerHTML=this.responseText;
+					}						
+			};
+	xhttp.open("GET", "php/proceso/ingresarProceso.php?proceso="+proceso+"&cantidad_acompaniantes="+cantidad_acompaniantes+"&cod_proceso_tipo="+cod_proceso_tipo+"&observaciones="+observaciones, true);								
+	xhttp.send();	
+	}	
+	
+
+function guardarDetalle()
+	{		
+	var cod_detalle = document.getElementById("cod_detalle").value;	
+	var cod_persona = document.getElementById("persona").value;	
+	var cod_proceso = document.getElementById("proceso").value;
+	var cod_detalle_tipo = document.getElementById("detalle_tipo").value;
+	//var valor = document.getElementById("valor").value;
+	var observaciones = document.getElementById("observaciones").value;	
+	alert("Guardar Detalle");
+	
+	xhttp = new XMLHttpRequest();			
+	xhttp.onreadystatechange = function()	
+			{					
+			if (this.readyState == 4 && this.status == 200)
+					{
+					document.getElementById("listado").innerHTML=this.responseText;
+					}						
+			};
+	//xhttp.open("GET", "php/detalle/ingresarDetalle.php?cod_detalle="+cod_detalle+"&cod_persona="+cod_persona+"&cod_proceso="+cod_proceso+"&cod_detalle_tipo="+cod_detalle_tipo+"&valor="+valor+"&observaciones="+observaciones, true);								
+	xhttp.open("GET", "php/detalle/ingresarDetalle.php?cod_detalle="+cod_detalle+"&cod_persona="+cod_persona+"&cod_proceso="+cod_proceso+"&cod_detalle_tipo="+cod_detalle_tipo+"&observaciones="+observaciones, true);								
+	xhttp.send();	
+	}	
+	

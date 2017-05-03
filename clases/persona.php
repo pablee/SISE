@@ -32,7 +32,7 @@ class Persona	{
 					$db->close();
 					}
 				
-				public function verPersona($buscar)
+				public function buscarPersona($buscar)
 					{
 					$db=new database();
 					$db->conectar();
@@ -71,6 +71,27 @@ class Persona	{
 					echo '<input id="usr_ult_modif" name="usr_ult_modif" type="hidden" value="'.$datos["cod_persona"].'">';
 					$db->close();
 					}
+				
+				public function verPersona()
+					{
+					$db=new database();
+					$db->conectar();
+					
+					$consulta="SELECT cod_persona, nombres, apellidos
+							   FROM bsd_persona;";
+					$resultado=mysqli_query($db->conexion, $consulta) or die ("No se pueden cargar las personas.");
+					
+					echo '<label for="persona"> Persona </label>
+							<select id="persona" name="persona" class="form-control">';	
+								
+					while($datos = mysqli_fetch_assoc($resultado))
+						{
+						echo "<option value=".$datos['cod_persona'].">".$datos['apellidos']." ".$datos['nombres']."</option>";							
+						}
 						
+					echo 	'</select>';
+									
+					$db->close();
+					}				
 				}	
 ?>

@@ -3,7 +3,7 @@
 
 	date_default_timezone_set('America/Argentina/Buenos_Aires');
 	setlocale (LC_TIME,"spanish");
-	$fecha = date("Y-m-d H:i:s");
+	$_SESSION['fecha'] = date("Y-m-d H:i:s");
 	$fecha2 = strftime("%A %e de %B");
 
 	if($_SESSION['login'] == FALSE)
@@ -41,6 +41,7 @@
 				<li class=""><a href="home.php">Home</a></li>
 				<li><a href="#" onclick="cargarFormulario(1)">Nueva persona</a></li>
 				<li><a href="#" onclick="cargarFormulario(2)">Nuevo proceso</a></li>
+				<li><a href="#" onclick="cargarFormulario(3)">Nuevo detalle</a></li>
 				<li><a href="#">Page 3</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
