@@ -10,7 +10,8 @@
 		{
 		header("location: index.php");	
 		}
-
+	
+	$_SESSION['count']=0;
 ?>
 
 <!DOCTYPE html>
@@ -25,6 +26,7 @@
 	<!--Bootstrap local-->
 	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
 	<script src="jquery/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 	<script src="bootstrap/js/bootstrap.min.js"></script>
 	
 	<script type="text/javascript" src="scripts/home.js"></script>
@@ -39,10 +41,8 @@
 			</div>
 			<ul class="nav navbar-nav">
 				<li class=""><a href="home.php">Home</a></li>
-				<li><a href="#" onclick="cargarFormulario(1)">Nueva persona</a></li>
-				<li><a href="#" onclick="cargarFormulario(2)">Nuevo proceso</a></li>
-				<li><a href="#" onclick="cargarFormulario(3)">Nuevo detalle</a></li>
-				<li><a href="#">Page 3</a></li>
+				<li><a href="#" onclick="cargarFormulario(1)">Persona</a></li>
+				<li><a href="#" onclick="cargarFormulario(2)">Proceso</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<p class="navbar-text">	<?php echo $fecha2 ?> </p>
@@ -86,11 +86,14 @@
 		
 		<!--Contenido-->	
 		<div id="contenido" class="row text-left">			
-			<div class="col-sm-2 col-md-2 col-lg-2" id="personaProceso">
+			<div class="col-sm-2 col-md-2 col-lg-2">
 			
 			</div>
 								
 			<div class="col-sm-8 col-md-8 col-lg-8">
+				<div class="" id="personaProceso">
+			
+				</div>
 				<div class="form-group" id="listado">
 				
 				</div>	

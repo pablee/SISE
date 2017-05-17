@@ -9,7 +9,7 @@ function buscarPersona(event)
 				{					
 				if (this.readyState == 4 && this.status == 200)
 						{
-						document.getElementById("personaProceso").innerHTML=this.responseText;
+						document.getElementById("listado").innerHTML=this.responseText;
 						}						
 				};
 
@@ -43,7 +43,7 @@ function cargarFormulario(valor)
 			xhttp.open("GET", "php/detalle/formularioDetalle.php", true);
 			break;
 		case 4:
-			day = "Thursday";
+			xhttp.open("GET", "php/persona/buscarPersonaProceso.php", true);
 			break;
 		case 5:
 			day = "Friday";
@@ -99,4 +99,63 @@ function guardarDetalle()
 	xhttp.open("GET", "php/detalle/ingresarDetalle.php?cod_detalle="+cod_detalle+"&cod_persona="+cod_persona+"&cod_proceso="+cod_proceso+"&cod_detalle_tipo="+cod_detalle_tipo+"&observaciones="+observaciones, true);								
 	xhttp.send();	
 	}	
+
+	
+//Agrega un campo de busqueda para agregar una persona a un proceso
+function buscarPersonaProceso()
+	{		
+	xhttp = new XMLHttpRequest();			
+	xhttp.onreadystatechange = function()	
+			{					
+			if (this.readyState == 4 && this.status == 200)
+					{
+					document.getElementById("buscarPersonaProceso").innerHTML+=this.responseText;
+					}						
+			};
+	xhttp.open("GET", "php/persona/buscarPersonaProceso.php", true);								
+	xhttp.send();	
+	}		
+
+
+//Agrega una persona a un proceso	
+function agregarPersonaProceso(event, id)
+	{		
+	//alert(event+id);			
+	if(event.which == 13 || event.keyCode == 13 || event==0)
+		{
+		var buscarPersona = document.getElementById("agregar"+id).value;	
+		xhttp = new XMLHttpRequest();			
+		xhttp.onreadystatechange = function()	
+			{					
+			if (this.readyState == 4 && this.status == 200)
+				{
+				document.getElementById("persona"+id).innerHTML=this.response;
+				}						
+			};
+		xhttp.open("GET", "php/persona/agregarPersonaProceso.php?buscarPersona="+buscarPersona, true);								
+		xhttp.send();	
+		}
+	}		
+		
+
+//Ver preguntas por proceso
+function verPreguntasProceso(tipoProceso, cliente, oponente)
+	{				
+	xhttp = new XMLHttpRequest();			
+	xhttp.onreadystatechange = function()	
+		{					
+		if (this.readyState == 4 && this.status == 200)
+			{
+			document.getElementById("detalleTipo").innerHTML=this.response;
+			}						
+		};
+	xhttp.open("GET", "php/proceso/verPreguntasProceso.php?tipoProceso="+tipoProceso+"&cliente="+cliente+"&oponente="+oponente, true);								
+	xhttp.send();		
+	}
+	
+	
+	
+	
+	
+	
 	

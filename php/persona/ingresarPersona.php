@@ -23,6 +23,10 @@ $cod_categoria=$_POST["cod_categoria"];
 $observaciones=$_POST["observaciones"];
 $usr_ult_modif=$_SESSION['cod_usuario'];
 $fec_ult_modif=$_SESSION['fecha'];
+if(isset($_POST["accion"]))
+	{
+	$accion=$_POST["accion"];
+	}
 
 echo $nombres."<br>";
 echo $apellidos."<br>"; 
@@ -49,7 +53,14 @@ echo '
 	 ';
 	 
 $persona = new Persona();	
-$persona->ingresarPersona($nombres, $apellidos, $cod_tipo_dni, $dni, $cuil, $fec_nacimiento, $sexo, $cod_nacionalidad, $cod_estado_civil, $telefono, $codigo_postal, $profesion, $cod_categoria, $observaciones, $usr_ult_modif, $fec_ult_modif);
+
+if($accion=="actualizar")
+	{
+	$persona->actualizarPersona($nombres, $apellidos, $cod_tipo_dni, $dni, $cuil, $fec_nacimiento, $sexo, $cod_nacionalidad, $cod_estado_civil, $telefono, $codigo_postal, $profesion, $cod_categoria, $observaciones, $usr_ult_modif, $fec_ult_modif);
+	}
+	else{
+		$persona->ingresarPersona($nombres, $apellidos, $cod_tipo_dni, $dni, $cuil, $fec_nacimiento, $sexo, $cod_nacionalidad, $cod_estado_civil, $telefono, $codigo_postal, $profesion, $cod_categoria, $observaciones, $usr_ult_modif, $fec_ult_modif);
+		}
 
 header ("location: ../../home.php");			
 ?>
