@@ -1,0 +1,15 @@
+INSERT INTO `sise_legal`.`ref_nacionalidad` (`cod_nacionalidad`,`nacionalidad`) VALUES (1, 'Otra');
+INSERT INTO `sise_legal`.`ref_nacionalidad` (`cod_nacionalidad`,`nacionalidad`) VALUES (2, 'Argentina');
+INSERT INTO `sise_legal`.`ref_nacionalidad` (`cod_nacionalidad`,`nacionalidad`) VALUES (3, 'Uruguaya');
+INSERT INTO `sise_legal`.`ref_nacionalidad` (`cod_nacionalidad`,`nacionalidad`) VALUES (4, 'Paraguaya');
+INSERT INTO `sise_legal`.`ref_nacionalidad` (`cod_nacionalidad`,`nacionalidad`) VALUES (5, 'Chilena');
+INSERT INTO `sise_legal`.`ref_nacionalidad` (`cod_nacionalidad`,`nacionalidad`) VALUES (6, 'Boliviana');
+INSERT INTO `sise_legal`.`ref_nacionalidad` (`cod_nacionalidad`,`nacionalidad`) VALUES (7, 'Colombiana');
+INSERT INTO `sise_legal`.`ref_nacionalidad` (`cod_nacionalidad`,`nacionalidad`) VALUES (8, 'Venezolana');
+INSERT INTO `sise_legal`.`ref_nacionalidad` (`cod_nacionalidad`,`nacionalidad`) VALUES (9, 'Ecuatoriana');
+INSERT INTO `sise_legal`.`ref_nacionalidad` (`cod_nacionalidad`,`nacionalidad`) VALUES (10, 'Mexicana');
+INSERT INTO `sise_legal`.`ref_nacionalidad` (`cod_nacionalidad`,`nacionalidad`) VALUES (11, 'Brasilera');
+INSERT INTO `sise_legal`.`ref_nacionalidad` (`cod_nacionalidad`,`nacionalidad`) VALUES (12, 'Española');
+INSERT INTO `sise_legal`.`ref_nacionalidad` (`cod_nacionalidad`,`nacionalidad`) VALUES (13, 'Italiana');
+INSERT INTO `sise_legal`.`ref_nacionalidad` (`cod_nacionalidad`,`nacionalidad`) VALUES (14, 'Francesa');
+INSERT INTO `sise_legal`.`ref_nacionalidad` (`cod_nacionalidad`,`nacionalidad`) VALUES (15, 'Alemana');

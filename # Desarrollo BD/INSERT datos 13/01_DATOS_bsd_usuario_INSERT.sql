@@ -1,0 +1,2 @@
+INSERT INTO `sise_legal`.`bsd_usuario` (`cod_usuario`,`usuario`, `password`, `nombre`, `apellido`, `correo_electronico`, `cod_rol`) VALUES (1, 'Admin', '123', 'SISE', 'Servicios', 'info@siseservicios.com', '1');
+INSERT INTO `sise_legal`.`bsd_usuario` (`cod_usuario`,`usuario`, `password`, `nombre`, `apellido`, `correo_electronico`, `cod_rol`) VALUES (2, 'Sebastian', '123', 'Sebastian', 'Batista', 'sebatista385@gmail.com', '3');

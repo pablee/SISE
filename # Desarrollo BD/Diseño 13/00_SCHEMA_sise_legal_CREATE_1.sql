@@ -1,0 +1,1 @@
+CREATE SCHEMA `sise_legal` ;

@@ -1,0 +1,16 @@
+SELECT 	  DET.COD_DETALLE
+		, DET.COD_PERSONA
+        , PER.NOMBRES
+        , DET.COD_PROCESO
+        , PROC.PROCESO
+        , DET.COD_DETALLE_TIPO
+        , T_DET.DETALLE_TIPO
+		,DET.*, PER.*, PROC.*, T_DET.*
+FROM 	sise_legal.bsd_detalle AS DET, 
+		bsd_persona AS PER, 
+		bsd_proceso AS PROC,
+        ref_detalle_tipo AS T_DET
+WHERE DET.COD_PERSONA = PER.COD_PERSONA
+  AND DET.COD_PROCESO = PROC.COD_PROCESO
+  AND DET.COD_DETALLE_TIPO = T_DET.COD_DETALLE_TIPO
+;
