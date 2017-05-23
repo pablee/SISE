@@ -19,29 +19,5 @@ class Detalle	{
 					$db->close();
 					}
 					
-				public function nuevoDetalle()
-					{
-					echo '<br><label for="cod_detalle"> Codigo de detalle </label>
-						  <input id="cod_detalle" name="cod_detalle" type="text" class="form-control"></input>';	
-					
-					echo '<br>';
-					$persona = new Persona();
-					$persona->verPersona();
-					
-					echo '<br>';	
-					$proceso = new Proceso();
-					$proceso->verProceso();
-					
-					echo '<br>';	
-					$detalle_tipo = new DetalleTipo();
-					$detalle_tipo->verDetalleTipo();
-					
-					echo '<br><label for="observaciones"> Observaciones </label>
-						  <textarea id="observaciones" name="observaciones" type="text" class="form-control" rows="5" cols="60"></textarea>';	
-						  
-					echo '<br><input type = "button" class = "btn btn-info" value = "Guardar" onclick="guardarDetalle()"></input>';
-					}	
-					
-				
 				}	
 ?>

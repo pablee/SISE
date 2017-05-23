@@ -11,7 +11,8 @@
 		header("location: index.php");	
 		}
 	
-	$_SESSION['count']=0;
+	$_SESSION["i"]=0;
+	$_SESSION["j"]=0;
 ?>
 
 <!DOCTYPE html>
@@ -84,6 +85,8 @@
 			</div>
 		</div>	
 		
+		
+		
 		<!--Contenido-->	
 		<div id="contenido" class="row text-left">			
 			<div class="col-sm-2 col-md-2 col-lg-2">
@@ -91,6 +94,7 @@
 			</div>
 								
 			<div class="col-sm-8 col-md-8 col-lg-8">
+			<hr>
 				<div class="" id="personaProceso">
 			
 				</div>

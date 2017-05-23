@@ -6,9 +6,11 @@ include_once "estado_civil.php";
 include_once "categoria.php";
 include_once "observaciones.php";
 
+
 class Persona	{
 				private $th=array("Nombres","Apellidos","Documento","Numero","Cuil","Fecha de nacimiento","Sexo","Nacionalidad","Estado civil","Telefono","Codigo postal","Profesion","Categoria","Observaciones","Modifica","Fecha");
 				private $nombre_campo=array("nombres","apellidos","cod_tipo_dni","dni","cuil","fec_nacimiento","sexo","cod_nacionalidad","cod_estado_civil","telefono","codigo_postal","profesion","cod_categoria","observaciones","usr_ult_modif","fec_ult_modif");
+				
 				private $table_head='<div class="table-responsive">
 										<table class="table">
 											<thead>
@@ -235,60 +237,33 @@ class Persona	{
 					$db->close();
 					}
 				
-				//Agregar persona en proceso
-				public function agregarPersonaProceso()
+				//Busca personas en proceso
+				public function buscarPersonaProceso($buscar,$persona_condicion)
 					{
 					$db=new database();
 					$db->conectar();
-					
-					$consulta="SELECT cod_persona, nombres, apellidos, cod_tipo_dni, dni
-							   FROM bsd_persona;";
+				
+					$consulta="SELECT cod_persona, nombres, apellidos, cod_tipo_dni, dni, persona_condicion, cod_persona_condicion
+							   FROM bsd_persona P, ref_persona_condicion PC
+							   WHERE dni='$buscar'
+							   AND cod_persona_condicion = '$persona_condicion';";
+							   
 					$resultado=mysqli_query($db->conexion, $consulta) or die ("No se pueden cargar las personas.");
 					
-					echo "<br>".$this->table_head;
-					
-					echo   '<th> Nombres </th>
-							<th> Apellidos </th>
-							<th> Documento </th>
-							<th> Numero </th>';
-					
-					echo $this->table_middle;
 					while($datos = mysqli_fetch_assoc($resultado))
 						{
-						echo "<tr id=".$datos['cod_persona'].">
-								<td>".$datos['nombres']."</td>
+						$_SESSION["personas"][0]=array($datos['cod_persona'],$datos['cod_persona_condicion']);
+					
+						$_SESSION["i"]++;
+						
+						echo   "<td>".$datos['nombres']."</td>
 								<td>".$datos['apellidos']."</td>
 								<td>".$datos['cod_tipo_dni']."</td>
 								<td>".$datos['dni']."</td>
-							  <tr>";
-						}
-						
-					echo $this->table_close;
-									
+								<td>".$datos['persona_condicion']."</td>";
+						}				
 					$db->close();
 					}			
-				
-				//Usado en la clase detalle para ver las personas existentes en la base.
-				public function verPersona()
-					{
-					$db=new database();
-					$db->conectar();
 					
-					$consulta="SELECT cod_persona, nombres, apellidos
-							   FROM bsd_persona;";
-					$resultado=mysqli_query($db->conexion, $consulta) or die ("No se pueden cargar las personas.");
-					
-					echo '<label for="persona"> Persona </label>
-							<select id="persona" name="persona" class="form-control">';	
-								
-					while($datos = mysqli_fetch_assoc($resultado))
-						{
-						echo "<option value=".$datos['cod_persona'].">".$datos['apellidos']." ".$datos['nombres']."</option>";							
-						}
-						
-					echo 	'</select>';
-									
-					$db->close();
-					}						
 				}	
 ?>
