@@ -84,6 +84,7 @@ function habilitarBusqueda()
 	document.getElementById("buscarPersonaProceso").disabled=false;	
 	}
 	
+	
 //Busca una persona y devuelve el listado de personas encontradas
 function buscarPersonaProceso(event)
 	{
@@ -123,25 +124,7 @@ function verPreguntasProceso(tipoProceso, cliente, oponente)
 	xhttp.send();		
 	}
 	
-	
-function guardarDetalle()
-	{		
-	//var tabla_personas = document.getElementById("personaEncontrada");
-	//var tabla_preguntas = document.getElementById("preguntasProceso");
-	//var persona = tabla_personas.rows[1].cells;
-    //alert(persona[4].innerHTML);
-	xhttp = new XMLHttpRequest();			
-	xhttp.onreadystatechange = function()	
-		{					
-		if (this.readyState == 4 && this.status == 200)
-			{
-			document.getElementById("contenido").innerHTML=this.response;
-			}						
-		};
-	xhttp.open("GET", "php/detalle/guardarDetalle.php", true);								
-	xhttp.send();
-	}		
-	
+
 	
 	
 	

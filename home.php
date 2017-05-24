@@ -1,6 +1,8 @@
 <?php
 	session_start();
-
+	include_once "clases/proceso.php";
+	include_once "clases/persona.php";
+	
 	date_default_timezone_set('America/Argentina/Buenos_Aires');
 	setlocale (LC_TIME,"spanish");
 	$_SESSION['fecha'] = date("Y-m-d H:i:s");
@@ -12,7 +14,7 @@
 		}
 	
 	$_SESSION["i"]=0;
-	$_SESSION["j"]=0;
+	
 ?>
 
 <!DOCTYPE html>
@@ -63,6 +65,7 @@
 	</nav>
 
 	<div class="container-fluid">
+		<!--Menu: Buscar/Comandos-->
 		<div class="row">							
 			<div class="col-sm-2 col-md-2 col-lg-2">
 			
@@ -86,7 +89,6 @@
 		</div>	
 		
 		
-		
 		<!--Contenido-->	
 		<div id="contenido" class="row text-left">			
 			<div class="col-sm-2 col-md-2 col-lg-2">
@@ -99,7 +101,29 @@
 			
 				</div>
 				<div class="form-group" id="listado">
-				
+					<?php
+					$persona=new Persona();
+					$personas=$persona->verPersona();
+					foreach($personas as $pers)
+						{
+						echo $pers["cod_persona"];
+						echo " "; 
+						echo $pers["nombres"];
+						echo " ";
+						echo $pers["apellidos"];
+						}
+
+
+					$proceso=new Proceso();
+					$informacion=$proceso->verProceso();
+					
+					foreach($informacion as $info)
+						{
+						echo $info["cod_proceso"];
+						echo " "; 
+						echo $info["proceso"];
+						}
+					?>
 				</div>	
 			</div>
 			

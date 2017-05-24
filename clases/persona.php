@@ -242,28 +242,70 @@ class Persona	{
 					{
 					$db=new database();
 					$db->conectar();
-				
+					
 					$consulta="SELECT cod_persona, nombres, apellidos, cod_tipo_dni, dni, persona_condicion, cod_persona_condicion
 							   FROM bsd_persona P, ref_persona_condicion PC
 							   WHERE dni='$buscar'
-							   AND cod_persona_condicion = '$persona_condicion';";
-							   
+							   AND cod_persona_condicion = '$persona_condicion';";					
 					$resultado=mysqli_query($db->conexion, $consulta) or die ("No se pueden cargar las personas.");
 					
 					while($datos = mysqli_fetch_assoc($resultado))
 						{
-						$_SESSION["personas"][0]=array($datos['cod_persona'],$datos['cod_persona_condicion']);
-					
-						$_SESSION["i"]++;
-						
+						$cod_persona=$datos['cod_persona'];						
 						echo   "<td>".$datos['nombres']."</td>
 								<td>".$datos['apellidos']."</td>
 								<td>".$datos['cod_tipo_dni']."</td>
 								<td>".$datos['dni']."</td>
-								<td>".$datos['persona_condicion']."</td>";
-						}				
+								<td>".$datos['persona_condicion']."</td>";						
+						}
+						
 					$db->close();
+					return $cod_persona;
 					}			
+				
+				public function verPersona()
+					{
+					$db=new database();
+					$db->conectar();
 					
+					$consulta="SELECT *
+							   FROM bsd_persona;";
+					$resultado=mysqli_query($db->conexion, $consulta) or die ("No se puede cargar la persona.");
+					
+					echo '<div class="table-responsive">
+							<table class="table table-striped">
+							<thead>
+								<tr>';																									
+							foreach($this->nombre_campo as $campo)
+								{
+								echo "<th>".$campo."</th>";
+								}	
+					echo '		</tr>
+							</thead>
+							<tbody>';
+										
+					$i=0;
+					while($datos=mysqli_fetch_assoc($resultado))
+						{
+						echo "<tr>";
+						foreach($this->nombre_campo as $campo)
+							{
+							echo "<td>".$datos["$campo"]."</td>";
+							}	
+						echo "</tr>";
+						$personas[$i]=$datos;
+						$cod_proceso=$datos["cod_persona"];
+						$i++;						
+						}
+						
+					echo '	</tbody>
+							</table>
+						</div>';
+					
+					$db->close();
+					//return $cod_proceso;
+					//return $datos;
+					return $personas;
+					}			
 				}	
 ?>
