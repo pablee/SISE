@@ -25,6 +25,6 @@ INSERT INTO `sise_legal`.`bsd_detalle`(`cod_persona`,`cod_proceso`,`cod_detalle_
 VALUES((SELECT COD_PERSONA FROM sise_legal.bsd_persona WHERE NOMBRES LIKE 'NOMBRE 1'),(SELECT COD_PROCESO FROM sise_legal.bsd_proceso WHERE PROCESO LIKE 'PERSONA 1 VS. PERSONA 2'),14,'Estuve mariado durante varios dias');
 
 INSERT INTO `sise_legal`.`rel_pers_cond_proc`(`cod_proceso`,`cod_persona`,`cod_persona_condicion`,`orden`,`observaciones`)
-VALUES(4,2,2,1,'EJEMPLO GENERICO PARA NOMBRE 1');
+VALUES((SELECT COD_PROCESO FROM sise_legal.bsd_proceso WHERE PROCESO LIKE 'PERSONA 1 VS. PERSONA 2'),(SELECT COD_PERSONA FROM sise_legal.bsd_persona WHERE NOMBRES LIKE 'NOMBRE 1'),2,1,'EJEMPLO GENERICO PARA NOMBRE 1');
 INSERT INTO `sise_legal`.`rel_pers_cond_proc`(`cod_proceso`,`cod_persona`,`cod_persona_condicion`,`orden`,`observaciones`)
-VALUES(4,3,3,2,'EJEMPLO GENERICO PARA NOMBRE 2');
+VALUES((SELECT COD_PROCESO FROM sise_legal.bsd_proceso WHERE PROCESO LIKE 'PERSONA 1 VS. PERSONA 2'),(SELECT COD_PERSONA FROM sise_legal.bsd_persona WHERE NOMBRES LIKE 'NOMBRE 2'),3,2,'EJEMPLO GENERICO PARA NOMBRE 2');

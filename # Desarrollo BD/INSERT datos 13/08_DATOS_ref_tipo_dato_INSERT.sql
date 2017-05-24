@@ -23,4 +23,4 @@ INSERT INTO `sise_legal`.`ref_tipo_dato` (`cod_tipo_dato`,`tipo_dato`, `observac
 INSERT INTO `sise_legal`.`ref_tipo_dato` (`cod_tipo_dato`,`tipo_dato`, `observaciones`) VALUES (23, 'TIMESTAMP', 'Almacena una fecha y hora UTC. El rango de valores oscila entre #1970-01-01 00:00:01# y #2038-01-19 03:14:07#.');
 INSERT INTO `sise_legal`.`ref_tipo_dato` (`cod_tipo_dato`,`tipo_dato`, `observaciones`) VALUES (24, 'YEAR', 'Almacena un año dado con 2 o 4 dígitos de longitud, por defecto son 4. El rango de valores oscila entre 1901 y 2155 con 4 dígitos. Mientras que con 2 dígitos el rango es desde 1970 a 2069  (70-69).');
 INSERT INTO `sise_legal`.`ref_tipo_dato` (`cod_tipo_dato`,`tipo_dato`, `observaciones`) VALUES (25, 'SET', 'Almacena 0, uno o varios valores una lista con un máximo de 64 posibles valores.');
-INSERT INTO `sise_legal`.`ref_tipo_dato` (`cod_tipo_dato`,`tipo_dato`, `observaciones`) VALUES (25, 'ENUM', 'Igual que SET pero solo puede almacenar un valor.');
+INSERT INTO `sise_legal`.`ref_tipo_dato` (`cod_tipo_dato`,`tipo_dato`, `observaciones`) VALUES (26, 'ENUM', 'Igual que SET pero solo puede almacenar un valor.');
