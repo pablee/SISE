@@ -1,4 +1,4 @@
-INSERT INTO `sise_legal`.`bsd_usuario` (`cod_usuario`,`usuario`, `password`, `nombre`, `apellido`, `correo_electronico`, `cod_rol`) VALUES (1, 'Admin', '123', 'SISE', 'Servicios', 'info@siseservicios.com', '1');
+INSERT INTO `sise_legal`.`bsd_usuario` (`cod_usuario`,`usuario`, `password`, `nombre`, `apellido`, `correo_electronico`, `cod_rol`) VALUES (1, 'Admin', 'SISE.2016', 'SISE', 'Servicios', 'info@siseservicios.com', '1');
 INSERT INTO `sise_legal`.`bsd_usuario` (`cod_usuario`,`usuario`, `password`, `nombre`, `apellido`, `correo_electronico`, `cod_rol`) VALUES (2, 'FMARTINO', 'FMARTINO.2017', 'Fernando Agustín', 'Martino', 'sebatista385@gmail.com', '1');
 INSERT INTO `sise_legal`.`bsd_usuario` (`cod_usuario`,`usuario`, `password`, `nombre`, `apellido`, `correo_electronico`, `cod_rol`) VALUES (3, 'IBAZO', 'IBAZO.123', 'Inés', 'Bazo', 'sebatista385@gmail.com', '3');
 INSERT INTO `sise_legal`.`bsd_usuario` (`cod_usuario`,`usuario`, `password`, `nombre`, `apellido`, `correo_electronico`, `cod_rol`) VALUES (4, 'AGRECO', 'AGRECO.123', 'Adriel', 'Greco', 'sebatista385@gmail.com', '3');
