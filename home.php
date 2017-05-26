@@ -14,7 +14,7 @@
 		}
 	
 	$_SESSION["i"]=0;
-	
+	$_SESSION["personas"]="";
 ?>
 
 <!DOCTYPE html>

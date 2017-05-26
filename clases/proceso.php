@@ -13,7 +13,7 @@ class Proceso	{
 				private $fec_ult_modif;		
 												
 				public function nuevoProceso()
-					{
+					{					
 					$persona = new Persona();
 					$proceso_tipo=new ProcesoTipo();		
 					

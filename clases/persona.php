@@ -36,7 +36,7 @@ class Persona	{
 					$categoria=new Categoria();
 					$observaciones=new Observacion();
 
-					echo '<form action="php/persona/ingresarPersona.php" method="POST">';
+					//echo '<form action="php/persona/ingresarPersona.php" method="POST">';
 
 					foreach($this->nombre_campo as $campo)
 						{
@@ -98,9 +98,9 @@ class Persona	{
 							<input id="usr_ult_modif" name="usr_ult_modif" type="hidden" value="<?php echo $_SESSION["cod_usuario"] ?></input>
 							<input id="fec_ult_modif" name="fec_ult_modif" type="hidden" value="<?php echo $fecha ?>"></input>
 								
-							<input type = "submit" class = "btn btn-info" value = "Guardar"></input>
+							<input type = "submit" class = "btn btn-info" value = "Guardar" onclick="ingresarPersona()"></input>
 							<br>
-						</form>	
+						
 						';
 					}		
 				
@@ -249,15 +249,22 @@ class Persona	{
 							   AND cod_persona_condicion = '$persona_condicion';";					
 					$resultado=mysqli_query($db->conexion, $consulta) or die ("No se pueden cargar las personas.");
 					
-					while($datos = mysqli_fetch_assoc($resultado))
+					if (1 <= mysqli_num_rows($resultado))
 						{
-						$cod_persona=$datos['cod_persona'];						
-						echo   "<td>".$datos['nombres']."</td>
-								<td>".$datos['apellidos']."</td>
-								<td>".$datos['cod_tipo_dni']."</td>
-								<td>".$datos['dni']."</td>
-								<td>".$datos['persona_condicion']."</td>";						
+						while($datos = mysqli_fetch_assoc($resultado))
+							{
+							$cod_persona=$datos['cod_persona'];						
+							echo   "<td>".$datos['nombres']."</td>
+									<td>".$datos['apellidos']."</td>
+									<td>".$datos['cod_tipo_dni']."</td>
+									<td>".$datos['dni']."</td>
+									<td>".$datos['persona_condicion']."</td>";						
+							}
 						}
+						else{
+							echo "El dni ingresado no existe, por favor verifique que el numero ingresado sea el correcto.";
+							$cod_persona=0;
+							}
 						
 					$db->close();
 					return $cod_persona;
