@@ -1,3 +1,41 @@
+function cargarFormulario(valor)
+	{	
+	xhttp = new XMLHttpRequest();			
+	xhttp.onreadystatechange = function()	
+			{					
+			if (this.readyState == 4 && this.status == 200)
+				{
+				document.getElementById("listado").innerHTML=this.responseText;									
+				}						
+			};
+	
+	switch (valor) 
+		{
+		case 1:
+			document.getElementById("busquedas").innerHTML='Buscar persona<input id="buscarPersona" name="buscarPersona" type="text" class="form-control" placeholder="Ingrese nombre o DNI" onkeypress="buscarPersona(event)"></input>';				
+			xhttp.open("GET", "php/persona/formularioPersona.php", true);
+			document.getElementById("personaProceso").innerHTML="";	
+			break;
+		case 2:
+			document.getElementById("busquedas").innerHTML='Buscar proceso<input id="buscarProceso" name="buscarProceso" type="text" class="form-control" placeholder="Ingrese nombre o DNI" onkeypress="buscarProceso(event)"></input>';
+			xhttp.open("GET", "php/proceso/formularioProceso.php", true);	
+			break;
+		case 3:
+			xhttp.open("GET", "php/detalle/formularioDetalle.php", true);
+			break;
+		case 4:
+			xhttp.open("GET", "php/persona/buscarPersonaProceso.php", true);
+			break;
+		case 5:
+			day = "Friday";
+			break;
+		case 6:
+			day = "Saturday";
+		} 		
+	xhttp.send();	
+	}	
+
+
 function ingresarPersona()
 	{	
 	var nombres=document.getElementById("nombres").value;
@@ -36,7 +74,7 @@ function buscarPersona(event)
 	{
 	if(event.which == 13 || event.keyCode == 13 || event==0)
 		{	
-		var buscar = document.getElementById("buscar").value;
+		var buscar = document.getElementById("buscarPersona").value;
 		//alert(buscar);
 		xhttp = new XMLHttpRequest();			
 		xhttp.onreadystatechange = function()	
@@ -44,7 +82,7 @@ function buscarPersona(event)
 				if (this.readyState == 4 && this.status == 200)
 						{
 						document.getElementById("listado").innerHTML=this.responseText;
-						document.getElementById("buscar").value="";
+						document.getElementById("buscarPersona").value="";
 						}						
 				};
 
@@ -53,42 +91,44 @@ function buscarPersona(event)
 		}
 	}
 
-	
-function cargarFormulario(valor)
+
+function buscarProceso(event)
+	{
+	if(event.which == 13 || event.keyCode == 13 || event==0)
+		{	
+		var buscar = document.getElementById("buscarProceso").value;
+		//alert(buscar);
+		xhttp = new XMLHttpRequest();			
+		xhttp.onreadystatechange = function()	
+			{					
+			if (this.readyState == 4 && this.status == 200)
+				{
+				document.getElementById("listado").innerHTML=this.responseText;
+				document.getElementById("buscarProceso").value="";
+				}						
+			};
+
+		xhttp.open("GET", "php/proceso/buscarProceso.php?buscar="+buscar, true);								
+		xhttp.send();
+		}
+	}
+
+
+function elegirProceso(cod_persona)
 	{	
 	xhttp = new XMLHttpRequest();			
 	xhttp.onreadystatechange = function()	
-			{					
-			if (this.readyState == 4 && this.status == 200)
-					{
-					document.getElementById("listado").innerHTML=this.responseText;					
-					document.getElementById("buscar").value="";
-					}						
-			};
-	
-	switch (valor) 
-		{
-		case 1:
-			xhttp.open("GET", "php/persona/formularioPersona.php", true);
-			document.getElementById("personaProceso").innerHTML="";	
-			break;
-		case 2:
-			xhttp.open("GET", "php/proceso/formularioProceso.php", true);	
-			break;
-		case 3:
-			xhttp.open("GET", "php/detalle/formularioDetalle.php", true);
-			break;
-		case 4:
-			xhttp.open("GET", "php/persona/buscarPersonaProceso.php", true);
-			break;
-		case 5:
-			day = "Friday";
-			break;
-		case 6:
-			day = "Saturday";
-		} 		
-	xhttp.send();	
-	}	
+		{					
+		if (this.readyState == 4 && this.status == 200)
+			{
+			document.getElementById("listado").innerHTML=this.responseText;
+			document.getElementById("buscarProceso").value="";
+			}						
+		};
+
+	xhttp.open("GET", "php/proceso/elegirProceso.php?cod_persona="+cod_persona, true);								
+	xhttp.send();
+	}
 
 	
 function guardarProceso()

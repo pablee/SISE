@@ -14,7 +14,7 @@
 		}
 	
 	$_SESSION["i"]=0;
-	$_SESSION["personas"]="";
+	//$_SESSION["personas"]="";
 ?>
 
 <!DOCTYPE html>
@@ -71,9 +71,9 @@
 			
 			</div>
 
-			<div class="col-sm-2 col-md-2 col-lg-2">
-				Buscar	
-				<input id="buscar" name="buscar" type="text" class="form-control" placeholder="Ingrese nombre o DNI" onkeypress="buscarPersona(event)"></input>				
+			<div class="col-sm-2 col-md-2 col-lg-2" id="busquedas">
+				Buscar persona
+				<input id="buscarPersona" name="buscarPersona" type="text" class="form-control" placeholder="Ingrese nombre o DNI" onkeypress="buscarPersona(event)"></input>				
 			</div>
 					
 			<div class="col-sm-2 col-md-2 col-lg-2">
@@ -103,7 +103,13 @@
 				<div class="form-group" id="listado">
 					<?php
 					$persona=new Persona();
-					$personas=$persona->verPersona();
+					$cod_persona=$persona->buscarCodigoPersona('NOMBRE 1');
+					
+					$proceso=new Proceso();
+					$proceso->buscarProceso('NOMBRE');
+					
+					//$proceso->editarProceso('NOMBRE 1');
+					$personas=$persona->listarPersona();
 					foreach($personas as $pers)
 						{
 						echo $pers["cod_persona"];
@@ -115,7 +121,7 @@
 
 
 					$proceso=new Proceso();
-					$informacion=$proceso->verProceso();
+					$informacion=$proceso->listarProceso();
 					
 					foreach($informacion as $info)
 						{

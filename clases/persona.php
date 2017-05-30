@@ -27,7 +27,7 @@ class Persona	{
 									</div> 		
 									';			
 				
-				//Carga el formulario para ingresar una nueva persona
+				//Carga el formulario para ingresar una nueva persona.
 				public function formularioPersona()
 					{
 					$nacionalidad=new Paises();
@@ -104,7 +104,7 @@ class Persona	{
 						';
 					}		
 				
-				//Ingresa la persona cargada en el formulario persona
+				//Ingresa la persona cargada en el formulario persona.
 				public function ingresarPersona($nombres, $apellidos, $cod_tipo_dni, $dni, $cuil, $fec_nacimiento, $sexo, $cod_nacionalidad, $cod_estado_civil, $telefono, $codigo_postal, $profesion, $cod_categoria, $observaciones, $usr_ult_modif, $fec_ult_modif)
 					{
 					$db=new database();
@@ -117,7 +117,7 @@ class Persona	{
 					$db->close();
 					}
 				
-				//Actualiza los datos de la persona 
+				//Actualiza los datos de la persona.
 				public function actualizarPersona($nombres, $apellidos, $cod_tipo_dni, $dni, $cuil, $fec_nacimiento, $sexo, $cod_nacionalidad, $cod_estado_civil, $telefono, $codigo_postal, $profesion, $cod_categoria, $observaciones, $usr_ult_modif, $fec_ult_modif)
 					{
 					$db=new database();
@@ -135,7 +135,7 @@ class Persona	{
 					$db->close();
 					}
 				
-				//Busca una persona en la base de datos y la muestra
+				//Busca una persona en la base de datos y la muestra.
 				public function buscarPersona($buscar)
 					{
 					$db=new database();
@@ -237,7 +237,7 @@ class Persona	{
 					$db->close();
 					}
 				
-				//Busca personas en proceso
+				//Busca personas en proceso.
 				public function buscarPersonaProceso($buscar,$persona_condicion)
 					{
 					$db=new database();
@@ -270,7 +270,8 @@ class Persona	{
 					return $cod_persona;
 					}			
 				
-				public function verPersona()
+				//Muestra un listado de todas las personas existentes.
+				public function listarPersona()
 					{
 					$db=new database();
 					$db->conectar();
@@ -301,7 +302,7 @@ class Persona	{
 							}	
 						echo "</tr>";
 						$personas[$i]=$datos;
-						$cod_proceso=$datos["cod_persona"];
+						$cod_persona=$datos["cod_persona"];
 						$i++;						
 						}
 						
@@ -313,6 +314,32 @@ class Persona	{
 					//return $cod_proceso;
 					//return $datos;
 					return $personas;
+					}
+				
+				//Busca el codigo de la persona en la tabla persona(se utiliza en la edicion de proceso).
+				public function buscarCodigoPersona($persona)
+					{
+					$db=new database();
+					$db->conectar();
+					
+					$consulta="SELECT *
+							   FROM bsd_persona
+							   WHERE dni = '$persona'
+							   OR nombres LIKE '%$persona%'
+							   OR apellidos LIKE '%$persona%';";
+							   
+					$resultado=mysqli_query($db->conexion, $consulta) or die ("No se puede cargar la persona.");
+					
+					$i=0;
+					while($datos=mysqli_fetch_assoc($resultado))
+						{
+						$personas[$i]=$datos;
+						$cod_persona=$datos["cod_persona"];
+						$i++;
+						}
+					
+					$db->close();
+					return $cod_persona;
 					}			
 				}	
 ?>
