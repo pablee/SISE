@@ -11,6 +11,5 @@ $buscar=$_GET["buscar"];
 
 $proceso=new Proceso();	
 $proceso->buscarProceso($buscar);
-//$proceso->editarProceso($buscar);
 	
 ?>

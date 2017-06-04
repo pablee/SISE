@@ -20,6 +20,22 @@ class Detalle	{
 					$db->close();
 					echo "ESTOY EN GUARDAR DETALLE FIN";
 					}
-					
+				
+				
+				public function actualizarDetalle($cod_persona, $cod_proceso, $cod_detalle_tipo, $valor, $observaciones, $usr_ult_modif, $fec_ult_modif)
+					{
+					$db=new database();
+					$db->conectar();
+				
+					$consulta= "UPDATE bsd_detalle 
+								SET valor='$valor', usr_ult_modif='$usr_ult_modif', fec_ult_modif='$fec_ult_modif'
+								WHERE  cod_detalle_tipo='$cod_detalle_tipo'
+								AND cod_persona = '$cod_persona' 
+								AND cod_proceso='$cod_proceso';";
+								
+					$resultado=mysqli_query($db->conexion, $consulta) or die ("No se pudo actualizar las respuestas de la tabla detalle.");		
+					$db->close();		
+					}
+						
 				}	
 ?>

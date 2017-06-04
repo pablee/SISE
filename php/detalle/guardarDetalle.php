@@ -5,6 +5,7 @@ include_once "../../clases/proceso.php";
 
 $nuevoProceso=new Proceso();
 $detalle=new Detalle();
+$accion=$_POST["accion"];
 $cod_proceso=$_SESSION["cod_proceso"];
 $observaciones="observaciones";
 $usr_ult_modif=$_SESSION['cod_usuario'];
@@ -21,7 +22,8 @@ foreach ($_SESSION["personas"] as $pers)
 	}
 */
 
-if(isset($_SESSION["personas"])&&$_SESSION["personas"]!="")
+
+if($accion=="guardar"&&isset($_SESSION["personas"])&&$_SESSION["personas"]!="")
 	{
 	foreach($_SESSION["personas"] as $pers)
 		{	
@@ -37,18 +39,36 @@ if(isset($_SESSION["personas"])&&$_SESSION["personas"]!="")
 		}
 	}
 	
-
-$cod_persona=$codigo_persona;
-for($i=1;$i<60;$i++)
+if($accion=="guardar")
 	{
-	if(isset($_POST["$i"])&&$cod_persona!=0)
-		{	
-		echo $_POST[$i];
-		echo $cod_detalle_tipo=$i;	//Pregunta
-		echo $valor=$_POST[$i];	//Respuesta
-		$detalle->ingresarDetalle($cod_persona, $cod_proceso, $cod_detalle_tipo, $valor, $observaciones, $usr_ult_modif, $fec_ult_modif);
+	$cod_persona=$codigo_persona;
+	for($i=1;$i<60;$i++)
+		{
+		if(isset($_POST["$i"])&&$cod_persona!=0)
+			{	
+			echo $_POST[$i];
+			echo $cod_detalle_tipo=$i;	//Pregunta
+			echo $valor=$_POST[$i];	//Respuesta
+			$detalle->ingresarDetalle($cod_persona, $cod_proceso, $cod_detalle_tipo, $valor, $observaciones, $usr_ult_modif, $fec_ult_modif);
+			}
+		}	
+	}
+	else if($accion=="actualizar")
+		{
+		echo "codigo de persona: ".$cod_persona=$_POST["cod_persona"];
+		echo "codigo de proceso: ".$cod_proceso=$_POST["cod_proceso"];
+		for($i=1;$i<60;$i++)
+			{
+			if(isset($_POST["$i"])&&$cod_persona!=0)
+				{
+				echo "<br>";
+				echo $_POST[$i];
+				echo $cod_detalle_tipo=$i;	//Pregunta
+				echo $valor=$_POST[$i];	//Respuesta
+				$detalle->actualizarDetalle($cod_persona, $cod_proceso, $cod_detalle_tipo, $valor, $observaciones, $usr_ult_modif, $fec_ult_modif);
+				}
+			}	
 		}
-	}	
 
 header ("location: ../../home.php");
 ?>

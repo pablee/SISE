@@ -2,19 +2,23 @@
 include_once "database.php";
 include_once "proceso_tipo.php";
 include_once "persona.php";
+include_once "detalle_tipo.php";
 
 class Proceso	{
+				private $encabezados=array("Codigo proceso","Proceso","Tipo","observaciones","Modifica","Fecha");
 				private $nombre_campo=array("cod_proceso","proceso","cod_proceso_tipo","observaciones","usr_ult_modif","fec_ult_modif");
 				private $condiciones=array("elegir","otro","cliente","oponente","empleador");
 				private $rel_pers_cond_proc=array("cod_proceso","cod_persona","cod_persona_condicion","orden","observaciones","usr_ult_modif","fec_ult_modif");
+				/*
 				private $proceso;
 				private $cod_proceso_tipo;
 				private $observaciones;
 				private $usr_ult_modif;
 				private $fec_ult_modif;		
-												
+				*/							
 				public function nuevoProceso()
 					{					
+					$cod_proceso=0;
 					$persona = new Persona();
 					$proceso_tipo=new ProcesoTipo();		
 					
@@ -59,6 +63,8 @@ class Proceso	{
 					echo '<br>';	
 					$proceso_tipo->selectProcesoTipo();
 					
+					echo '<input id="accion" name="accion" type="hidden" class="form-control" value="guardar"></input>';
+					
 					echo '<br><label for="proceso"> Proceso </label>
 						  <input id="proceso" name="proceso" type="text" class="form-control" placeholder="Descripcion del proceso"></input>';	
 					
@@ -69,7 +75,7 @@ class Proceso	{
 					echo '<br><label for="observaciones"> Observaciones </label>
 						  <textarea id="observaciones" name="observaciones" type="text" class="form-control" rows="5" cols="60"></textarea>';	
 						  
-					echo '<br><input type = "submit" class = "btn btn-info" value = "Guardar" onclick="guardarProceso()"></input>';
+					echo '<br><input type = "submit" class = "btn btn-info" value = "Guardar" onclick="guardarProceso('.$cod_proceso.')"></input>';
 					echo '</form>';
 					}		
 				
@@ -102,16 +108,19 @@ class Proceso	{
 							   FROM bsd_proceso;";	   
 					$resultado=mysqli_query($db->conexion, $consulta) or die ("No se pueden cargar los procesos.");
 					
-					echo '<table class="table table-striped">
-							<thead>
-								<tr>';																									
-							foreach($this->nombre_campo as $campo)
-								{
-								echo "<th>".$campo."</th>";
-								}	
-					echo '		</tr>
-							</thead>
-							<tbody>';
+					echo '<h3>Ultimos procesos ingresados</h3>
+						  <br>
+						  <div class="table-responsive">
+							<table class="table table-striped">
+								<thead>
+									<tr>';																									
+								foreach($this->encabezados as $campo)
+									{
+									echo "<th>".$campo."</th>";
+									}	
+					echo '			</tr>
+								</thead>
+								<tbody>';
 							
 					$i=0;
 					while($datos=mysqli_fetch_assoc($resultado))
@@ -127,8 +136,9 @@ class Proceso	{
 						$i++;
 						}
 						
-					echo '	</tbody>
-						  </table>';
+					echo '		</tbody>
+							</table>
+						  </div>';
 						  
 					$db->close();
 					//return $cod_proceso;
@@ -163,6 +173,7 @@ class Proceso	{
 										<th> Nombres </th>
 										<th> Apellidos </th>
 										<th> DNI </th>
+										<th> Opcion </th>
 									</tr>
 								</thead>
 								<tbody>';
@@ -213,6 +224,7 @@ class Proceso	{
 					{
 					$persona = new Persona();
 					$proceso_tipo=new ProcesoTipo();		
+					$detalleTipo=new DetalleTipo();	
 					$procesos=$this->elegirProceso($cod_persona);
 					
 					echo '<h3>Personas en proceso</h3>
@@ -242,7 +254,10 @@ class Proceso	{
 								</table>
 							</div>'; 		
 					
+					echo '<input id="accion" name="accion" type="hidden" class="form-control" value="actualizar"></input>';	
+					echo '<input id="cod_persona" name="cod_persona" type="hidden" class="form-control" value="'.$cod_persona.'"></input>';	
 					echo '<input id="cod_proceso" name="cod_proceso" type="hidden" class="form-control" value="'.$procesos[0]["cod_proceso"].'"></input>';	
+					
 					echo '<br>';	
 					$proceso_tipo->buscarProcesoTipo($procesos[0]["cod_proceso_tipo"]);
 					
@@ -255,11 +270,38 @@ class Proceso	{
 					
 					echo '<br><label for="observaciones"> Observaciones </label>
 						  <textarea id="observaciones" name="observaciones" type="text" class="form-control" value="'.$procesos[0]["observaciones"].'" rows="5" cols="60"></textarea>';	
-						  
-					echo '<br><input type = "submit" class = "btn btn-info" value = "Guardar" onclick="guardarProceso()"></input>';
+					
+					//Buscar las preguntas y respuestas para la persona buscada en el proceso elegido.
+					echo '<br>';						
+					$cod_proceso=$procesos[0]["cod_proceso"];
+					$detalleTipo->buscarDetalleTipo($cod_persona,$cod_proceso);
+	  
+					echo '<br><input type = "submit" class = "btn btn-info" value = "Guardar" onclick="guardarProceso('.$cod_proceso.')"></input>';
 					echo '</form>';					
 					}
 				
+				public function actualizarProceso($cod_proceso, $proceso, $cod_proceso_tipo, $observaciones, $usr_ult_modif, $fec_ult_modif)
+					{	
+					$db=new database();
+					$db->conectar();
+					
+					echo $cod_proceso;
+					echo $proceso;
+					echo $cod_proceso_tipo;
+					echo $observaciones;
+					echo $usr_ult_modif; 
+					echo $fec_ult_modif;
+					
+					$consulta= "UPDATE bsd_proceso 
+								SET proceso='$proceso', cod_proceso_tipo='$cod_proceso_tipo', observaciones='$observaciones', usr_ult_modif='$usr_ult_modif', fec_ult_modif='$fec_ult_modif'
+								WHERE cod_proceso='$cod_proceso';";
+													
+					$resultado=mysqli_query($db->conexion, $consulta) or die ("No se pudo actualizar el proceso.");
+					$cod_proceso=mysqli_insert_id($db->conexion);
+					$db->close();
+					return $cod_proceso;
+					}
+					
 				public function ultimoProcesoIngresado()
 					{
 					$db=new database();

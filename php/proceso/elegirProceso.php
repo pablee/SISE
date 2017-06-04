@@ -11,5 +11,5 @@ $cod_persona=$_GET["cod_persona"];
 
 $proceso=new Proceso();	
 $proceso->editarProceso($cod_persona);
-	
+
 ?>

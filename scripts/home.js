@@ -14,14 +14,17 @@ function cargarFormulario(valor)
 		case 1:
 			document.getElementById("busquedas").innerHTML='Buscar persona<input id="buscarPersona" name="buscarPersona" type="text" class="form-control" placeholder="Ingrese nombre o DNI" onkeypress="buscarPersona(event)"></input>';				
 			xhttp.open("GET", "php/persona/formularioPersona.php", true);
-			document.getElementById("personaProceso").innerHTML="";	
+			document.getElementById("personaProceso").innerHTML="";
+			document.getElementById("ultimosIngresos").innerHTML="";
 			break;
 		case 2:
 			document.getElementById("busquedas").innerHTML='Buscar proceso<input id="buscarProceso" name="buscarProceso" type="text" class="form-control" placeholder="Ingrese nombre o DNI" onkeypress="buscarProceso(event)"></input>';
+			document.getElementById("ultimosIngresos").innerHTML="";
 			xhttp.open("GET", "php/proceso/formularioProceso.php", true);	
 			break;
 		case 3:
-			xhttp.open("GET", "php/detalle/formularioDetalle.php", true);
+			//document.getElementById("ultimosIngresos").innerHTML="";
+			//xhttp.open("GET", "php/detalle/formularioDetalle.php", true);
 			break;
 		case 4:
 			xhttp.open("GET", "php/persona/buscarPersonaProceso.php", true);
@@ -131,13 +134,12 @@ function elegirProceso(cod_persona)
 	}
 
 	
-function guardarProceso()
+function guardarProceso(cod_proceso)
 	{
+	//alert(cod_proceso);
 	var proceso = document.getElementById("proceso").value;	
 	var cod_proceso_tipo = document.getElementById("cod_proceso_tipo").value;	
 	var observaciones = document.getElementById("observaciones").value;	
-	
-	//alert(proceso+cantidad_acompaniantes+cod_proceso_tipo+observaciones);
 	
 	xhttp = new XMLHttpRequest();			
 	xhttp.onreadystatechange = function()	
@@ -147,7 +149,7 @@ function guardarProceso()
 					document.getElementById("listado").innerHTML=this.responseText;
 					}						
 			};
-	xhttp.open("GET", "php/proceso/guardarProceso.php?proceso="+proceso+"&cod_proceso_tipo="+cod_proceso_tipo+"&observaciones="+observaciones, true);								
+	xhttp.open("GET", "php/proceso/guardarProceso.php?cod_proceso="+cod_proceso+"&proceso="+proceso+"&cod_proceso_tipo="+cod_proceso_tipo+"&observaciones="+observaciones, true);								
 	xhttp.send();	
 	}	
 

@@ -237,7 +237,7 @@ class Persona	{
 					$db->close();
 					}
 				
-				//Busca personas en proceso.
+				//Busca personas en un proceso.
 				public function buscarPersonaProceso($buscar,$persona_condicion)
 					{
 					$db=new database();
@@ -278,13 +278,15 @@ class Persona	{
 					
 					$consulta="SELECT *
 							   FROM bsd_persona;";
-					$resultado=mysqli_query($db->conexion, $consulta) or die ("No se puede cargar la persona.");
+					$resultado=mysqli_query($db->conexion, $consulta) or die ("No se puede cargar el listado de personas.");
 					
-					echo '<div class="table-responsive">
+					echo '<h3>Ultimas personas ingresadas</h3>
+						  <br>
+						  <div class="table-responsive">
 							<table class="table table-striped">
 							<thead>
 								<tr>';																									
-							foreach($this->nombre_campo as $campo)
+							foreach($this->th as $campo)
 								{
 								echo "<th>".$campo."</th>";
 								}	

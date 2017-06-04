@@ -101,41 +101,32 @@
 			
 				</div>
 				<div class="form-group" id="listado">
-					<?php
-					$persona=new Persona();
-					$cod_persona=$persona->buscarCodigoPersona('NOMBRE 1');
 					
-					$proceso=new Proceso();
-					$proceso->buscarProceso('NOMBRE');
-					
-					//$proceso->editarProceso('NOMBRE 1');
-					$personas=$persona->listarPersona();
-					foreach($personas as $pers)
-						{
-						echo $pers["cod_persona"];
-						echo " "; 
-						echo $pers["nombres"];
-						echo " ";
-						echo $pers["apellidos"];
-						}
-
-
-					$proceso=new Proceso();
-					$informacion=$proceso->listarProceso();
-					
-					foreach($informacion as $info)
-						{
-						echo $info["cod_proceso"];
-						echo " "; 
-						echo $info["proceso"];
-						}
-					?>
 				</div>	
 			</div>
 			
 			<div class="col-sm-2 col-md-2 col-lg-2"> 	
 			</div>	
 		</div>
+		
+		<!--Tablas con los ultimos ingresos-->	
+		<div class="row text-left">						
+			<div class="col-sm-12 col-md-12 col-lg-12">
+			<hr>
+				
+				<div class="form-group" id="ultimosIngresos">
+					<?php
+					$proceso=new Proceso();
+					$proceso->buscarProceso(1);
+					$informacion=$proceso->listarProceso();
+					
+					$persona=new Persona();
+					$personas=$persona->listarPersona();
+					?>
+				</div>	
+			</div>
+		</div>
+		
 	</div>
 </body>
 </html>
