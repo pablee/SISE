@@ -16,6 +16,6 @@ CREATE TABLE IF NOT EXISTS `bsd_usuario`
 	CONSTRAINT `bsd_usuario_cod_rol_FK` FOREIGN KEY (`cod_rol`) REFERENCES `bsd_rol`(`cod_rol`)
 )
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = latin1
-COLLATE = latin1_spanish_ci
+-- DEFAULT CHARACTER SET = latin1
+-- COLLATE = latin1_spanish_ci
 COMMENT = 'Usuarios del sistema';

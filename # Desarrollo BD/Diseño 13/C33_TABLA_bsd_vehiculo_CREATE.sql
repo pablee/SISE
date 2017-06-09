@@ -18,6 +18,6 @@ CREATE TABLE IF NOT EXISTS `bsd_vehiculo`
 	CONSTRAINT `bsd_vehiculo_usr_ult_modif_FK` FOREIGN KEY (`usr_ult_modif`) REFERENCES `bsd_usuario`(`cod_usuario`)
 ) 
 ENGINE=InnoDB 
-DEFAULT CHARSET=latin1 
-COLLATE=latin1_spanish_ci 
+-- DEFAULT CHARSET=latin1 
+-- COLLATE=latin1_spanish_ci 
 COMMENT='tabla de vehiculos disponibles a utilizar';

@@ -19,6 +19,6 @@ CREATE TABLE IF NOT EXISTS `rel_pers_cond_proc`
 	CONSTRAINT `rel_pers_cond_proc_usr_ult_modif_FK` FOREIGN KEY (`usr_ult_modif`) REFERENCES `bsd_usuario`(`cod_usuario`)
 )
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = latin1
-COLLATE = latin1_spanish_ci
+-- DEFAULT CHARACTER SET = latin1
+-- COLLATE = latin1_spanish_ci
 COMMENT = 'Tabla de relacion entre proceso, persona y la condicion de dicha persona';

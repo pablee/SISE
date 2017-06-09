@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS `bsd_rol`
 	KEY `usr_ult_modif` (`usr_ult_modif`)
 )
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = latin1
-COLLATE = latin1_spanish_ci
+-- DEFAULT CHARACTER SET = utf8
+-- COLLATE = utf8_spanish2_ci
 COMMENT = 'Tabla de roles de usuario del sistema';
 

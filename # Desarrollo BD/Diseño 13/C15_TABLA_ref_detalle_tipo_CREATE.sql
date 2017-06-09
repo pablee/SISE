@@ -16,6 +16,6 @@ CREATE TABLE IF NOT EXISTS `ref_detalle_tipo`
 	CONSTRAINT `ref_detalle_tipo_usr_ult_modif_FK` FOREIGN KEY (`usr_ult_modif`) REFERENCES `bsd_usuario`(`cod_usuario`)
 )
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = latin1
-COLLATE = latin1_spanish_ci
+-- DEFAULT CHARACTER SET = latin1
+-- COLLATE = latin1_spanish_ci
 COMMENT = 'Tabla auxiliar de referencia para tipos de detalle a registrar';
