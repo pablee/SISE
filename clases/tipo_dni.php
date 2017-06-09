@@ -24,11 +24,11 @@ class TipoDni	{
 					$db=new database();
 					$db->conectar();
 					
-					$consulta="SELECT *
-							   FROM ref_tipo_dni 
-							   WHERE cod_tipo_dni = '$idTipo';";
+					$consulta = 	"SELECT *
+							   		 FROM ref_tipo_dni 
+							   	 	 WHERE cod_tipo_dni = '$idTipo';";
 							  
-					$resultado=mysqli_query($db->conexion, $consulta) or die ("No se encontro el tipo de dni.");	
+					$resultado = mysqli_query($db->conexion, $consulta) or die ("No se encontró el tipo de dni.");	
 					$datos = mysqli_fetch_assoc($resultado);
 					
 					echo'

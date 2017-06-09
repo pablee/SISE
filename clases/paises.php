@@ -24,11 +24,11 @@ class Paises{
 				$db=new database();
 				$db->conectar();
 				
-				$consulta="SELECT *
-						   FROM ref_nacionalidad 
-						   WHERE cod_nacionalidad = '$idPais';";
+				$consulta = 	"SELECT *
+						   		 FROM ref_nacionalidad 
+						   		 WHERE cod_nacionalidad = '$idPais';";
 						  
-				$resultado=mysqli_query($db->conexion, $consulta) or die ("No se encontro el pais.");	
+				$resultado=mysqli_query($db->conexion, $consulta) or die ("No se encontró el pais.");	
 				$datos = mysqli_fetch_assoc($resultado);
 				
 				echo '<label for="cod_nacionalidad"> Nacionalidad </label>

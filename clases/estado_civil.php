@@ -28,7 +28,7 @@ class EstadoCivil{
 							   FROM ref_estado_civil 
 							   WHERE cod_estado_civil = '$idEstado';";
 							  
-					$resultado=mysqli_query($db->conexion, $consulta) or die ("No se encontro el estado civil.");	
+					$resultado=mysqli_query($db->conexion, $consulta) or die ("No se encontró el estado civil.");	
 					$datos = mysqli_fetch_assoc($resultado);
 					
 					echo '<label for="cod_estado_civil"> Estado Civil </label>

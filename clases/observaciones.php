@@ -2,7 +2,7 @@
 include_once "database.php";
 
 class Observacion	{
-					private $tipoPersona = array("fisica","juridica");
+					private $tipoPersona = array("física","jurídica");
 
 					public function verObservacion() 
 						{

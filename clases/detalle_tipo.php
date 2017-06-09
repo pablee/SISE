@@ -8,12 +8,20 @@ class DetalleTipo
 		$db=new database();
 		$db->conectar();
 		
-		$consulta= "SELECT ref_detalle_tipo.cod_detalle_tipo, ref_detalle_tipo.detalle_tipo, ref_detalle_tipo.cod_tipo_dato, ref_tipo_dato.tipo_dato 
-					FROM rel_pers_cond_proc_tipo_deta_tipo, ref_detalle_tipo, ref_tipo_dato 
+		$consulta= "SELECT 	ref_detalle_tipo.cod_detalle_tipo, 
+							ref_detalle_tipo.detalle_tipo, 
+							ref_detalle_tipo.cod_tipo_dato, 
+							ref_tipo_dato.tipo_dato 
+					FROM 	rel_pers_cond_proc_tipo_deta_tipo, 
+							ref_detalle_tipo, 
+							ref_tipo_dato 
 					WHERE ref_detalle_tipo.cod_detalle_tipo = rel_pers_cond_proc_tipo_deta_tipo.cod_detalle_tipo 
-					AND ref_tipo_dato.cod_tipo_dato = ref_detalle_tipo.cod_tipo_dato 
-					AND cod_proceso_tipo = '$cod_proceso_tipo' 
-					AND (cod_persona_condicion = '$cliente' or cod_persona_condicion = '$oponente');";
+					  AND ref_tipo_dato.cod_tipo_dato = ref_detalle_tipo.cod_tipo_dato 
+					  AND cod_proceso_tipo = '$cod_proceso_tipo' 
+					  AND (		cod_persona_condicion = '$cliente' 
+					  		OR 	cod_persona_condicion = '$oponente'
+					  	  )
+					  ;";
 		
 		$resultado=mysqli_query($db->conexion, $consulta) or die ("No se pueden cargar los tipos de detalle.");		
 			
@@ -77,11 +85,18 @@ class DetalleTipo
 		$db=new database();
 		$db->conectar();
 	
-		$consulta= "SELECT DET.cod_detalle_tipo, DT.detalle_tipo, DET.valor, RTD.tipo_dato 
-					FROM bsd_detalle DET, ref_detalle_tipo DT, ref_tipo_dato RTD
-					WHERE DET.cod_persona = '$cod_persona' AND DET.cod_proceso='$cod_proceso'
-					AND DET.cod_detalle_tipo = DT.cod_detalle_tipo
-					AND DT.cod_tipo_dato = RTD.cod_tipo_dato;";
+		$consulta= "SELECT 	DET.cod_detalle_tipo, 
+							DT.detalle_tipo, 
+							DET.valor, 
+							RTD.tipo_dato 
+					FROM 	bsd_detalle DET, 
+							ref_detalle_tipo DT, 
+							ref_tipo_dato RTD
+					WHERE DET.cod_persona = '$cod_persona' 
+					  AND DET.cod_proceso = '$cod_proceso'
+					  AND DET.cod_detalle_tipo = DT.cod_detalle_tipo
+					  AND DT.cod_tipo_dato = RTD.cod_tipo_dato
+					  ;";
 					
 		$resultado=mysqli_query($db->conexion, $consulta) or die ("No se pueden cargar los tipos de detalle de la tabla detalle.");		
 			

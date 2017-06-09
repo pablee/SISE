@@ -8,8 +8,43 @@ include_once "observaciones.php";
 
 
 class Persona	{
-				private $th=array("Nombres","Apellidos","Documento","Numero","Cuil","Fecha de nacimiento","Sexo","Nacionalidad","Estado civil","Telefono","Codigo postal","Profesion","Categoria","Observaciones","Modifica","Fecha");
-				private $nombre_campo=array("nombres","apellidos","cod_tipo_dni","dni","cuil","fec_nacimiento","sexo","cod_nacionalidad","cod_estado_civil","telefono","codigo_postal","profesion","cod_categoria","observaciones","usr_ult_modif","fec_ult_modif");
+				private $th=array(
+					"Nombres/Razón social",
+					"Apellidos",
+					"Tipo de documento",
+					"Número de documento",
+					"CUIL",
+					"Fecha de nacimiento",
+					"Sexo",
+					"Nacionalidad",
+					"Estado civil",
+					"Teléfono",
+					"Código postal",
+					"Profesión",
+					"Categoría",
+					"Observaciones",
+					"Usuario",
+					"Fecha"
+					);
+
+				private $nombre_campo=array(
+					"nombres",
+					"apellidos",
+					"cod_tipo_dni",
+					"dni",
+					"cuil",
+					"fec_nacimiento",
+					"sexo",
+					"cod_nacionalidad",
+					"cod_estado_civil",
+					"telefono",
+					"codigo_postal",
+					"profesion",
+					"cod_categoria",
+					"observaciones",
+					"usr_ult_modif",
+					"fec_ult_modif"
+					);
 				
 				private $table_head='<div class="table-responsive">
 										<table class="table">
@@ -124,10 +159,22 @@ class Persona	{
 					$db->conectar();
 					$observaciones = "<br>".$observaciones;
 					$consulta ="UPDATE bsd_persona 
-								SET	nombres='$nombres', apellidos='$apellidos', cod_tipo_dni='$cod_tipo_dni', dni='$dni', cuil='$cuil', 
-									fec_nacimiento='$fec_nacimiento', sexo='$sexo', cod_nacionalidad='$cod_nacionalidad', cod_estado_civil='$cod_estado_civil',
-									telefono='$telefono', codigo_postal='$codigo_postal', profesion='$profesion', cod_categoria='$cod_categoria',
-									observaciones=CONCAT(observaciones, '$observaciones'), usr_ult_modif='$usr_ult_modif', fec_ult_modif='$fec_ult_modif'
+								SET	nombres='$nombres', 
+									apellidos='$apellidos', 
+									cod_tipo_dni='$cod_tipo_dni', 
+									dni='$dni', 
+									cuil='$cuil', 
+									fec_nacimiento='$fec_nacimiento', 
+									sexo='$sexo', 
+									cod_nacionalidad='$cod_nacionalidad', 
+									cod_estado_civil='$cod_estado_civil',
+									telefono='$telefono', 
+									codigo_postal='$codigo_postal', 
+									profesion='$profesion', 
+									cod_categoria='$cod_categoria',
+									observaciones=CONCAT(observaciones, '$observaciones'), 
+									usr_ult_modif='$usr_ult_modif', 
+									fec_ult_modif='$fec_ult_modif'
 								WHERE dni='$dni';";
 								
 					$resultado=mysqli_query($db->conexion, $consulta) or die ("No se actualizaron los datos en la tabla persona.");
@@ -149,8 +196,9 @@ class Persona	{
 					
 					$consulta="SELECT *
 							   FROM bsd_persona 
-							   WHERE dni = '$buscar';";
-					$resultado=mysqli_query($db->conexion, $consulta) or die ("No se encontro la persona.");
+							   WHERE dni = '$buscar'
+							      OR nombres like '%$buscar%';";
+					$resultado=mysqli_query($db->conexion, $consulta) or die ("No se encontró la persona.");
 															
 					echo '<form action="php/persona/ingresarPersona.php" method="POST">';
 					
@@ -243,10 +291,21 @@ class Persona	{
 					$db=new database();
 					$db->conectar();
 					
-					$consulta="SELECT cod_persona, nombres, apellidos, cod_tipo_dni, dni, persona_condicion, cod_persona_condicion
-							   FROM bsd_persona P, ref_persona_condicion PC
-							   WHERE dni='$buscar'
-							   AND cod_persona_condicion = '$persona_condicion';";					
+					$consulta="SELECT 	cod_persona, 
+										nombres, 
+										apellidos, 
+										cod_tipo_dni, 
+										dni, 
+										persona_condicion, 
+										cod_persona_condicion
+							   FROM bsd_persona P, 
+							   		ref_persona_condicion PC
+							   WHERE 	(
+									   		 dni='$buscar'
+										  OR nombres like '%$buscar%'
+										  OR apellidos like '%$buscar%'
+								  		)
+							     AND cod_persona_condicion = '$persona_condicion';";					
 					$resultado=mysqli_query($db->conexion, $consulta) or die ("No se pueden cargar las personas.");
 					
 					if (1 <= mysqli_num_rows($resultado))
@@ -262,7 +321,7 @@ class Persona	{
 							}
 						}
 						else{
-							echo "El dni ingresado no existe, por favor verifique que el numero ingresado sea el correcto.";
+							echo "El dni ingresado no existe, por favor verifique que el número ingresado sea el correcto.";
 							$cod_persona=0;
 							}
 						
@@ -276,11 +335,13 @@ class Persona	{
 					$db=new database();
 					$db->conectar();
 					
-					$consulta="SELECT *
-							   FROM bsd_persona;";
+					$consulta="
+								SELECT *
+							   	FROM bsd_persona
+							   	;";
 					$resultado=mysqli_query($db->conexion, $consulta) or die ("No se puede cargar el listado de personas.");
 					
-					echo '<h3>Ultimas personas ingresadas</h3>
+					echo '<h3>Últimas personas ingresadas</h3>
 						  <br>
 						  <div class="table-responsive">
 							<table class="table table-striped">
@@ -327,8 +388,8 @@ class Persona	{
 					$consulta="SELECT *
 							   FROM bsd_persona
 							   WHERE dni = '$persona'
-							   OR nombres LIKE '%$persona%'
-							   OR apellidos LIKE '%$persona%';";
+							      OR nombres LIKE '%$persona%'
+							      OR apellidos LIKE '%$persona%';";
 							   
 					$resultado=mysqli_query($db->conexion, $consulta) or die ("No se puede cargar la persona.");
 					

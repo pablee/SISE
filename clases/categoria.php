@@ -7,7 +7,7 @@ class Categoria{
 				public function verCategoria() 
 					{
 					echo'	
-						<label for="cod_categoria"> Codigo Categoria </label>
+						<label for="cod_categoria"> Código de Categoria </label>
 						<select id="cod_categoria" name="cod_categoria" class="form-control">
 							<option value=""> Elegir... </option>
 						';
@@ -35,7 +35,7 @@ class Categoria{
 						}
 						
 					echo'	
-						<label for="cod_categoria"> Codigo Categoria </label>
+						<label for="cod_categoria"> Código de Categoria </label>
 						<select id="cod_categoria" name="cod_categoria" class="form-control">
 							<option value="'.$idCategoria.'"> Persona '.ucwords($campo).' </option>
 							<option value="1"> Persona Fisica </option>
