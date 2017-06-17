@@ -35,7 +35,7 @@ class Paises{
 						<select id="cod_nacionalidad" name="cod_nacionalidad" class="form-control">';	
 				
 				echo '<option value="'.$datos["cod_nacionalidad"].'">'.$datos["nacionalidad"].'</option>';
-				
+				$i=1;
 				foreach ($this->paises as $pais)
 					{
 					echo '<option value="'.$i.'">'.$pais.'</option>';

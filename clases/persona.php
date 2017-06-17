@@ -7,8 +7,9 @@ include_once "categoria.php";
 include_once "observaciones.php";
 
 
-class Persona	{
-				private $th=array(
+class Persona	
+{
+	private $th=array(
 					"Nombres/Razón social",
 					"Apellidos",
 					"Tipo de documento",
@@ -27,24 +28,24 @@ class Persona	{
 					"Fecha"
 					);
 
-				private $nombre_campo=array(
-					"nombres",
-					"apellidos",
-					"cod_tipo_dni",
-					"dni",
-					"cuil",
-					"fec_nacimiento",
-					"sexo",
-					"cod_nacionalidad",
-					"cod_estado_civil",
-					"telefono",
-					"codigo_postal",
-					"profesion",
-					"cod_categoria",
-					"observaciones",
-					"usr_ult_modif",
-					"fec_ult_modif"
-					);
+	private $nombre_campo=array(
+								"nombres",
+								"apellidos",
+								"cod_tipo_dni",
+								"dni",
+								"cuil",
+								"fec_nacimiento",
+								"sexo",
+								"cod_nacionalidad",
+								"cod_estado_civil",
+								"telefono",
+								"codigo_postal",
+								"profesion",
+								"cod_categoria",
+								"observaciones",
+								"usr_ult_modif",
+								"fec_ult_modif"
+								);
 				
 				private $table_head='<div class="table-responsive">
 										<table class="table">
@@ -61,7 +62,8 @@ class Persona	{
 										</table>
 									</div> 		
 									';			
-				
+
+//===============================================================================================
 				//Carga el formulario para ingresar una nueva persona.
 				public function formularioPersona()
 					{
@@ -138,20 +140,22 @@ class Persona	{
 						
 						';
 					}		
-				
-				//Ingresa la persona cargada en el formulario persona.
-				public function ingresarPersona($nombres, $apellidos, $cod_tipo_dni, $dni, $cuil, $fec_nacimiento, $sexo, $cod_nacionalidad, $cod_estado_civil, $telefono, $codigo_postal, $profesion, $cod_categoria, $observaciones, $usr_ult_modif, $fec_ult_modif)
-					{
-					$db=new database();
-					$db->conectar();
-					
-					$consulta ="INSERT INTO bsd_persona (cod_persona, nombres, apellidos, cod_tipo_dni, dni, cuil, fec_nacimiento, sexo, cod_nacionalidad, cod_estado_civil, telefono, codigo_postal, profesion, cod_categoria, observaciones, usr_ult_modif, fec_ult_modif)
-								VALUES (NULL,'$nombres','$apellidos','$cod_tipo_dni','$dni','$cuil','$fec_nacimiento','$sexo','$cod_nacionalidad','$cod_estado_civil','$telefono','$codigo_postal','$profesion','$cod_categoria','$observaciones','$usr_ult_modif','$fec_ult_modif');";
-					$resultado=mysqli_query($db->conexion, $consulta) or die ("No se pudieron guardar los datos en la tabla persona.");
-					
-					$db->close();
-					}
-				
+
+//===============================================================================================
+	//Ingresa la persona cargada en el formulario persona.
+	public function ingresarPersona($nombres, $apellidos, $cod_tipo_dni, $dni, $cuil, $fec_nacimiento, $sexo, $cod_nacionalidad, $cod_estado_civil, $telefono, $codigo_postal, $profesion, $cod_categoria, $observaciones, $usr_ult_modif, $fec_ult_modif)
+		{
+		$db=new database();
+		$db->conectar();
+		
+		$consulta ="INSERT INTO bsd_persona (cod_persona, nombres, apellidos, cod_tipo_dni, dni, cuil, fec_nacimiento, sexo, cod_nacionalidad, cod_estado_civil, telefono, codigo_postal, profesion, cod_categoria, observaciones, usr_ult_modif, fec_ult_modif)
+					VALUES (NULL,'$nombres','$apellidos','$cod_tipo_dni','$dni','$cuil','$fec_nacimiento','$sexo','$cod_nacionalidad','$cod_estado_civil','$telefono','$codigo_postal','$profesion','$cod_categoria','$observaciones','$usr_ult_modif','$fec_ult_modif');";
+		$resultado=mysqli_query($db->conexion, $consulta) or die ("No se pudieron guardar los datos en la tabla persona.");
+		
+		$db->close();
+		}
+
+//=============================================================================================================
 				//Actualiza los datos de la persona.
 				public function actualizarPersona($nombres, $apellidos, $cod_tipo_dni, $dni, $cuil, $fec_nacimiento, $sexo, $cod_nacionalidad, $cod_estado_civil, $telefono, $codigo_postal, $profesion, $cod_categoria, $observaciones, $usr_ult_modif, $fec_ult_modif)
 					{
@@ -181,7 +185,8 @@ class Persona	{
 					
 					$db->close();
 					}
-				
+
+//===============================================================================================
 				//Busca una persona en la base de datos y la muestra.
 				public function buscarPersona($buscar)
 					{
@@ -197,7 +202,9 @@ class Persona	{
 					$consulta="SELECT *
 							   FROM bsd_persona 
 							   WHERE dni = '$buscar'
-							      OR nombres like '%$buscar%';";
+							      OR nombres like '%$buscar%'
+							      OR apellidos like '%$buscar%';";
+							      
 					$resultado=mysqli_query($db->conexion, $consulta) or die ("No se encontró la persona.");
 															
 					echo '<form action="php/persona/ingresarPersona.php" method="POST">';
