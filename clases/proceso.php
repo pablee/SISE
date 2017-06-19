@@ -151,8 +151,10 @@ class Proceso	{
 					$db=new database();
 					$db->conectar();
 					
-					$consulta="SELECT *
-							   FROM bsd_proceso;";	   
+					$consulta="SELECT PRO.cod_proceso, PRO.proceso, RPT.proceso_tipo, PRO.observaciones, U.usuario, PRO.fec_ult_modif
+							   FROM bsd_proceso PRO
+							   JOIN ref_proceso_tipo RPT ON PRO.cod_proceso_tipo = RPT.cod_proceso_tipo
+							   JOIN bsd_usuario U ON PRO.usr_ult_modif = U.cod_usuario;";				
 					$resultado=mysqli_query($db->conexion, $consulta) or die ("No se pueden cargar los procesos.");
 					
 					echo '<h3>Últimos procesos ingresados</h3>
@@ -173,10 +175,12 @@ class Proceso	{
 					while($datos=mysqli_fetch_assoc($resultado))
 						{
 						echo "<tr>";	
-						foreach($this->nombre_campo as $campo)
-							{
-							echo "<td>".$datos["$campo"]."</td>";
-							}	
+							echo "<td>".$datos["cod_proceso"]."</td>";
+							echo "<td>".$datos["proceso"]."</td>";
+							echo "<td>".$datos["proceso_tipo"]."</td>";
+							echo "<td>".$datos["observaciones"]."</td>";
+							echo "<td>".$datos["usuario"]."</td>";
+							echo "<td>".$datos["fec_ult_modif"]."</td>";							
 						echo "</tr>";
 						$procesos[$i]=$datos;
 						$cod_proceso=$datos["cod_proceso"];
@@ -209,7 +213,7 @@ class Proceso	{
 										PER.nombres, 
 										PER.apellidos, 
 										PER.dni 
-								FROM `rel_pers_cond_proc` PCP 
+								FROM rel_pers_cond_proc PCP 
 								JOIN bsd_persona PER ON PCP.cod_persona = PER.cod_persona 
 								JOIN bsd_proceso PRO ON PCP.cod_proceso = PRO.cod_proceso 
 								WHERE PER.nombres LIKE '%$buscar%'

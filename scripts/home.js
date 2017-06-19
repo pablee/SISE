@@ -68,8 +68,6 @@ function ingresarPersona()
 	
 	xhttp.open("GET", "php/persona/ingresarPersona.php?nombres="+nombres+"&apellidos="+apellidos+"&cod_tipo_dni="+cod_tipo_dni+"&dni="+dni+"&cuil="+cuil+"&fec_nacimiento="+fec_nacimiento+"&sexo="+sexo+"&cod_nacionalidad="+cod_nacionalidad+"&cod_estado_civil="+cod_estado_civil+"&telefono="+telefono+"&codigo_postal="+codigo_postal+"&profesion="+profesion+"&cod_categoria="+cod_categoria+"&observaciones="+observaciones, true);								
 	xhttp.send();
-	
-	alert(nombres);
 	}
 
 

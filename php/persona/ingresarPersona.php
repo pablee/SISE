@@ -17,7 +17,7 @@ $sexo=$_GET["sexo"];
 $cod_nacionalidad=$_GET["cod_nacionalidad"];
 $cod_estado_civil=$_GET["cod_estado_civil"];
 $telefono=$_GET["telefono"];
-$codigo_GETal=$_GET["codigo_GETal"];
+$codigo_postal=$_GET["codigo_postal"];
 $profesion=$_GET["profesion"];
 $cod_categoria=$_GET["cod_categoria"];
 $observaciones=$_GET["observaciones"];
@@ -27,40 +27,27 @@ if(isset($_POST["accion"]))
 	{
 	$accion=$_POST["accion"];
 	}
-
-echo $nombres."<br>";
-echo $apellidos."<br>"; 
-echo $cod_tipo_dni."<br>";
-echo $dni."<br>";
-echo $cuil."<br>";
-echo $fec_nacimiento."<br>";
-echo $sexo."<br>"; 
-echo $cod_nacionalidad."<br>";
-echo $cod_estado_civil."<br>";
-echo $telefono."<br>";
-echo $codigo_GETal."<br>";
-echo $profesion."<br>";
-echo $cod_categoria."<br>";
-echo $observaciones."<br>";
-echo $usr_ult_modif."<br>";
-echo $fec_ult_modif."<br>";
-
-echo '<h2>Su solicitud fue procesada con exito</h2>';
-echo '
-	 <a href="home.php">
-		<input type = "button" class = "btn btn-success" value = "Volver">
-	 </a>
-	 ';
+	else{
+		$accion="nuevo_ingreso";
+		}
 	 
 $persona = new Persona();	
-
 if($accion=="actualizar")
 	{
 	$persona->actualizarPersona($nombres, $apellidos, $cod_tipo_dni, $dni, $cuil, $fec_nacimiento, $sexo, $cod_nacionalidad, $cod_estado_civil, $telefono, $codigo_GETal, $profesion, $cod_categoria, $observaciones, $usr_ult_modif, $fec_ult_modif);
 	}
-	else{
-		$persona->ingresarPersona($nombres, $apellidos, $cod_tipo_dni, $dni, $cuil, $fec_nacimiento, $sexo, $cod_nacionalidad, $cod_estado_civil, $telefono, $codigo_GETal, $profesion, $cod_categoria, $observaciones, $usr_ult_modif, $fec_ult_modif);
+	else if($accion=="nuevo_ingreso")
+		{
+		$persona->ingresarPersona($nombres, $apellidos, $cod_tipo_dni, $dni, $cuil, $fec_nacimiento, $sexo, $cod_nacionalidad, $cod_estado_civil, $telefono, $codigo_postal, $profesion, $cod_categoria, $observaciones, $usr_ult_modif, $fec_ult_modif);
 		}
 
-//header ("location: ../../home.php");			
+echo '<h2>La persona '.$nombres." ".$apellidos.' fue ingresada con exito</h2>';
+echo '
+	 <a href="home.php">
+		<input type = "button" class = "btn btn-success" value = "Volver">
+	 </a>
+	 ';		
+
+//echo "<p>".$nombres.$apellidos."</p>";
+
 ?>

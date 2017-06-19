@@ -1,22 +1,19 @@
 <?php
 include_once "database.php";
 
-class Paises{
-			private $paises = array("Elegir","Alemana","Argentina","Boliviana","Brasilera","Chilena","Colombiana","Ecuatoriana","Española","Francesa","Italiana","Mexicana","Paraguaya","Uruguaya","Venezolana","Otra");
-
+class Paises{			
 			public function verPaises() 
 				{
-				$i=1;	
-				echo '<label for="cod_nacionalidad"> Nacionalidad </label>
-						<select id="cod_nacionalidad" name="cod_nacionalidad" class="form-control">';	
-							
-				foreach ($this->paises as $pais)
+				$db=new database();
+				$db->conectar();
+				
+				$consulta = "SELECT * FROM ref_nacionalidad;";
+				$resultado=mysqli_query($db->conexion, $consulta) or die ("No se encontró el pais.");	
+		
+				while($datos = mysqli_fetch_assoc($resultado))
 					{
-					echo '<option value="'.$i.'">'.$pais.'</option>';
-					$i++;
-					}
-					
-				echo 	'</select>';	
+					echo '<option value="'.$datos["cod_nacionalidad"].'">'.$datos["nacionalidad"].'</option>';
+					}	
 				}
 				
 			public function buscarPais($idPais) 
@@ -30,19 +27,9 @@ class Paises{
 						  
 				$resultado=mysqli_query($db->conexion, $consulta) or die ("No se encontró el pais.");	
 				$datos = mysqli_fetch_assoc($resultado);
-				
-				echo '<label for="cod_nacionalidad"> Nacionalidad </label>
-						<select id="cod_nacionalidad" name="cod_nacionalidad" class="form-control">';	
-				
+
 				echo '<option value="'.$datos["cod_nacionalidad"].'">'.$datos["nacionalidad"].'</option>';
-				$i=1;
-				foreach ($this->paises as $pais)
-					{
-					echo '<option value="'.$i.'">'.$pais.'</option>';
-					$i++;
-					}
-					
-				echo 	'</select>';	
+				$this->verPaises();
 				}	
 			}		
 ?>

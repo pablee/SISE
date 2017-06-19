@@ -54,6 +54,15 @@ class DetalleTipo
 						  </tr>';						  
 					break;	
 				
+				case "DATETIME":
+					echo '<tr>
+							<td>'.$datos["detalle_tipo"].'</td>
+							<td>
+								<input type="datetime-local" class="form-control" id="'.$datos["cod_detalle_tipo"].'" name="'.$datos["cod_detalle_tipo"].'"></input>
+							</td>
+						  </tr>';						  
+					break;
+				
 				case "MEDIUMTEXT":
 				case "TEXT":
 					echo '<tr>
@@ -132,6 +141,18 @@ class DetalleTipo
 						  </tr>';						  
 					break;	
 				
+				case "DATETIME":
+					$date = strtotime($datos["valor"]);
+					$fecha= date('Y-m-d\TH:i',$date);
+					//Para poder setear la fecha con hora en el input tiene que usarse \T despues del formato de la fecha.
+					echo '<tr>
+							<td>'.$datos["detalle_tipo"].'</td>
+							<td>								
+								<input type="datetime-local" class="form-control" id="'.$datos["cod_detalle_tipo"].'" name="'.$datos["cod_detalle_tipo"].'" value="'.$fecha.'"></input>
+							</td>
+						  </tr>';						  
+					break;	
+					
 				case "MEDIUMTEXT":
 				case "TEXT":
 					echo '<tr>

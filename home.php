@@ -110,8 +110,10 @@
 		</div>
 		
 		<!--Tablas con los ultimos ingresos-->	
-		<div class="row text-left">						
-			<div class="col-sm-12 col-md-12 col-lg-12">
+		<div class="row text-left">			
+			<div class="col-sm-1 col-md-1 col-lg-1"> 	
+			</div>	
+			<div class="col-sm-10 col-md-10 col-lg-10">
 			<hr>
 				
 				<div class="form-group" id="ultimosIngresos">
@@ -125,6 +127,8 @@
 					?>
 				</div>	
 			</div>
+			<div class="col-sm-1 col-md-1 col-lg-1"> 	
+			</div>	
 		</div>
 		
 	</div>
