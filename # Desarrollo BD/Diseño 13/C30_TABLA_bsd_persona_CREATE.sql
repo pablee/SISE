@@ -2,8 +2,9 @@ USE sise_legal;
 CREATE TABLE IF NOT EXISTS `bsd_persona` 
 (
 	`cod_persona` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Clave primaria',
-	`nombres` VARCHAR(100) DEFAULT NULL COMMENT 'Nombres de la persona o razon social',
+	`nombres` VARCHAR(100) DEFAULT NULL COMMENT 'Nombres de la persona',
 	`apellidos` VARCHAR(100) DEFAULT NULL COMMENT 'Apellidos de la persona',
+	`razon_social` VARCHAR(100) DEFAULT NULL COMMENT 'Razon social de la persona',
 	`cod_tipo_dni` INT(3) UNSIGNED DEFAULT NULL COMMENT '1-DNI 2-LC 3-LE 4-OTRO',
 	`dni` INT(10) UNSIGNED DEFAULT NULL COMMENT 'numero de DNI',
 	`cuil` BIGINT(11) UNSIGNED DEFAULT NULL COMMENT 'CUIL 20-30789385-2 11 lugares',
