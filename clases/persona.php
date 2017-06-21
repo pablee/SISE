@@ -5,13 +5,14 @@ include_once "tipo_dni.php";
 include_once "estado_civil.php";
 include_once "categoria.php";
 include_once "observaciones.php";
-
+include_once "direccion.php";
 
 class Persona	
 	{
 	private $th=array(
-					"Nombres/Razón social",
+					"Nombres",
 					"Apellidos",
+					"Razón social",
 					"Tipo de documento",
 					"Número de documento",
 					"CUIL",
@@ -31,6 +32,7 @@ class Persona
 	private $nombre_campo=array(
 								"nombres",
 								"apellidos",
+								"razon_social",
 								"cod_tipo_dni",
 								"dni",
 								"cuil",
@@ -39,29 +41,27 @@ class Persona
 								"cod_nacionalidad",
 								"cod_estado_civil",
 								"telefono",
-								"codigo_postal",
+			
 								"profesion",
 								"cod_categoria",
-								"observaciones",
-								"usr_ult_modif",
-								"fec_ult_modif"
+								"observaciones"
 								);
 				
-				private $table_head='<div class="table-responsive">
-										<table class="table">
-											<thead>
-												<tr>																									
-									';			
-				private $table_middle='			</tr>
-											</thead>
-											<tbody> 
-												
-									';				
-				private $table_close='															
-											</tbody>
-										</table>
-									</div> 		
-									';			
+	private $table_head='<div class="table-responsive">
+							<table class="table">
+								<thead>
+									<tr>																									
+						';			
+	private $table_middle='			</tr>
+								</thead>
+								<tbody> 
+									
+						';				
+	private $table_close='															
+								</tbody>
+							</table>
+						</div> 		
+						';			
 
 //===============================================================================================
 	//Carga el formulario para ingresar una nueva persona.
@@ -72,9 +72,8 @@ class Persona
 		$estadoCivil=new EstadoCivil();
 		$categoria=new Categoria();
 		$observaciones=new Observacion();
-
-		//echo '<form action="php/persona/ingresarPersona.php" method="POST">';
-
+		$direccion=new Direccion();
+		
 		foreach($this->nombre_campo as $campo)
 			{
 			echo '<br>';						
@@ -105,9 +104,9 @@ class Persona
 				
 				case "cod_nacionalidad":
 					echo '<label for="cod_nacionalidad"> Nacionalidad </label>
-							<select id="cod_nacionalidad" name="cod_nacionalidad" class="form-control">';
-							$nacionalidad->verPaises();	
-					echo 	'</select>';	
+						  <select id="cod_nacionalidad" name="cod_nacionalidad" class="form-control">';
+						  $nacionalidad->verPaises();	
+					echo  '</select>';	
 					break;
 				
 				case "cod_estado_civil":
@@ -129,30 +128,34 @@ class Persona
 					break;		
 					
 				default:
-					echo '<label for="'.$campo.'"> '.ucwords($campo).' </label>';
+					//ucwords($variable) convierte a mayuscula la primer letra del string
+					//str_replace(find,replace,string,count)					
+					echo '<label for="'.$campo.'"> '.ucwords(str_replace("_"," ",$campo)).' </label>';
 					echo '<input id="'.$campo.'" name="'.$campo.'" type="text" class="form-control" ></input>';
 				}
 			}
+		echo "<hr>";
+		$direccion->formularioDireccion();
 
-		echo '
-				<input id="usr_ult_modif" name="usr_ult_modif" type="hidden" value="<?php echo $_SESSION["cod_usuario"] ?></input>
+		echo '	<input id="usr_ult_modif" name="usr_ult_modif" type="hidden" value="<?php echo $_SESSION["cod_usuario"] ?></input>
 				<input id="fec_ult_modif" name="fec_ult_modif" type="hidden" value="<?php echo $fecha ?>"></input>
-					
-				<input type = "submit" class = "btn btn-info" value = "Guardar" onclick="ingresarPersona()"></input>
-				<br>
-			
-			';
+				<input id="accion" name="accion" type="hidden" value="nuevo_ingreso"></input>
+			 ';
+		//Boton que guarda el formulario.
+		echo '<br>
+			  <input type = "submit" class = "btn btn-info" value = "Guardar" onclick="guardarPersona()"></input>			
+			 ';
 		}		
 
 //===============================================================================================
 	//Ingresa la persona cargada en el formulario persona.
-	public function ingresarPersona($nombres, $apellidos, $cod_tipo_dni, $dni, $cuil, $fec_nacimiento, $sexo, $cod_nacionalidad, $cod_estado_civil, $telefono, $codigo_postal, $profesion, $cod_categoria, $observaciones, $usr_ult_modif, $fec_ult_modif)
+	public function guardarPersona($nombres, $apellidos, $razon_social, $cod_tipo_dni, $dni, $cuil, $fec_nacimiento, $sexo, $cod_nacionalidad, $cod_estado_civil, $telefono, $codigo_postal, $profesion, $cod_categoria, $observaciones, $usr_ult_modif, $fec_ult_modif)
 		{
 		$db=new database();
 		$db->conectar();
 		
-		$consulta ="INSERT INTO bsd_persona (cod_persona, nombres, apellidos, cod_tipo_dni, dni, cuil, fec_nacimiento, sexo, cod_nacionalidad, cod_estado_civil, telefono, codigo_postal, profesion, cod_categoria, observaciones, usr_ult_modif, fec_ult_modif)
-					VALUES (NULL,'$nombres','$apellidos','$cod_tipo_dni','$dni','$cuil','$fec_nacimiento','$sexo','$cod_nacionalidad','$cod_estado_civil','$telefono','$codigo_postal','$profesion','$cod_categoria','$observaciones','$usr_ult_modif','$fec_ult_modif');";
+		$consulta ="INSERT INTO bsd_persona (cod_persona, nombres, apellidos, razon_social, cod_tipo_dni, dni, cuil, fec_nacimiento, sexo, cod_nacionalidad, cod_estado_civil, telefono, codigo_postal, profesion, cod_categoria, observaciones, usr_ult_modif, fec_ult_modif)
+					VALUES (NULL,'$nombres','$apellidos','$razon_social','$cod_tipo_dni','$dni','$cuil','$fec_nacimiento','$sexo','$cod_nacionalidad','$cod_estado_civil','$telefono','$codigo_postal','$profesion','$cod_categoria','$observaciones','$usr_ult_modif','$fec_ult_modif');";
 		$resultado=mysqli_query($db->conexion, $consulta) or die ("No se pudieron guardar los datos en la tabla persona.");
 		
 		$db->close();
@@ -160,14 +163,15 @@ class Persona
 
 //===============================================================================================
 	//Actualiza los datos de la persona.
-	public function actualizarPersona($nombres, $apellidos, $cod_tipo_dni, $dni, $cuil, $fec_nacimiento, $sexo, $cod_nacionalidad, $cod_estado_civil, $telefono, $codigo_postal, $profesion, $cod_categoria, $observaciones, $usr_ult_modif, $fec_ult_modif)
+	public function actualizarPersona($nombres, $apellidos, $razon_social, $cod_tipo_dni, $dni, $cuil, $fec_nacimiento, $sexo, $cod_nacionalidad, $cod_estado_civil, $telefono, $codigo_postal, $profesion, $cod_categoria, $observaciones, $usr_ult_modif, $fec_ult_modif)
 		{
 		$db=new database();
 		$db->conectar();
 		$observaciones = "<br>".$observaciones;
 		$consulta ="UPDATE bsd_persona 
 					SET	nombres='$nombres', 
-						apellidos='$apellidos', 
+						apellidos='$apellidos',
+						razon_social='$razon_social',
 						cod_tipo_dni='$cod_tipo_dni', 
 						dni='$dni', 
 						cuil='$cuil', 
@@ -185,7 +189,6 @@ class Persona
 					WHERE dni='$dni';";
 					
 		$resultado=mysqli_query($db->conexion, $consulta) or die ("No se actualizaron los datos en la tabla persona.");
-		
 		$db->close();
 		}
 
@@ -209,9 +212,7 @@ class Persona
 				   OR apellidos LIKE '%$buscar%';";
 					  
 		$resultado=mysqli_query($db->conexion, $consulta) or die ("No se encontró la persona.");
-												
-		echo '<form action="php/persona/ingresarPersona.php" method="POST">';
-		
+									
 		$datos = mysqli_fetch_assoc($resultado);
 		foreach($this->nombre_campo as $campo)
 			{
@@ -280,7 +281,7 @@ class Persona
 					break;		
 					
 				default:
-					echo '<label for="'.$campo.'"> '.ucwords($campo).' </label>';
+					echo '<label for="'.$campo.'"> '.ucwords(str_replace("_"," ",$campo)).' </label>';
 					echo '<input id="'.$campo.'" name="'.$campo.'" type="text" class="form-control" value="'.$datos[$campo].'"></input>';
 				}
 			}
@@ -289,12 +290,11 @@ class Persona
 				<input id="usr_ult_modif" name="usr_ult_modif" type="hidden" value="<?php echo $_SESSION["cod_usuario"] ?></input>
 				<input id="fec_ult_modif" name="fec_ult_modif" type="hidden" value="<?php echo $fecha ?>"></input>
 				<input id="accion" name="accion" type="hidden" value="actualizar"></input>
-				
-				<input type = "submit" class = "btn btn-info" value = "Guardar"></input>
-				<br>
-			</form>	
-			';
-		
+			 ';
+		//Boton que guarda el formulario.
+		echo '	<input type = "submit" class = "btn btn-info" value = "Guardar" onclick="guardarPersona()"></input>
+				<br>			
+			 ';
 		$db->close();
 		}
 

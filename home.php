@@ -33,6 +33,7 @@
 	<script src="bootstrap/js/bootstrap.min.js"></script>
 	
 	<script type="text/javascript" src="scripts/home.js"></script>
+	<script type="text/javascript" src="scripts/login.js"></script>
 </head>
 
 <body>

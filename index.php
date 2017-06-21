@@ -1,5 +1,6 @@
 <?php
-	session_start();		
+	session_start();
+
 ?>
 
 <html lang="en">
@@ -10,10 +11,10 @@
 		<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
 		<!-- jQuery library -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-
 		<!-- Latest compiled JavaScript 
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
 		<script src="bootstrap/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="scripts/login.js"></script>
 		<meta charset="utf-8"> 
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 	
@@ -55,7 +56,7 @@
 																																	{
 																																	echo $_COOKIE['usuario'];
 																																	}
-																																?>">
+																																?>" required>
 							</input>
 							<br>
 							<label for="pass">Contraseña</label>
@@ -64,9 +65,17 @@
 																																	{
 																																	echo $_COOKIE['password'];
 																																	}
-																																?>">
-							</input>
+																																?>" required>
+							</input>												
 							<br>
+							<?php 
+							if(isset($_SESSION["mensaje"]))
+								{
+								echo '<div class="alert alert-danger">
+										<strong>Error!</strong> '.$_SESSION["mensaje"].'
+									  </div>';								
+								}
+							?>
 						</div>
 						<div style="float: right">
 							<?php 
@@ -78,17 +87,13 @@
 										echo '<input type = "checkbox" name = "recordar" value = "si"> Recordarme </input>';
 										} 							
 							?>
-							<input type = "submit" class = "btn btn-default" value = "Ingresar"></input>
-							<!--
-							<a href="home.php">
-								<input type = "button" class = "btn btn-success" value = "Aceptar">
-							</a>
-							-->
+							<input type="submit" class="btn btn-default" value="Ingresar"></input>
 						</div>
 					</form>
 				</div>
 				
 				<div class="col-sm-4 col-md-4">
+				
 				</div>
 			</div>			
 		</div>

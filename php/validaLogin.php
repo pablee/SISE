@@ -42,13 +42,11 @@ if (1 == mysqli_num_rows($resultado))
 	$_SESSION['cod_usuario'] = $datos['cod_usuario'];
 	
 	header("location: ../home.php");
+	$_SESSION["mensaje"]="";
 	}
 	else{
+		$_SESSION["mensaje"]="usuario o contraseña incorrecto";
 		header("location: ../index.php");
 		}
- 	
-/*
-echo $datos['usuario'];
-echo $datos['password'];
-*/
+
 ?>

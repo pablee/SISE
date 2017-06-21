@@ -39,10 +39,11 @@ function cargarFormulario(valor)
 	}	
 
 
-function ingresarPersona()
+function guardarPersona()
 	{	
 	var nombres=document.getElementById("nombres").value;
 	var apellidos=document.getElementById("apellidos").value;
+	var razon_social=document.getElementById("razon_social").value;
 	var cod_tipo_dni=document.getElementById("cod_tipo_dni").value;
 	var dni=document.getElementById("dni").value;
 	var cuil=document.getElementById("cuil").value;
@@ -51,10 +52,26 @@ function ingresarPersona()
 	var cod_nacionalidad=document.getElementById("cod_nacionalidad").value;
 	var cod_estado_civil=document.getElementById("cod_estado_civil").value;
 	var telefono=document.getElementById("telefono").value;
-	var codigo_postal=document.getElementById("codigo_postal").value;
+	//var codigo_postal=document.getElementById("codigo_postal").value;
 	var profesion=document.getElementById("profesion").value;
 	var cod_categoria=document.getElementById("cod_categoria").value;
 	var observaciones=document.getElementById("observaciones").value;
+	
+	//Direccion
+	var domicilio=document.getElementById("domicilio").value;
+	var calle=document.getElementById("calle").value;
+	var numero=document.getElementById("numero").value;
+	var piso=document.getElementById("piso").value;
+	var departamento=document.getElementById("departamento").value;
+	var torre=document.getElementById("torre").value;
+	var cod_localidad=document.getElementById("localidad").value;
+	var cod_partido=document.getElementById("partido").value;
+	var cod_provincia=document.getElementById("provincia").value;
+	var codigo_postal=document.getElementById("codigo_postal").value;
+	var observaciones_direccion=document.getElementById("observaciones_direccion").value;
+	
+	//Accion (actualizar o guardar)
+	var accion=document.getElementById("accion").value;
 	
 	xhttp = new XMLHttpRequest();	
 	xhttp.onreadystatechange = function()	
@@ -66,7 +83,33 @@ function ingresarPersona()
 			}						
 		};
 	
-	xhttp.open("GET", "php/persona/ingresarPersona.php?nombres="+nombres+"&apellidos="+apellidos+"&cod_tipo_dni="+cod_tipo_dni+"&dni="+dni+"&cuil="+cuil+"&fec_nacimiento="+fec_nacimiento+"&sexo="+sexo+"&cod_nacionalidad="+cod_nacionalidad+"&cod_estado_civil="+cod_estado_civil+"&telefono="+telefono+"&codigo_postal="+codigo_postal+"&profesion="+profesion+"&cod_categoria="+cod_categoria+"&observaciones="+observaciones, true);								
+	xhttp.open("GET",	"php/persona/guardarPersona.php?nombres="+nombres+
+						"&apellidos="+apellidos+
+						"&razon_social="+razon_social+
+						"&cod_tipo_dni="+cod_tipo_dni+
+						"&dni="+dni+
+						"&cuil="+cuil+
+						"&fec_nacimiento="+fec_nacimiento+
+						"&sexo="+sexo+
+						"&cod_nacionalidad="+cod_nacionalidad+
+						"&cod_estado_civil="+cod_estado_civil+
+						"&telefono="+telefono+
+						"&codigo_postal="+codigo_postal+
+						"&profesion="+profesion+
+						"&cod_categoria="+cod_categoria+
+						"&observaciones="+observaciones+
+						"&domicilio="+domicilio+
+						"&calle="+calle+
+						"&numero="+numero+
+						"&piso="+piso+
+						"&departamento="+departamento+
+						"&torre="+torre+
+						"&cod_localidad="+cod_localidad+
+						"&cod_partido="+cod_partido+
+						"&cod_provincia="+cod_provincia+
+						"&codigo_postal="+codigo_postal+
+						"&observaciones_direccion="+observaciones_direccion+
+						"&accion="+accion, true);								
 	xhttp.send();
 	}
 
