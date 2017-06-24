@@ -13,20 +13,20 @@ class Persona
 					"Nombres",
 					"Apellidos",
 					"Razón social",
-					"Tipo de documento",
-					"Número de documento",
-					"CUIL",
-					"Fecha de nacimiento",
+#					"Tipo de doc.",
+					"Núm. de doc.",
+#					"CUIL",
+#					"Fecha de nac.",
 					"Sexo",
-					"Nacionalidad",
-					"Estado civil",
+#					"Nacionalidad",
+#					"Estado civil",
 					"Teléfono",
 #					"Código postal",
 					"Profesión",
 					"Categoría",
 					"Observaciones",
-					"Usuario",
-					"Fecha"
+					"Usr. última modif.",
+					"Fec. última modif."
 					);
 
 	private $nombre_campo=array(
@@ -384,31 +384,34 @@ class Persona
 	//Muestra un listado de todas las personas existentes.
 	public function listarPersona()
 		{
-		$db=new database();
+		$db = new database();
 		$db->conectar();
 		
-		$consulta="SELECT 
+		$consulta = "SELECT 
 						  P.nombres
 						, P.apellidos
 						, P.razon_social
-						, RTD.tipo_dni
+						#, RTD.tipo_dni
 						, P.dni
-						, P.cuil
-						, P.fec_nacimiento
+						#, P.cuil
+						#, P.fec_nacimiento
 						#, P.sexo
 						, CASE P.sexo 
 							WHEN 'm' THEN 'Masculino' 
 							WHEN 'f' THEN 'Femenino' 
 							ELSE '' 
 						END AS sexo
-						, RN.nacionalidad
-						, REC.estado_civil
+						#, RN.nacionalidad
+						#, REC.estado_civil
 						, P.telefono
-						, P.codigo_postal
 						, P.profesion
-						, P.cod_categoria
+						, CASE P.cod_categoria
+							WHEN 1 THEN 'Persona física'
+							WHEN 2 THEN 'Persona jurídica'
+							ELSE ''
+						END AS categoria
 						, P.observaciones
-						, U.usuario
+						, U.apellido AS usr_apellido
 						, P.fec_ult_modif 
 				   FROM bsd_persona P 
 				   JOIN ref_tipo_dni RTD 		ON P.cod_tipo_dni = RTD.cod_tipo_dni 
@@ -438,19 +441,19 @@ class Persona
 				echo "<td>".$datos["nombres"]."</td>";
 				echo "<td>".$datos["apellidos"]."</td>";
 				echo "<td>".$datos["razon_social"]."</td>";
-				echo "<td>".$datos["tipo_dni"]."</td>";
+				#echo "<td>".$datos["tipo_dni"]."</td>";
 				echo "<td>".$datos["dni"]."</td>";
-				echo "<td>".$datos["cuil"]."</td>";
-				echo "<td>".$datos["fec_nacimiento"]."</td>";
+				#echo "<td>".$datos["cuil"]."</td>";
+				#echo "<td>".$datos["fec_nacimiento"]."</td>";
 				echo "<td>".$datos["sexo"]."</td>";
-				echo "<td>".$datos["nacionalidad"]."</td>";
-				echo "<td>".$datos["estado_civil"]."</td>";
+				#echo "<td>".$datos["nacionalidad"]."</td>";
+				#echo "<td>".$datos["estado_civil"]."</td>";
 				echo "<td>".$datos["telefono"]."</td>";
-				echo "<td>".$datos["codigo_postal"]."</td>";
+				#echo "<td>".$datos["codigo_postal"]."</td>";
 				echo "<td>".$datos["profesion"]."</td>";
-				echo "<td>".$datos["cod_categoria"]."</td>";
+				echo "<td>".$datos["categoria"]."</td>";
 				echo "<td>".$datos["observaciones"]."</td>";
-				echo "<td>".$datos["usuario"]."</td>";
+				echo "<td>".$datos["usr_apellido"]."</td>";
 				echo "<td>".$datos["fec_ult_modif"]."</td>";
 			echo "</tr>";
 			$personas[$i] = $datos;
@@ -466,7 +469,8 @@ class Persona
 		
 		return $personas;
 		}
-				
+
+//===============================================================================================	
 	//Busca el codigo de la persona en la tabla persona(se utiliza en la edicion de proceso).
 	public function buscarCodigoPersona($persona)
 		{

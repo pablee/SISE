@@ -119,12 +119,12 @@
 				
 				<div class="form-group" id="ultimosIngresos">
 					<?php
-					$proceso=new Proceso();
-					$proceso->buscarProceso(1);
-					$informacion=$proceso->listarProceso();
+					$proceso = new Proceso();
+					$proceso->buscarProceso(NULL);
+					$informacion = $proceso->listarProceso();
 					
-					$persona=new Persona();
-					$personas=$persona->listarPersona();
+					$persona = new Persona();
+					$personas = $persona->listarPersona();
 					?>
 				</div>	
 			</div>

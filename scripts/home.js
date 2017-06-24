@@ -1,3 +1,5 @@
+
+//====================================================================================================
 function cargarFormulario(valor)
 	{	
 	xhttp = new XMLHttpRequest();			
@@ -39,6 +41,7 @@ function cargarFormulario(valor)
 	}	
 
 
+//====================================================================================================
 function guardarPersona()
 	{	
 	var nombres=document.getElementById("nombres").value;
@@ -114,6 +117,7 @@ function guardarPersona()
 	}
 
 
+//====================================================================================================
 function buscarPersona(event)
 	{
 	if(event.which == 13 || event.keyCode == 13 || event==0)
@@ -135,7 +139,7 @@ function buscarPersona(event)
 		}
 	}
 
-
+//====================================================================================================
 function buscarProceso(event)
 	{
 	if(event.which == 13 || event.keyCode == 13 || event==0)
@@ -158,6 +162,7 @@ function buscarProceso(event)
 	}
 
 
+//====================================================================================================
 function elegirProceso(cod_persona)
 	{	
 	xhttp = new XMLHttpRequest();			
@@ -174,7 +179,8 @@ function elegirProceso(cod_persona)
 	xhttp.send();
 	}
 
-	
+
+//====================================================================================================
 function guardarProceso(cod_proceso)
 	{
 	//alert(cod_proceso);
@@ -195,13 +201,15 @@ function guardarProceso(cod_proceso)
 	}	
 
 
+//====================================================================================================
 //Habilita el boton de busqueda de persona en el proceso
 function habilitarBusqueda()
 	{
 	document.getElementById("buscarPersonaProceso").disabled=false;	
 	}
 	
-	
+
+//====================================================================================================
 //Busca una persona y devuelve el listado de personas encontradas
 function buscarPersonaProceso(event)
 	{
@@ -226,6 +234,7 @@ function buscarPersonaProceso(event)
 	}		
 		
 
+//====================================================================================================
 //Ver preguntas por proceso
 function verPreguntasProceso(tipoProceso, cliente, oponente)
 	{				

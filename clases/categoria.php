@@ -4,6 +4,7 @@ include_once "database.php";
 class Categoria{
 				private $tipoPersona = array("fisica","juridica");
 
+//=================================================================================
 				public function verCategoria() 
 					{
 					echo'	
@@ -21,7 +22,8 @@ class Categoria{
 												
 					echo '</select>';		
 					}
-					
+
+//================================================================================
 				public function buscarCategoria($idCategoria) 
 					{
 					$i=1;
