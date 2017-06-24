@@ -6,8 +6,8 @@ include_once "detalle_tipo.php";
 
 class Proceso	{
 				private $encabezados=array(
-											"Código proceso",
-											"Proceso",
+											"Tipo de proceso",
+											"Carátula",
 											"Tipo",
 											"observaciones",
 											"Modifica",
@@ -50,9 +50,9 @@ class Proceso	{
 /*=================================================================================================*/
 				public function nuevoProceso()
 					{					
-					$cod_proceso=0;
+					$cod_proceso = 0;
 					$persona = new Persona();
-					$proceso_tipo=new ProcesoTipo();		
+					$proceso_tipo = new ProcesoTipo();		
 					
 					echo '<h3>Agregar una persona al proceso</h3>
 						  <br>
@@ -60,7 +60,7 @@ class Proceso	{
 							<div class="form-group">
 								<label for="agregar">Condición:</label>	
 								<select id="persona_condicion" name="persona_condicion" class="form-control" onchange="habilitarBusqueda()">';
-								$i=0;
+								$i = 0;
 								foreach($this->condiciones as $condicion)
 									{
 									echo '<option value="'.$i.'"> '.ucwords($condicion).' </option>';	
@@ -81,7 +81,7 @@ class Proceso	{
 										<tr>																									
 											<th> Nombres/Razón Social </th>
 											<th> Apellidos </th>
-											<th> Documento </th>
+											<th> Tipo de Documento </th>
 											<th> Número de documento </th>
 											<th> Condición </th>
 										</tr>
@@ -114,7 +114,7 @@ class Proceso	{
 /*=================================================================================================*/
 				public function guardarProceso($proceso, $cod_proceso_tipo, $observaciones, $usr_ult_modif, $fec_ult_modif)
 					{	
-					$db=new database();
+					$db = new database();
 					$db->conectar();
 					
 					echo $proceso;
@@ -123,24 +123,24 @@ class Proceso	{
 					echo $usr_ult_modif;
 					echo $fec_ult_modif;
 					
-					$consulta="INSERT INTO bsd_proceso (
-								cod_proceso, 
-								proceso, 
-								cod_proceso_tipo, 
-								observaciones, 
-								usr_ult_modif, 
-								fec_ult_modif
-							) VALUES (
-								NULL, 
-								'$proceso', 
-								'$cod_proceso_tipo', 
-								'$observaciones', 
-								'$usr_ult_modif', 
-								'$fec_ult_modif'
-							);";
+					$consulta = "INSERT INTO bsd_proceso (
+									cod_proceso
+									, proceso
+									, cod_proceso_tipo
+									, observaciones
+									, usr_ult_modif
+									, fec_ult_modif
+								) VALUES (
+									NULL
+									, '$proceso'
+									, '$cod_proceso_tipo'
+									, '$observaciones'
+									, '$usr_ult_modif'
+									, '$fec_ult_modif'
+								);";
 													
-					$resultado=mysqli_query($db->conexion, $consulta) or die ("No se pudo ingresar el proceso.");
-					$cod_proceso=mysqli_insert_id($db->conexion);
+					$resultado = mysqli_query($db->conexion, $consulta) or die ("No se pudo ingresar el proceso.");
+					$cod_proceso = mysqli_insert_id($db->conexion);
 					$db->close();
 					return $cod_proceso;
 					}
@@ -148,10 +148,16 @@ class Proceso	{
 /*=================================================================================================*/
 				public function listarProceso()
 					{
-					$db=new database();
+					$db = new database();
 					$db->conectar();
 					
-					$consulta="SELECT PRO.cod_proceso, PRO.proceso, RPT.proceso_tipo, PRO.observaciones, U.usuario, PRO.fec_ult_modif
+					$consulta = "SELECT 
+									PRO.cod_proceso
+									, PRO.proceso
+									, RPT.proceso_tipo
+									, PRO.observaciones
+									, U.usuario
+									, PRO.fec_ult_modif
 							   FROM bsd_proceso PRO
 							   JOIN ref_proceso_tipo RPT ON PRO.cod_proceso_tipo = RPT.cod_proceso_tipo
 							   JOIN bsd_usuario U ON PRO.usr_ult_modif = U.cod_usuario;";				
@@ -171,8 +177,8 @@ class Proceso	{
 								</thead>
 								<tbody>';
 							
-					$i=0;
-					while($datos=mysqli_fetch_assoc($resultado))
+					$i = 0;
+					while($datos = mysqli_fetch_assoc($resultado))
 						{
 						echo "<tr>";	
 							echo "<td>".$datos["cod_proceso"]."</td>";
@@ -204,7 +210,7 @@ class Proceso	{
 				//Busca los procesos
 				public function buscarProceso($buscar)
 					{
-					$db=new database();
+					$db = new database();
 					$db->conectar();
 					
 					$consulta= "SELECT 	PRO.cod_proceso, 
@@ -213,9 +219,11 @@ class Proceso	{
 										PER.nombres, 
 										PER.apellidos, 
 										PER.dni 
+
 								FROM rel_pers_cond_proc PCP 
 								JOIN bsd_persona PER ON PCP.cod_persona = PER.cod_persona 
 								JOIN bsd_proceso PRO ON PCP.cod_proceso = PRO.cod_proceso 
+
 								WHERE PER.nombres LIKE '%$buscar%'
 								   OR PER.apellidos LIKE '%$buscar%'
 								   OR PER.dni = '$buscar';";
@@ -259,7 +267,7 @@ class Proceso	{
 /*=================================================================================================*/
 				public function elegirProceso($cod_persona)
 					{
-					$db=new database();
+					$db = new database();
 					$db->conectar();
 					
 					$consulta= "SELECT 
@@ -280,12 +288,12 @@ class Proceso	{
 														FROM rel_pers_cond_proc 
 														WHERE cod_persona='$cod_persona');";	   
 							   
-					$resultado=mysqli_query($db->conexion, $consulta) or die ("No se pueden cargar los procesos.");
+					$resultado = mysqli_query($db->conexion, $consulta) or die ("No se pueden cargar los procesos.");
 					
-					$i=0;
-					while($datos=mysqli_fetch_assoc($resultado))
+					$i = 0;
+					while($datos = mysqli_fetch_assoc($resultado))
 						{	
-						$procesos[$i]=$datos;
+						$procesos[$i] = $datos;
 						$i++;
 						}
 					  
@@ -297,9 +305,9 @@ class Proceso	{
 				public function editarProceso($cod_persona)
 					{
 					$persona = new Persona();
-					$proceso_tipo=new ProcesoTipo();		
-					$detalleTipo=new DetalleTipo();	
-					$procesos=$this->elegirProceso($cod_persona);
+					$proceso_tipo = new ProcesoTipo();		
+					$detalleTipo = new DetalleTipo();	
+					$procesos = $this->elegirProceso($cod_persona);
 					
 					echo '<h3>Personas en proceso</h3>
 						  <form action="php/detalle/guardarDetalle.php" method="POST">
@@ -413,21 +421,20 @@ class Proceso	{
 					$db=new database();
 					$db->conectar();
 					$consulta="	INSERT INTO rel_pers_cond_proc (
-								cod_proceso, 
-								cod_persona, 
-								cod_persona_condicion, 
-								orden, 
-								observaciones, 
-								usr_ult_modif, 
-								fec_ult_modif
-								) VALUES (
-								'$cod_proceso', 
-								'$cod_persona', 
-								'$cod_persona_condicion', 
-								'$orden', '$observaciones', 
-								'$usr_ult_modif', 
-								'$fec_ult_modif'
-								);";
+									cod_proceso, 
+									cod_persona, 
+									cod_persona_condicion, 
+									orden, 
+									observaciones, 
+									usr_ult_modif, 
+									fec_ult_modif) 
+								VALUES (
+									'$cod_proceso', 
+									'$cod_persona', 
+									'$cod_persona_condicion', 
+									'$orden', '$observaciones', 
+									'$usr_ult_modif', 
+									'$fec_ult_modif');";
 					$resultado=mysqli_query($db->conexion, $consulta) or die ("No se pudo hacer el insert en la tabla rel_pers_cond_proc.");
 					$db->close();
 					}

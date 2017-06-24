@@ -21,7 +21,7 @@ class Persona
 					"Nacionalidad",
 					"Estado civil",
 					"Teléfono",
-					"Código postal",
+#					"Código postal",
 					"Profesión",
 					"Categoría",
 					"Observaciones",
@@ -41,7 +41,7 @@ class Persona
 								"cod_nacionalidad",
 								"cod_estado_civil",
 								"telefono",
-			
+
 								"profesion",
 								"cod_categoria",
 								"observaciones"
@@ -154,9 +154,45 @@ class Persona
 		$db=new database();
 		$db->conectar();
 		
-		$consulta ="INSERT INTO bsd_persona (cod_persona, nombres, apellidos, razon_social, cod_tipo_dni, dni, cuil, fec_nacimiento, sexo, cod_nacionalidad, cod_estado_civil, telefono, codigo_postal, profesion, cod_categoria, observaciones, usr_ult_modif, fec_ult_modif)
-					VALUES (NULL,'$nombres','$apellidos','$razon_social','$cod_tipo_dni','$dni','$cuil','$fec_nacimiento','$sexo','$cod_nacionalidad','$cod_estado_civil','$telefono','$codigo_postal','$profesion','$cod_categoria','$observaciones','$usr_ult_modif','$fec_ult_modif');";
-		$resultado=mysqli_query($db->conexion, $consulta) or die ("No se pudieron guardar los datos en la tabla persona.");
+		$consulta = "INSERT INTO bsd_persona (
+						cod_persona
+						, nombres
+						, apellidos
+						, razon_social
+						, cod_tipo_dni
+						, dni
+						, cuil
+						, fec_nacimiento
+						, sexo
+						, cod_nacionalidad
+						, cod_estado_civil
+						, telefono
+						, codigo_postal
+						, profesion
+						, cod_categoria
+						, observaciones
+						, usr_ult_modif
+						, fec_ult_modif)
+					VALUES (
+						NULL
+						, '$nombres'
+						, '$apellidos'
+						, '$razon_social'
+						, '$cod_tipo_dni'
+						, '$dni'
+						, '$cuil'
+						, '$fec_nacimiento'
+						, '$sexo'
+						, '$cod_nacionalidad'
+						, '$cod_estado_civil'
+						, '$telefono'
+						, '$codigo_postal'
+						, '$profesion'
+						, '$cod_categoria'
+						, '$observaciones'
+						, '$usr_ult_modif'
+						, '$fec_ult_modif');";
+		$resultado = mysqli_query($db->conexion, $consulta) or die ("No se pudieron guardar los datos en la tabla persona.");
 		
 		$db->close();
 		}
@@ -165,10 +201,10 @@ class Persona
 	//Actualiza los datos de la persona.
 	public function actualizarPersona($nombres, $apellidos, $razon_social, $cod_tipo_dni, $dni, $cuil, $fec_nacimiento, $sexo, $cod_nacionalidad, $cod_estado_civil, $telefono, $codigo_postal, $profesion, $cod_categoria, $observaciones, $usr_ult_modif, $fec_ult_modif)
 		{
-		$db=new database();
+		$db = new database();
 		$db->conectar();
 		$observaciones = "<br>".$observaciones;
-		$consulta ="UPDATE bsd_persona 
+		$consulta = "UPDATE bsd_persona 
 					SET	nombres='$nombres', 
 						apellidos='$apellidos',
 						razon_social='$razon_social',
@@ -196,22 +232,22 @@ class Persona
 	//Busca una persona en la base de datos y la muestra.
 	public function buscarPersona($buscar)
 		{
-		$db=new database();
+		$db = new database();
 		$db->conectar();
 		
-		$nacionalidad=new Paises();
-		$tipoDni=new TipoDni();
-		$estadoCivil=new EstadoCivil();
-		$categoria=new Categoria();
-		$observaciones=new Observacion();
+		$nacionalidad = new Paises();
+		$tipoDni = new TipoDni();
+		$estadoCivil = new EstadoCivil();
+		$categoria = new Categoria();
+		$observaciones = new Observacion();
 		
-		$consulta="SELECT *
-				   FROM bsd_persona 
-				   WHERE dni = '$buscar'
-				   OR nombres LIKE '%$buscar%'
-				   OR apellidos LIKE '%$buscar%';";
+		$consulta = "SELECT *
+				   	 FROM bsd_persona 
+				   	 WHERE dni = '$buscar'
+				   	 OR nombres LIKE '%$buscar%'
+				   	 OR apellidos LIKE '%$buscar%';";
 					  
-		$resultado=mysqli_query($db->conexion, $consulta) or die ("No se encontró la persona.");
+		$resultado = mysqli_query($db->conexion, $consulta) or die ("No se encontró la persona.");
 									
 		$datos = mysqli_fetch_assoc($resultado);
 		foreach($this->nombre_campo as $campo)
@@ -305,31 +341,32 @@ class Persona
 		$db=new database();
 		$db->conectar();
 		
-		$consulta="SELECT 	cod_persona, 
-							nombres, 
-							apellidos, 
-							cod_tipo_dni, 
-							dni, 
-							persona_condicion, 
-							cod_persona_condicion
+		$consulta = "SELECT	P.cod_persona, 
+							P.nombres, 
+							P.apellidos, 
+							TD.tipo_dni, 
+							P.dni, 
+							PC.persona_condicion
 				   FROM bsd_persona P, 
-						ref_persona_condicion PC
-				   WHERE 	(
-								 dni='$buscar'
-							  OR nombres like '%$buscar%'
-							  OR apellidos like '%$buscar%'
-							)
-					 AND cod_persona_condicion = '$persona_condicion';";					
-		$resultado=mysqli_query($db->conexion, $consulta) or die ("No se pueden cargar las personas.");
+						ref_persona_condicion PC,
+						ref_tipo_dni TD
+				   WHERE (
+							 P.dni='$buscar'
+						  OR P.nombres like '%$buscar%'
+						  OR P.apellidos like '%$buscar%'
+						 )
+					 AND PC.cod_persona_condicion = '$persona_condicion'
+					 AND P.cod_tipo_dni = TD.cod_tipo_dni;";					
+		$resultado = mysqli_query($db->conexion, $consulta) or die ("No se pueden cargar las personas.");
 		
 		if (1 <= mysqli_num_rows($resultado))
 			{
 			while($datos = mysqli_fetch_assoc($resultado))
 				{
-				$cod_persona=$datos['cod_persona'];						
+				$cod_persona = $datos['cod_persona'];						
 				echo   "<td>".$datos['nombres']."</td>
 						<td>".$datos['apellidos']."</td>
-						<td>".$datos['cod_tipo_dni']."</td>
+						<td>".$datos['tipo_dni']."</td>
 						<td>".$datos['dni']."</td>
 						<td>".$datos['persona_condicion']."</td>";						
 				}
@@ -350,14 +387,35 @@ class Persona
 		$db=new database();
 		$db->conectar();
 		
-		$consulta="SELECT P.nombres, P.apellidos, RTD.tipo_dni, P.dni, P.cuil, P.fec_nacimiento, P.sexo, RN.nacionalidad, REC.estado_civil, P.telefono, 
-				   P.codigo_postal, P.profesion, P.cod_categoria, P.observaciones, U.usuario, P.fec_ult_modif 
+		$consulta="SELECT 
+						  P.nombres
+						, P.apellidos
+						, P.razon_social
+						, RTD.tipo_dni
+						, P.dni
+						, P.cuil
+						, P.fec_nacimiento
+						#, P.sexo
+						, CASE P.sexo 
+							WHEN 'm' THEN 'Masculino' 
+							WHEN 'f' THEN 'Femenino' 
+							ELSE '' 
+						END AS sexo
+						, RN.nacionalidad
+						, REC.estado_civil
+						, P.telefono
+						, P.codigo_postal
+						, P.profesion
+						, P.cod_categoria
+						, P.observaciones
+						, U.usuario
+						, P.fec_ult_modif 
 				   FROM bsd_persona P 
-				   JOIN ref_tipo_dni RTD ON P.cod_tipo_dni = RTD.cod_tipo_dni 
-				   JOIN ref_nacionalidad RN ON P.cod_nacionalidad = RN.cod_nacionalidad 
-				   JOIN ref_estado_civil REC ON P.cod_estado_civil = REC.cod_estado_civil 
-				   JOIN bsd_usuario U ON P.usr_ult_modif = U.cod_usuario;";
-		$resultado=mysqli_query($db->conexion, $consulta) or die ("No se puede cargar el listado de personas.");
+				   JOIN ref_tipo_dni RTD 		ON P.cod_tipo_dni = RTD.cod_tipo_dni 
+				   JOIN ref_nacionalidad RN 	ON P.cod_nacionalidad = RN.cod_nacionalidad 
+				   JOIN ref_estado_civil REC 	ON P.cod_estado_civil = REC.cod_estado_civil 
+				   JOIN bsd_usuario U 			ON P.usr_ult_modif = U.cod_usuario;";
+		$resultado = mysqli_query($db->conexion, $consulta) or die ("No se puede cargar el listado de personas.");
 		
 		echo '<h3>Últimas personas ingresadas</h3>
 			  <br>
@@ -373,12 +431,13 @@ class Persona
 				</thead>
 				<tbody>';
 							
-		$i=0;
-		while($datos=mysqli_fetch_assoc($resultado))
+		$i = 0;
+		while($datos = mysqli_fetch_assoc($resultado))
 			{
 			echo "<tr>";
 				echo "<td>".$datos["nombres"]."</td>";
 				echo "<td>".$datos["apellidos"]."</td>";
+				echo "<td>".$datos["razon_social"]."</td>";
 				echo "<td>".$datos["tipo_dni"]."</td>";
 				echo "<td>".$datos["dni"]."</td>";
 				echo "<td>".$datos["cuil"]."</td>";
@@ -394,7 +453,7 @@ class Persona
 				echo "<td>".$datos["usuario"]."</td>";
 				echo "<td>".$datos["fec_ult_modif"]."</td>";
 			echo "</tr>";
-			$personas[$i]=$datos;
+			$personas[$i] = $datos;
 			//$cod_persona=$datos["cod_persona"];
 			$i++;						
 			}
@@ -411,22 +470,22 @@ class Persona
 	//Busca el codigo de la persona en la tabla persona(se utiliza en la edicion de proceso).
 	public function buscarCodigoPersona($persona)
 		{
-		$db=new database();
+		$db = new database();
 		$db->conectar();
 		
-		$consulta="SELECT *
-				   FROM bsd_persona
-				   WHERE dni = '$persona'
-					  OR nombres LIKE '%$persona%'
-					  OR apellidos LIKE '%$persona%';";
+		$consulta = "SELECT *
+				    FROM bsd_persona
+					WHERE dni = '$persona'
+					   OR nombres LIKE '%$persona%'
+					   OR apellidos LIKE '%$persona%';";
 				   
-		$resultado=mysqli_query($db->conexion, $consulta) or die ("No se puede cargar la persona.");
+		$resultado = mysqli_query($db->conexion, $consulta) or die ("No se puede cargar la persona.");
 		
 		$i=0;
-		while($datos=mysqli_fetch_assoc($resultado))
+		while($datos = mysqli_fetch_assoc($resultado))
 			{
-			$personas[$i]=$datos;
-			$cod_persona=$datos["cod_persona"];
+			$personas[$i] = $datos;
+			$cod_persona = $datos["cod_persona"];
 			$i++;
 			}
 		
