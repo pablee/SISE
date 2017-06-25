@@ -7,9 +7,9 @@ if($_SESSION['login'] == FALSE)
 	header("location: ../../index.php");	
 	}
 	
-$buscar=$_GET["buscar"];
+$buscar = $_GET["buscar"];
 
-$proceso=new Proceso();	
+$proceso = new Proceso();	
 $proceso->buscarProceso($buscar);
 	
 ?>

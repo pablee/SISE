@@ -2,6 +2,6 @@
 session_start();
 include_once "../../clases/proceso.php";
 
-$proceso=new Proceso();
+$proceso = new Proceso();
 $proceso->nuevoProceso();
 ?>				

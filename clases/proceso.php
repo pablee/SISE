@@ -6,7 +6,7 @@ include_once "detalle_tipo.php";
 
 class Proceso	
 	{
-	private $encabezados=array(
+	private $encabezados = array(
 								"Tipo de proceso",
 								"Carátula",
 								"Tipo",
@@ -15,7 +15,7 @@ class Proceso
 								"Fecha"
 								);
 
-	private $nombre_campo=array(
+	private $nombre_campo = array(
 								"cod_proceso",
 								"proceso",
 								"cod_proceso_tipo",
@@ -24,7 +24,7 @@ class Proceso
 								"fec_ult_modif"
 								);
 
-	private $condiciones=array(
+	private $condiciones = array(
 								"elegir",
 								"otro",
 								"cliente",
@@ -32,7 +32,7 @@ class Proceso
 								"empleador"
 								);
 
-	private $rel_pers_cond_proc=array(
+	private $rel_pers_cond_proc = array(
 									"cod_proceso",
 									"cod_persona",
 									"cod_persona_condicion",
@@ -164,7 +164,7 @@ class Proceso
 				   JOIN bsd_usuario U ON PRO.usr_ult_modif = U.cod_usuario;";				
 		$resultado = mysqli_query($db->conexion, $consulta) or die ("No se pueden cargar los procesos.");
 		
-		echo '<h3>Últimas carátulas ingresadas</h3>
+		echo '<h3>Últimos procesos ingresados</h3>
 			  <br>
 			  <div class="table-responsive">
 				<table class="table table-striped">
@@ -251,7 +251,7 @@ class Proceso
 						</tr>
 					</thead>
 					<tbody>';
-					while($datos=mysqli_fetch_assoc($resultado))
+					while($datos = mysqli_fetch_assoc($resultado))
 						{	
 						echo '<tr>
 								<!--<td>'.$datos["cod_proceso"].'</td>-->

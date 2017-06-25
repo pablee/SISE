@@ -3,26 +3,26 @@ session_start();
 include_once "../../clases/proceso.php";
 
 //Guardar proceso.
-$cod_proceso=$_GET["cod_proceso"];
-$proceso=$_GET["proceso"];
-$cod_proceso_tipo=$_GET["cod_proceso_tipo"];
-$observaciones=$_GET["observaciones"];
-$usr_ult_modif=$_SESSION['cod_usuario'];
-$fec_ult_modif=$_SESSION['fecha'];
+$cod_proceso = $_GET["cod_proceso"];
+$proceso = $_GET["proceso"];
+$cod_proceso_tipo = $_GET["cod_proceso_tipo"];
+$observaciones = $_GET["observaciones"];
+$usr_ult_modif = $_SESSION['cod_usuario'];
+$fec_ult_modif = $_SESSION['fecha'];
 
 //Se guardan los datos del proceso y la funcion devuelve el id del ultimo ingreso(el cod_proceso es usado en otras tablas).
-$nuevoProceso=new Proceso();
+$nuevoProceso = new Proceso();
 if($cod_proceso==0)
 	{
 	echo "guardo el proceso";
-	$cod_proceso=$nuevoProceso->guardarProceso($proceso, $cod_proceso_tipo, $observaciones, $usr_ult_modif, $fec_ult_modif);
+	$cod_proceso = $nuevoProceso->guardarProceso($proceso, $cod_proceso_tipo, $observaciones, $usr_ult_modif, $fec_ult_modif);
 	}
 	else
 		{
 		echo "actualizo el proceso";
-		$cod_proceso=$nuevoProceso->actualizarProceso($cod_proceso, $proceso, $cod_proceso_tipo, $observaciones, $usr_ult_modif, $fec_ult_modif);
+		$cod_proceso = $nuevoProceso->actualizarProceso($cod_proceso, $proceso, $cod_proceso_tipo, $observaciones, $usr_ult_modif, $fec_ult_modif);
 		}
 		
-$_SESSION["cod_proceso"]=$cod_proceso;	
+$_SESSION["cod_proceso"] = $cod_proceso;	
 
 ?>				

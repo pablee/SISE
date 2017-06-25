@@ -13,7 +13,7 @@ class Detalle	{
 					$db=new database();
 					$db->conectar();
 					
-					$consulta ="INSERT INTO bsd_detalle (
+					$consulta = "INSERT INTO bsd_detalle (
 										cod_persona, 
 										cod_proceso, 
 										cod_detalle_tipo, 
