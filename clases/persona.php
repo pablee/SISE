@@ -41,12 +41,16 @@ class Persona
 								"cod_nacionalidad",
 								"cod_estado_civil",
 								"telefono",
-
+								"celular",
+								"correo_personal_1",
+								"correo_personal_2",
+								"correo_laboral_1",
+								"correo_laboral_2",
 								"profesion",
 								"cod_categoria",
 								"observaciones"
 								);
-				
+
 	private $table_head='<div class="table-responsive">
 							<table class="table">
 								<thead>
@@ -149,14 +153,13 @@ class Persona
 
 //===============================================================================================
 	//Ingresa la persona cargada en el formulario persona.
-	public function guardarPersona($nombres, $apellidos, $razon_social, $cod_tipo_dni, $dni, $cuil, $fec_nacimiento, $sexo, $cod_nacionalidad, $cod_estado_civil, $telefono, $codigo_postal, $profesion, $cod_categoria, $observaciones, $usr_ult_modif, $fec_ult_modif)
+	public function guardarPersona($nombres, $apellidos, $razon_social, $cod_tipo_dni, $dni, $cuil, $fec_nacimiento, $sexo, $cod_nacionalidad, $cod_estado_civil, $telefono, $celular, $correo_personal_1, $correo_personal_2, $correo_laboral_1, $correo_laboral_2, $profesion, $cod_categoria, $observaciones, $usr_ult_modif, $fec_ult_modif)
 		{
 		$db=new database();
 		$db->conectar();
 		
 		$consulta = "INSERT INTO bsd_persona (
-						cod_persona
-						, nombres
+						nombres
 						, apellidos
 						, razon_social
 						, cod_tipo_dni
@@ -167,15 +170,18 @@ class Persona
 						, cod_nacionalidad
 						, cod_estado_civil
 						, telefono
-						, codigo_postal
+						, celular
+						, correo_personal_1
+						, correo_personal_2
+						, correo_laboral_1
+						, correo_laboral_2
 						, profesion
 						, cod_categoria
 						, observaciones
 						, usr_ult_modif
 						, fec_ult_modif)
 					VALUES (
-						NULL
-						, '$nombres'
+						'$nombres'
 						, '$apellidos'
 						, '$razon_social'
 						, '$cod_tipo_dni'
@@ -186,12 +192,17 @@ class Persona
 						, '$cod_nacionalidad'
 						, '$cod_estado_civil'
 						, '$telefono'
-						, '$codigo_postal'
+						, '$celular'
+						, '$correo_personal_1'
+						, '$correo_personal_2'
+						, '$correo_laboral_1'
+						, '$correo_laboral_2'
 						, '$profesion'
 						, '$cod_categoria'
 						, '$observaciones'
 						, '$usr_ult_modif'
 						, '$fec_ult_modif');";
+		echo $consulta;
 		$resultado = mysqli_query($db->conexion, $consulta) or die ("No se pudieron guardar los datos en la tabla persona.");
 		
 		$db->close();
@@ -199,7 +210,7 @@ class Persona
 
 //===============================================================================================
 	//Actualiza los datos de la persona.
-	public function actualizarPersona($nombres, $apellidos, $razon_social, $cod_tipo_dni, $dni, $cuil, $fec_nacimiento, $sexo, $cod_nacionalidad, $cod_estado_civil, $telefono, $codigo_postal, $profesion, $cod_categoria, $observaciones, $usr_ult_modif, $fec_ult_modif)
+	public function actualizarPersona($nombres, $apellidos, $razon_social, $cod_tipo_dni, $dni, $cuil, $fec_nacimiento, $sexo, $cod_nacionalidad, $cod_estado_civil, $telefono, $celular, $correo_personal_1, $correo_personal_2, $correo_laboral_1, $correo_laboral_2, $profesion, $cod_categoria, $observaciones, $usr_ult_modif, $fec_ult_modif)
 		{
 		$db = new database();
 		$db->conectar();
@@ -215,8 +226,12 @@ class Persona
 						sexo='$sexo', 
 						cod_nacionalidad='$cod_nacionalidad', 
 						cod_estado_civil='$cod_estado_civil',
-						telefono='$telefono', 
-						codigo_postal='$codigo_postal', 
+						telefono='$telefono',
+						celular='$celular',
+						correo_personal_1='$correo_personal_1', 
+						correo_personal_2='$correo_personal_2', 
+						correo_laboral_1='$correo_laboral_1', 
+						correo_laboral_2='$correo_laboral_2',
 						profesion='$profesion', 
 						cod_categoria='$cod_categoria',
 						observaciones=CONCAT(observaciones, '$observaciones'), 
@@ -449,7 +464,6 @@ class Persona
 				#echo "<td>".$datos["nacionalidad"]."</td>";
 				#echo "<td>".$datos["estado_civil"]."</td>";
 				echo "<td>".$datos["telefono"]."</td>";
-				#echo "<td>".$datos["codigo_postal"]."</td>";
 				echo "<td>".$datos["profesion"]."</td>";
 				echo "<td>".$datos["categoria"]."</td>";
 				echo "<td>".$datos["observaciones"]."</td>";
