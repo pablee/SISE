@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS `bsd_direccion`
     `cod_localidad` INT(11) UNSIGNED DEFAULT NULL COMMENT 'localidad de la direccion',
     `cod_partido` INT(11) UNSIGNED DEFAULT NULL COMMENT 'partido de la direccion',
     `cod_provincia` INT(11) UNSIGNED DEFAULT NULL COMMENT 'provincia del domicilio',
-    `codigo postal` VARCHAR(20) DEFAULT NULL COMMENT 'Codigo postal de la direccion',
+    `codigo_postal` VARCHAR(20) DEFAULT NULL COMMENT 'Codigo postal de la direccion',
 	`observaciones` TEXT DEFAULT NULL COMMENT 'observaciones de texto libre de 65.635',
 	`usr_ult_modif` INT(3) unsigned DEFAULT NULL COMMENT 'usuario de ultima modificacion',
 	`fec_ult_modif` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'fecha de ultima modificacion',

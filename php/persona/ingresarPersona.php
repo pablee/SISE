@@ -17,7 +17,11 @@ $sexo=$_GET["sexo"];
 $cod_nacionalidad=$_GET["cod_nacionalidad"];
 $cod_estado_civil=$_GET["cod_estado_civil"];
 $telefono=$_GET["telefono"];
-$codigo_postal=$_GET["codigo_postal"];
+$celular=$_GET["celular"];
+$correo_personal_1=$_GET["correo_personal_1"];
+$correo_personal_2=$_GET["correo_personal_2"];
+$correo_laboral_1=$_GET["correo_laboral_1"];
+$correo_laboral_2=$_GET["correo_laboral_2"];
 $profesion=$_GET["profesion"];
 $cod_categoria=$_GET["cod_categoria"];
 $observaciones=$_GET["observaciones"];
@@ -34,11 +38,11 @@ if(isset($_POST["accion"]))
 $persona = new Persona();	
 if($accion=="actualizar")
 	{
-	$persona->actualizarPersona($nombres, $apellidos, $cod_tipo_dni, $dni, $cuil, $fec_nacimiento, $sexo, $cod_nacionalidad, $cod_estado_civil, $telefono, $codigo_GETal, $profesion, $cod_categoria, $observaciones, $usr_ult_modif, $fec_ult_modif);
+	$persona->actualizarPersona($nombres, $apellidos, $cod_tipo_dni, $dni, $cuil, $fec_nacimiento, $sexo, $cod_nacionalidad, $cod_estado_civil, $telefono, $celular, $correo_personal_1, $correo_personal_2, $correo_laboral_1, $correo_laboral_2, $profesion, $cod_categoria, $observaciones, $usr_ult_modif, $fec_ult_modif);
 	}
 	else if($accion=="nuevo_ingreso")
 		{
-		$persona->ingresarPersona($nombres, $apellidos, $cod_tipo_dni, $dni, $cuil, $fec_nacimiento, $sexo, $cod_nacionalidad, $cod_estado_civil, $telefono, $codigo_postal, $profesion, $cod_categoria, $observaciones, $usr_ult_modif, $fec_ult_modif);
+		$persona->ingresarPersona($nombres, $apellidos, $cod_tipo_dni, $dni, $cuil, $fec_nacimiento, $sexo, $cod_nacionalidad, $cod_estado_civil, $telefono, $celular, $correo_personal_1, $correo_personal_2, $correo_laboral_1, $correo_laboral_2, $profesion, $cod_categoria, $observaciones, $usr_ult_modif, $fec_ult_modif);
 		}
 
 echo '<h2>La persona '.$nombres." ".$apellidos.' fue ingresada con exito</h2>';

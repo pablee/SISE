@@ -8,7 +8,7 @@ class Categoria{
 				public function verCategoria() 
 					{
 					echo'	
-						<label for="cod_categoria"> Código de Categoria </label>
+						<label for="cod_categoria"> Categoria </label>
 						<select id="cod_categoria" name="cod_categoria" class="form-control">
 							<option value=""> Elegir... </option>
 						';

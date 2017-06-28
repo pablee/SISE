@@ -7,6 +7,6 @@ if($_SESSION['login'] == FALSE)
 	header("location: ../../index.php");	
 	}
 		
-echo 'HOLAAAAAAAAAAAAAA';
+echo 'Agregar persona a proceso php';
 	  
 ?>

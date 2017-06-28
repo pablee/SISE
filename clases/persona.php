@@ -71,12 +71,12 @@ class Persona
 	//Carga el formulario para ingresar una nueva persona.
 	public function formularioPersona()
 		{
-		$nacionalidad=new Paises();
-		$tipoDni=new TipoDni();
-		$estadoCivil=new EstadoCivil();
-		$categoria=new Categoria();
-		$observaciones=new Observacion();
-		$direccion=new Direccion();
+		$nacionalidad = new Paises();
+		$tipoDni = new TipoDni();
+		$estadoCivil = new EstadoCivil();
+		$categoria = new Categoria();
+		$observaciones = new Observacion();
+		$direccion = new Direccion();
 		
 		foreach($this->nombre_campo as $campo)
 			{

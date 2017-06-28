@@ -7,7 +7,7 @@ function cargarFormulario(valor)
 			{					
 			if (this.readyState == 4 && this.status == 200)
 				{
-				document.getElementById("listado").innerHTML=this.responseText;									
+				document.getElementById("listado").innerHTML = this.responseText;									
 				}						
 			};
 	
@@ -55,7 +55,11 @@ function guardarPersona()
 	var cod_nacionalidad=document.getElementById("cod_nacionalidad").value;
 	var cod_estado_civil=document.getElementById("cod_estado_civil").value;
 	var telefono=document.getElementById("telefono").value;
-	//var codigo_postal=document.getElementById("codigo_postal").value;
+	var celular=document.getElementById("celular").value;
+	var correo_personal_1=document.getElementById("correo_personal_1").value;
+	var correo_personal_2=document.getElementById("correo_personal_2").value;
+	var correo_laboral_1=document.getElementById("correo_laboral_1").value;
+	var correo_laboral_2=document.getElementById("correo_laboral_2").value;
 	var profesion=document.getElementById("profesion").value;
 	var cod_categoria=document.getElementById("cod_categoria").value;
 	var observaciones=document.getElementById("observaciones").value;
@@ -74,19 +78,20 @@ function guardarPersona()
 	var observaciones_direccion=document.getElementById("observaciones_direccion").value;
 	
 	//Accion (actualizar o guardar)
-	var accion=document.getElementById("accion").value;
+	var accion = document.getElementById("accion").value;
 	
 	xhttp = new XMLHttpRequest();	
 	xhttp.onreadystatechange = function()	
 		{					
 		if (this.readyState == 4 && this.status == 200)
 			{
-			document.getElementById("listado").innerHTML=this.responseText;
-			document.getElementById("buscar").value="";
+			document.getElementById("listado").innerHTML = this.responseText;
+			document.getElementById("buscar").value = "";
 			}						
 		};
 	
-	xhttp.open("GET",	"php/persona/guardarPersona.php?nombres="+nombres+
+	xhttp.open("GET",	"php/persona/guardarPersona.php?"+
+						"nombres="+nombres+
 						"&apellidos="+apellidos+
 						"&razon_social="+razon_social+
 						"&cod_tipo_dni="+cod_tipo_dni+
@@ -97,10 +102,15 @@ function guardarPersona()
 						"&cod_nacionalidad="+cod_nacionalidad+
 						"&cod_estado_civil="+cod_estado_civil+
 						"&telefono="+telefono+
-						"&codigo_postal="+codigo_postal+
+						"&celular="+celular+
+						"&correo_personal_1="+correo_personal_1+
+						"&correo_personal_2="+correo_personal_2+
+						"&correo_laboral_1="+correo_laboral_1+
+						"&correo_laboral_2="+correo_laboral_2+
 						"&profesion="+profesion+
 						"&cod_categoria="+cod_categoria+
 						"&observaciones="+observaciones+
+
 						"&domicilio="+domicilio+
 						"&calle="+calle+
 						"&numero="+numero+
@@ -129,8 +139,8 @@ function buscarPersona(event)
 				{					
 				if (this.readyState == 4 && this.status == 200)
 						{
-						document.getElementById("listado").innerHTML=this.responseText;
-						document.getElementById("buscarPersona").value="";
+						document.getElementById("listado").innerHTML = this.responseText;
+						document.getElementById("buscarPersona").value = "";
 						}						
 				};
 
@@ -151,8 +161,8 @@ function buscarProceso(event)
 			{					
 			if (this.readyState == 4 && this.status == 200)
 				{
-				document.getElementById("listado").innerHTML=this.responseText;
-				document.getElementById("buscarProceso").value="";
+				document.getElementById("listado").innerHTML = this.responseText;
+				document.getElementById("buscarProceso").value = "";
 				}						
 			};
 
@@ -170,8 +180,8 @@ function elegirProceso(cod_persona)
 		{					
 		if (this.readyState == 4 && this.status == 200)
 			{
-			document.getElementById("listado").innerHTML=this.responseText;
-			document.getElementById("buscarProceso").value="";
+			document.getElementById("listado").innerHTML = this.responseText;
+			document.getElementById("buscarProceso").value = "";
 			}						
 		};
 
@@ -243,7 +253,7 @@ function verPreguntasProceso(tipoProceso, cliente, oponente)
 		{					
 		if (this.readyState == 4 && this.status == 200)
 			{
-			document.getElementById("detalleTipo").innerHTML=this.response;
+			document.getElementById("detalleTipo").innerHTML = this.response;
 			}						
 		};
 	xhttp.open("GET", "php/proceso/verPreguntasProceso.php?tipoProceso="+tipoProceso+"&cliente="+cliente+"&oponente="+oponente, true);								

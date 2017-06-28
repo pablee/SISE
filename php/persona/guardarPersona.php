@@ -19,7 +19,11 @@ $sexo=$_GET["sexo"];
 $cod_nacionalidad=$_GET["cod_nacionalidad"];
 $cod_estado_civil=$_GET["cod_estado_civil"];
 $telefono=$_GET["telefono"];
-$codigo_postal=$_GET["codigo_postal"];
+$celular=$_GET["celular"];
+$correo_personal_1=$_GET["correo_personal_1"];
+$correo_personal_2=$_GET["correo_personal_2"];
+$correo_laboral_1=$_GET["correo_laboral_1"];
+$correo_laboral_2=$_GET["correo_laboral_2"];
 $profesion=$_GET["profesion"];
 $cod_categoria=$_GET["cod_categoria"];
 $observaciones=$_GET["observaciones"];
@@ -48,12 +52,12 @@ $direccion = new Direccion();
 if($accion=="actualizar")
 	{
 	$accion = "actualizada";
-	$persona->actualizarPersona($nombres, $apellidos, $razon_social, $cod_tipo_dni, $dni, $cuil, $fec_nacimiento, $sexo, $cod_nacionalidad, $cod_estado_civil, $telefono, $codigo_postal, $profesion, $cod_categoria, $observaciones, $usr_ult_modif, $fec_ult_modif);
+	$persona->actualizarPersona($nombres, $apellidos, $razon_social, $cod_tipo_dni, $dni, $cuil, $fec_nacimiento, $sexo, $cod_nacionalidad, $cod_estado_civil, $telefono, $celular, $correo_personal_1, $correo_personal_2, $correo_laboral_1, $correo_laboral_2, $profesion, $cod_categoria, $observaciones, $usr_ult_modif, $fec_ult_modif);
 	}
 	else if($accion=="nuevo_ingreso")
 		{
 		$accion = "ingresada";
-		$persona->guardarPersona($nombres, $apellidos, $razon_social, $cod_tipo_dni, $dni, $cuil, $fec_nacimiento, $sexo, $cod_nacionalidad, $cod_estado_civil, $telefono, $codigo_postal, $profesion, $cod_categoria, $observaciones, $usr_ult_modif, $fec_ult_modif);
+		$persona->guardarPersona($nombres, $apellidos, $razon_social, $cod_tipo_dni, $dni, $cuil, $fec_nacimiento, $sexo, $cod_nacionalidad, $cod_estado_civil, $telefono, $celular, $correo_personal_1, $correo_personal_2, $correo_laboral_1, $correo_laboral_2, $profesion, $cod_categoria, $observaciones, $usr_ult_modif, $fec_ult_modif);
 		$direccion->guardarDireccion($domicilio,$calle,$numero,$piso,$departamento,$torre,$cod_localidad,$cod_partido,$cod_provincia,$codigo_postal,$observaciones_direccion,$usr_ult_modif,$fec_ult_modif);
 		}
 
