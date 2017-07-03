@@ -1,0 +1,2 @@
+INSERT INTO `sise_legal`.`ref_direccion_partido` (`partido`, `cod_provincia`) VALUES ('Otro', '1');
+INSERT INTO `sise_legal`.`ref_direccion_partido`(`usr_ult_modif`,`fec_ult_modif`,`cod_partido`, `partido`, `cod_provincia`, `observaciones`) VALUES (SYSDATE(), '1', '1', );

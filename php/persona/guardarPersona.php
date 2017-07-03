@@ -4,9 +4,9 @@ include "../../clases/persona.php";
 include_once "../../clases/direccion.php";
 
 if($_SESSION['login'] == FALSE)
-	{
+{
 	header("location: ../../index.php");	
-	}
+}
 	
 $nombres=$_GET["nombres"];
 $apellidos=$_GET["apellidos"];
@@ -50,16 +50,16 @@ $persona = new Persona();
 $direccion = new Direccion();	
 
 if($accion=="actualizar")
-	{
+{
 	$accion = "actualizada";
 	$persona->actualizarPersona($nombres, $apellidos, $razon_social, $cod_tipo_dni, $dni, $cuil, $fec_nacimiento, $sexo, $cod_nacionalidad, $cod_estado_civil, $telefono, $celular, $correo_personal_1, $correo_personal_2, $correo_laboral_1, $correo_laboral_2, $profesion, $cod_categoria, $observaciones, $usr_ult_modif, $fec_ult_modif);
-	}
-	else if($accion=="nuevo_ingreso")
-		{
-		$accion = "ingresada";
-		$persona->guardarPersona($nombres, $apellidos, $razon_social, $cod_tipo_dni, $dni, $cuil, $fec_nacimiento, $sexo, $cod_nacionalidad, $cod_estado_civil, $telefono, $celular, $correo_personal_1, $correo_personal_2, $correo_laboral_1, $correo_laboral_2, $profesion, $cod_categoria, $observaciones, $usr_ult_modif, $fec_ult_modif);
-		$direccion->guardarDireccion($domicilio,$calle,$numero,$piso,$departamento,$torre,$cod_localidad,$cod_partido,$cod_provincia,$codigo_postal,$observaciones_direccion,$usr_ult_modif,$fec_ult_modif);
-		}
+}
+else if($accion=="nuevo_ingreso")
+{
+	$accion = "ingresada";
+	$persona->guardarPersona($nombres, $apellidos, $razon_social, $cod_tipo_dni, $dni, $cuil, $fec_nacimiento, $sexo, $cod_nacionalidad, $cod_estado_civil, $telefono, $celular, $correo_personal_1, $correo_personal_2, $correo_laboral_1, $correo_laboral_2, $profesion, $cod_categoria, $observaciones, $usr_ult_modif, $fec_ult_modif);
+	$direccion->guardarDireccion($dni, $domicilio,$calle,$numero,$piso,$departamento,$torre,$cod_localidad,$cod_partido,$cod_provincia,$codigo_postal,$observaciones_direccion,$usr_ult_modif,$fec_ult_modif);
+}
 
 echo '<h2>La persona '.$nombres." ".$apellidos.' fue '.$accion.' con exito</h2>';
 echo '
