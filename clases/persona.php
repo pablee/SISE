@@ -70,7 +70,7 @@ class Persona
 //===============================================================================================
 	//Carga el formulario para ingresar una nueva persona.
 	public function formularioPersona()
-		{
+	{
 		$nacionalidad = new Paises();
 		$tipoDni = new TipoDni();
 		$estadoCivil = new EstadoCivil();
@@ -79,10 +79,10 @@ class Persona
 		$direccion = new Direccion();
 		
 		foreach($this->nombre_campo as $campo)
-			{
+		{
 			echo '<br>';						
 			switch ($campo) 
-				{
+			{
 				case "cod_tipo_dni":
 					$tipoDni->verTipoDNI();
 					break;
@@ -136,8 +136,8 @@ class Persona
 					//str_replace(find,replace,string,count)					
 					echo '<label for="'.$campo.'"> '.ucwords(str_replace("_"," ",$campo)).' </label>';
 					echo '<input id="'.$campo.'" name="'.$campo.'" type="text" class="form-control" ></input>';
-				}
 			}
+		}
 		echo "<hr>";
 		$direccion->formularioDireccion();
 
@@ -149,7 +149,7 @@ class Persona
 		echo '<br>
 			  <input type = "submit" class = "btn btn-info" value = "Guardar" onclick="guardarPersona()"></input>			
 			 ';
-		}		
+	}		
 
 //===============================================================================================
 	//Ingresa la persona cargada en el formulario persona.

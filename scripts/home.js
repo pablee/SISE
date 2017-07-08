@@ -71,7 +71,8 @@ function guardarPersona()
 	var piso=document.getElementById("piso").value;
 	var departamento=document.getElementById("departamento").value;
 	var torre=document.getElementById("torre").value;
-	var cod_localidad=document.getElementById("localidad").value;
+	//var cod_localidad=document.getElementById("localidad").value;
+	var cod_localidad=1;
 	var cod_partido=document.getElementById("partido").value;
 	var cod_provincia=document.getElementById("provincia").value;
 	var codigo_postal=document.getElementById("codigo_postal").value;
@@ -240,6 +241,8 @@ function buscarPersonaProceso(event)
 			};
 		xhttp.open("GET", "php/persona/buscarPersonaProceso.php?buscarPersonaProceso="+buscarPersonaProceso+"&persona_condicion="+persona_condicion, true);
 		xhttp.send();	
+		document.getElementById("persona_condicion").value='';
+		document.getElementById("buscarPersonaProceso").value='';
 		}
 	}		
 		

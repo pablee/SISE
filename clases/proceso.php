@@ -5,7 +5,7 @@ include_once "persona.php";
 include_once "detalle_tipo.php";
 
 class Proceso	
-	{
+{
 	private $encabezados = array(
 								"Tipo de proceso",
 								"Carátula",
@@ -50,7 +50,7 @@ class Proceso
 	*/
 /*=================================================================================================*/
 	public function nuevoProceso()
-		{					
+	{					
 		$cod_proceso = 0;
 		$persona = new Persona();
 		$proceso_tipo = new ProcesoTipo();		
@@ -63,10 +63,10 @@ class Proceso
 					<select id="persona_condicion" name="persona_condicion" class="form-control" onchange="habilitarBusqueda()">';
 					$i = 0;
 					foreach($this->condiciones as $condicion)
-						{
+					{
 						echo '<option value="'.$i.'"> '.ucwords($condicion).' </option>';	
 						$i++;
-						}	
+					}	
 		echo '		</select>	
 					<input id="buscarPersonaProceso" name="buscarPersonaProceso" type="text" class="form-control" placeholder="Ingrese nombre o DNI" onkeypress="buscarPersonaProceso(event)" disabled></input>
 					<button type="button" class="btn btn-info" onclick="buscarPersonaProceso(0)"> 
@@ -110,11 +110,11 @@ class Proceso
 			  
 		echo '<br><input type = "submit" class = "btn btn-info" value = "Guardar" onclick="guardarProceso('.$cod_proceso.')"></input>';
 		echo '</form>';
-		}
+	}
 
 /*=================================================================================================*/
 	public function guardarProceso($proceso, $cod_proceso_tipo, $observaciones, $usr_ult_modif, $fec_ult_modif)
-		{	
+	{	
 		$db = new database();
 		$db->conectar();
 		
@@ -144,7 +144,7 @@ class Proceso
 		$cod_proceso = mysqli_insert_id($db->conexion);
 		$db->close();
 		return $cod_proceso;
-		}
+	}
 
 /*=================================================================================================*/
 	public function listarProceso()
@@ -171,16 +171,16 @@ class Proceso
 					<thead>
 						<tr>';
 					foreach($this->encabezados as $campo)
-						{
+					{
 						echo "<th>".$campo."</th>";
-						}	
+					}	
 		echo '			</tr>
 					</thead>
 					<tbody>';
 				
 		$i = 0;
 		while($datos = mysqli_fetch_assoc($resultado))
-			{
+		{
 			echo "<tr>";	
 				echo "<td>".$datos["cod_proceso"]."</td>";
 				echo "<td>".$datos["proceso"]."</td>";
@@ -192,7 +192,7 @@ class Proceso
 			$procesos[$i]=$datos;
 			$cod_proceso=$datos["cod_proceso"];
 			$i++;
-			}
+		}
 			
 		echo '		</tbody>
 				</table>
@@ -202,14 +202,14 @@ class Proceso
 		//return $cod_proceso;
 		//return $datos;
 		if ($datos = mysqli_fetch_assoc($resultado)) 
-			{
+		{
 			return $procesos;
-			}
 		}
+	}
 
 /*=================================================================================================*/
 	public function buscarProceso($buscar)
-		{
+	{
 		$db = new database();
 		$db->conectar();
 		
@@ -252,7 +252,7 @@ class Proceso
 					</thead>
 					<tbody>';
 					while($datos = mysqli_fetch_assoc($resultado))
-						{	
+					{	
 						echo '<tr>
 								<!--<td>'.$datos["cod_proceso"].'</td>-->
 								<td>'.$datos["proceso"].'</td>
@@ -262,12 +262,12 @@ class Proceso
 								<td>'.$datos["dni"].'</td>
 								<td><button type="button" class="btn btn-link" value="'.$datos["cod_persona"].'" onclick="elegirProceso(this.value)">Elegir</button></td>
 							  </tr>';
-						}
+					}
 		echo '		</tbody>
 			</table>
 		  </div>';  
 		$db->close();
-		}							
+	}							
 
 /*=================================================================================================*/
 	public function elegirProceso($cod_persona)
@@ -397,7 +397,7 @@ class Proceso
 
 /*=================================================================================================*/
 	public function ultimoProcesoIngresado()
-		{
+	{
 		$db = new database();
 		$db->conectar();
 		
@@ -407,17 +407,17 @@ class Proceso
 		$resultado = mysqli_query($db->conexion, $consulta) or die ("No se pueden cargar los procesos.");
 		$i = 0;
 		while($datos = mysqli_fetch_assoc($resultado))
-			{
+		{
 			$procesos[$i]=$datos;
 			$cod_proceso=$datos["cod_proceso"];
 			$i++;
-			}
+		}
 
 		$db->close();
 		//return $cod_proceso;
 		//return $datos;
 		return $procesos;
-		}				
+	}				
 
 /*=================================================================================================*/
 //Genera el insert en la tabla pers_cond_proc.(guarda la relacion de una o mas personas, clientes u oponentes, con un proceso)

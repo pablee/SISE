@@ -77,7 +77,7 @@ formulario de persona.
 							, usr_ult_modif
 							, fec_ult_modif)
 						VALUES (
-							 '$domicilio'
+							 '$domicilio' #Calle . numero . piso
 							,'$calle'
 							,'$numero'
 							,'$piso'
