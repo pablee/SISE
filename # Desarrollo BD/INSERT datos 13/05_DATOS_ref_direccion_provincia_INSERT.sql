@@ -1,25 +1,25 @@
-INSERT INTO `sise_legal`.`ref_direccion_provincia` (`usr_ult_modif`, `fec_ult_modif`, `cod_provincia`, `observaciones`, `provincia`) VALUES ('1', SYSDATE(), '1', 'BAI', 'Buenos Aires')
-INSERT INTO `sise_legal`.`ref_direccion_provincia` (`usr_ult_modif`, `fec_ult_modif`, `cod_provincia`, `observaciones`, `provincia`) VALUES ('1', SYSDATE(), '1', 'CAT', 'Catamarca')
-INSERT INTO `sise_legal`.`ref_direccion_provincia` (`usr_ult_modif`, `fec_ult_modif`, `cod_provincia`, `observaciones`, `provincia`) VALUES ('1', SYSDATE(), '1', 'CBA', 'Córdoba')
-INSERT INTO `sise_legal`.`ref_direccion_provincia` (`usr_ult_modif`, `fec_ult_modif`, `cod_provincia`, `observaciones`, `provincia`) VALUES ('1', SYSDATE(), '1', 'CFE', 'Capital Federal')
-INSERT INTO `sise_legal`.`ref_direccion_provincia` (`usr_ult_modif`, `fec_ult_modif`, `cod_provincia`, `observaciones`, `provincia`) VALUES ('1', SYSDATE(), '1', 'CHA', 'Chaco')
-INSERT INTO `sise_legal`.`ref_direccion_provincia` (`usr_ult_modif`, `fec_ult_modif`, `cod_provincia`, `observaciones`, `provincia`) VALUES ('1', SYSDATE(), '1', 'CHU', 'Chubut')
-INSERT INTO `sise_legal`.`ref_direccion_provincia` (`usr_ult_modif`, `fec_ult_modif`, `cod_provincia`, `observaciones`, `provincia`) VALUES ('1', SYSDATE(), '1', 'COR', 'Corrientes')
-INSERT INTO `sise_legal`.`ref_direccion_provincia` (`usr_ult_modif`, `fec_ult_modif`, `cod_provincia`, `observaciones`, `provincia`) VALUES ('1', SYSDATE(), '1', 'ERI', 'Entre Ríos')
-INSERT INTO `sise_legal`.`ref_direccion_provincia` (`usr_ult_modif`, `fec_ult_modif`, `cod_provincia`, `observaciones`, `provincia`) VALUES ('1', SYSDATE(), '1', 'FOR', 'Formosa')
-INSERT INTO `sise_legal`.`ref_direccion_provincia` (`usr_ult_modif`, `fec_ult_modif`, `cod_provincia`, `observaciones`, `provincia`) VALUES ('1', SYSDATE(), '1', 'FUE', 'Desconocido')
-INSERT INTO `sise_legal`.`ref_direccion_provincia` (`usr_ult_modif`, `fec_ult_modif`, `cod_provincia`, `observaciones`, `provincia`) VALUES ('1', SYSDATE(), '1', 'JUJ', 'Jujuy')
-INSERT INTO `sise_legal`.`ref_direccion_provincia` (`usr_ult_modif`, `fec_ult_modif`, `cod_provincia`, `observaciones`, `provincia`) VALUES ('1', SYSDATE(), '1', 'LPA', 'La Pampa')
-INSERT INTO `sise_legal`.`ref_direccion_provincia` (`usr_ult_modif`, `fec_ult_modif`, `cod_provincia`, `observaciones`, `provincia`) VALUES ('1', SYSDATE(), '1', 'LRI', 'La Rioja')
-INSERT INTO `sise_legal`.`ref_direccion_provincia` (`usr_ult_modif`, `fec_ult_modif`, `cod_provincia`, `observaciones`, `provincia`) VALUES ('1', SYSDATE(), '1', 'MEN', 'Mendoza')
-INSERT INTO `sise_legal`.`ref_direccion_provincia` (`usr_ult_modif`, `fec_ult_modif`, `cod_provincia`, `observaciones`, `provincia`) VALUES ('1', SYSDATE(), '1', 'MIS', 'Misiones')
-INSERT INTO `sise_legal`.`ref_direccion_provincia` (`usr_ult_modif`, `fec_ult_modif`, `cod_provincia`, `observaciones`, `provincia`) VALUES ('1', SYSDATE(), '1', 'NEU', 'Neuquén')
-INSERT INTO `sise_legal`.`ref_direccion_provincia` (`usr_ult_modif`, `fec_ult_modif`, `cod_provincia`, `observaciones`, `provincia`) VALUES ('1', SYSDATE(), '1', 'RNE', 'Río Negro')
-INSERT INTO `sise_legal`.`ref_direccion_provincia` (`usr_ult_modif`, `fec_ult_modif`, `cod_provincia`, `observaciones`, `provincia`) VALUES ('1', SYSDATE(), '1', 'SAL', 'Salta')
-INSERT INTO `sise_legal`.`ref_direccion_provincia` (`usr_ult_modif`, `fec_ult_modif`, `cod_provincia`, `observaciones`, `provincia`) VALUES ('1', SYSDATE(), '1', 'SCR', 'Santa Cruz')
-INSERT INTO `sise_legal`.`ref_direccion_provincia` (`usr_ult_modif`, `fec_ult_modif`, `cod_provincia`, `observaciones`, `provincia`) VALUES ('1', SYSDATE(), '1', 'SDE', 'Santiago del Estero')
-INSERT INTO `sise_legal`.`ref_direccion_provincia` (`usr_ult_modif`, `fec_ult_modif`, `cod_provincia`, `observaciones`, `provincia`) VALUES ('1', SYSDATE(), '1', 'SFE', 'Santa Fe')
-INSERT INTO `sise_legal`.`ref_direccion_provincia` (`usr_ult_modif`, `fec_ult_modif`, `cod_provincia`, `observaciones`, `provincia`) VALUES ('1', SYSDATE(), '1', 'SJU', 'San Juan')
-INSERT INTO `sise_legal`.`ref_direccion_provincia` (`usr_ult_modif`, `fec_ult_modif`, `cod_provincia`, `observaciones`, `provincia`) VALUES ('1', SYSDATE(), '1', 'SLU', 'San Luis')
-INSERT INTO `sise_legal`.`ref_direccion_provincia` (`usr_ult_modif`, `fec_ult_modif`, `cod_provincia`, `observaciones`, `provincia`) VALUES ('1', SYSDATE(), '1', 'TDF', 'Tierra del Fuego')
-INSERT INTO `sise_legal`.`ref_direccion_provincia` (`usr_ult_modif`, `fec_ult_modif`, `cod_provincia`, `observaciones`, `provincia`) VALUES ('1', SYSDATE(), '1', 'TUC', 'Tucumán')
+INSERT INTO `sise_legal`.`ref_direccion_provincia` (`usr_ult_modif`, `fec_ult_modif`, `observaciones`, `provincia`) VALUES ('1', SYSDATE(), 'CFE', 'Capital Federal');
+INSERT INTO `sise_legal`.`ref_direccion_provincia` (`usr_ult_modif`, `fec_ult_modif`, `observaciones`, `provincia`) VALUES ('1', SYSDATE(), 'BAI', 'Buenos Aires');
+INSERT INTO `sise_legal`.`ref_direccion_provincia` (`usr_ult_modif`, `fec_ult_modif`, `observaciones`, `provincia`) VALUES ('1', SYSDATE(), 'CAT', 'Catamarca');
+INSERT INTO `sise_legal`.`ref_direccion_provincia` (`usr_ult_modif`, `fec_ult_modif`, `observaciones`, `provincia`) VALUES ('1', SYSDATE(), 'CBA', 'Córdoba');
+INSERT INTO `sise_legal`.`ref_direccion_provincia` (`usr_ult_modif`, `fec_ult_modif`, `observaciones`, `provincia`) VALUES ('1', SYSDATE(), 'COR', 'Corrientes');
+INSERT INTO `sise_legal`.`ref_direccion_provincia` (`usr_ult_modif`, `fec_ult_modif`, `observaciones`, `provincia`) VALUES ('1', SYSDATE(), 'ERI', 'Entre Ríos');
+INSERT INTO `sise_legal`.`ref_direccion_provincia` (`usr_ult_modif`, `fec_ult_modif`, `observaciones`, `provincia`) VALUES ('1', SYSDATE(), 'JUJ', 'Jujuy');
+INSERT INTO `sise_legal`.`ref_direccion_provincia` (`usr_ult_modif`, `fec_ult_modif`, `observaciones`, `provincia`) VALUES ('1', SYSDATE(), 'MEN', 'Mendoza');
+INSERT INTO `sise_legal`.`ref_direccion_provincia` (`usr_ult_modif`, `fec_ult_modif`, `observaciones`, `provincia`) VALUES ('1', SYSDATE(), 'LRI', 'La Rioja');
+INSERT INTO `sise_legal`.`ref_direccion_provincia` (`usr_ult_modif`, `fec_ult_modif`, `observaciones`, `provincia`) VALUES ('1', SYSDATE(), 'SAL', 'Salta');
+INSERT INTO `sise_legal`.`ref_direccion_provincia` (`usr_ult_modif`, `fec_ult_modif`, `observaciones`, `provincia`) VALUES ('1', SYSDATE(), 'SJU', 'San Juan');
+INSERT INTO `sise_legal`.`ref_direccion_provincia` (`usr_ult_modif`, `fec_ult_modif`, `observaciones`, `provincia`) VALUES ('1', SYSDATE(), 'SLU', 'San Luis');
+INSERT INTO `sise_legal`.`ref_direccion_provincia` (`usr_ult_modif`, `fec_ult_modif`, `observaciones`, `provincia`) VALUES ('1', SYSDATE(), 'SFE', 'Santa Fe');
+INSERT INTO `sise_legal`.`ref_direccion_provincia` (`usr_ult_modif`, `fec_ult_modif`, `observaciones`, `provincia`) VALUES ('1', SYSDATE(), 'SDE', 'Santiago del Estero');
+INSERT INTO `sise_legal`.`ref_direccion_provincia` (`usr_ult_modif`, `fec_ult_modif`, `observaciones`, `provincia`) VALUES ('1', SYSDATE(), 'TUC', 'Tucumán');
+INSERT INTO `sise_legal`.`ref_direccion_provincia` (`usr_ult_modif`, `fec_ult_modif`, `observaciones`, `provincia`) VALUES ('1', SYSDATE(), 'CHA', 'Chaco');
+INSERT INTO `sise_legal`.`ref_direccion_provincia` (`usr_ult_modif`, `fec_ult_modif`, `observaciones`, `provincia`) VALUES ('1', SYSDATE(), 'CHU', 'Chubut');
+INSERT INTO `sise_legal`.`ref_direccion_provincia` (`usr_ult_modif`, `fec_ult_modif`, `observaciones`, `provincia`) VALUES ('1', SYSDATE(), 'FOR', 'Formosa');
+INSERT INTO `sise_legal`.`ref_direccion_provincia` (`usr_ult_modif`, `fec_ult_modif`, `observaciones`, `provincia`) VALUES ('1', SYSDATE(), 'MIS', 'Misiones');
+INSERT INTO `sise_legal`.`ref_direccion_provincia` (`usr_ult_modif`, `fec_ult_modif`, `observaciones`, `provincia`) VALUES ('1', SYSDATE(), 'NEU', 'Neuquén');
+INSERT INTO `sise_legal`.`ref_direccion_provincia` (`usr_ult_modif`, `fec_ult_modif`, `observaciones`, `provincia`) VALUES ('1', SYSDATE(), 'LPA', 'La Pampa');
+INSERT INTO `sise_legal`.`ref_direccion_provincia` (`usr_ult_modif`, `fec_ult_modif`, `observaciones`, `provincia`) VALUES ('1', SYSDATE(), 'RNE', 'Río Negro');
+INSERT INTO `sise_legal`.`ref_direccion_provincia` (`usr_ult_modif`, `fec_ult_modif`, `observaciones`, `provincia`) VALUES ('1', SYSDATE(), 'SCR', 'Santa Cruz');
+INSERT INTO `sise_legal`.`ref_direccion_provincia` (`usr_ult_modif`, `fec_ult_modif`, `observaciones`, `provincia`) VALUES ('1', SYSDATE(), 'TDF', 'Tierra del Fuego');
+INSERT INTO `sise_legal`.`ref_direccion_provincia` (`usr_ult_modif`, `fec_ult_modif`, `observaciones`, `provincia`) VALUES ('1', SYSDATE(), 'NA', 'Desconocido');

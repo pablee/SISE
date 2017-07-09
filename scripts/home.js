@@ -73,8 +73,10 @@ function guardarPersona()
 	var torre=document.getElementById("torre").value;
 	//var cod_localidad=document.getElementById("localidad").value;
 	var cod_localidad=1;
-	var cod_partido=document.getElementById("partido").value;
-	var cod_provincia=document.getElementById("provincia").value;
+	//var cod_partido=document.getElementById("partido").value;
+	var cod_partido=1;
+	//var cod_provincia=document.getElementById("provincia").value;
+	var cod_provincia=1;
 	var codigo_postal=document.getElementById("codigo_postal").value;
 	var observaciones_direccion=document.getElementById("observaciones_direccion").value;
 	
