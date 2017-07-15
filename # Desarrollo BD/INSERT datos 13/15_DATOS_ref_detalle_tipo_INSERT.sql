@@ -57,13 +57,13 @@ INSERT INTO `sise_legal`.`ref_detalle_tipo` (`cod_detalle_tipo`, `detalle_tipo`,
 INSERT INTO `sise_legal`.`ref_detalle_tipo` (`cod_detalle_tipo`, `detalle_tipo`, `cod_tipo_dato`, `observaciones`) VALUES (55, 'Correo electrónico de Estudio Jurídico', '11', 'VARCHAR - Ocupación variable cuya longitud comprende de 1 a 255 caracteres.');
 INSERT INTO `sise_legal`.`ref_detalle_tipo` (`cod_detalle_tipo`, `detalle_tipo`, `cod_tipo_dato`, `observaciones`) VALUES (56, 'Domicilio de Estudio Jurídico', '11', 'VARCHAR - Ocupación variable cuya longitud comprende de 1 a 255 caracteres.');
 INSERT INTO `sise_legal`.`ref_detalle_tipo` (`cod_detalle_tipo`, `detalle_tipo`, `cod_tipo_dato`, `observaciones`) VALUES (57, 'Informe de dominio', '1', 'BIT - Booleano de 0 o 1.');
-INSERT INTO `sise_legal`.`ref_detalle_tipo` (`cod_detalle_tipo`, `detalle_tipo`, `cod_tipo_dato`, `observaciones`) VALUES (58, '¿Se encuentra la DOCUMENTACIÓN COMPLETA?', '1', 'BIT - Booleano de 0 o 1.');
+INSERT INTO `sise_legal`.`ref_detalle_tipo` (`cod_detalle_tipo`, `detalle_tipo`, `cod_tipo_dato`, `observaciones`) VALUES (58, '¿Se encuentra la DOCUMENTACIÓN completa?', '1', 'BIT - Booleano de 0 o 1.');
 
 INSERT INTO `sise_legal`.`ref_detalle_tipo` (`cod_detalle_tipo`, `detalle_tipo`, `cod_tipo_dato`, `observaciones`) VALUES (59, '¿Se solicitó MEDIACIÓN?', '1', 'BIT - Booleano de 0 o 1.');
 INSERT INTO `sise_legal`.`ref_detalle_tipo` (`cod_detalle_tipo`, `detalle_tipo`, `cod_tipo_dato`, `observaciones`) VALUES (60, '¿Se realizó VISTA MÉDICA?', '1', 'BIT - Booleano de 0 o 1.');
 INSERT INTO `sise_legal`.`ref_detalle_tipo` (`cod_detalle_tipo`, `detalle_tipo`, `cod_tipo_dato`, `observaciones`) VALUES (61, 'Lugar de VISTA MÉDICA', '11', 'VARCHAR - Ocupación variable cuya longitud comprende de 1 a 255 caracteres.');
 INSERT INTO `sise_legal`.`ref_detalle_tipo` (`cod_detalle_tipo`, `detalle_tipo`, `cod_tipo_dato`, `observaciones`) VALUES (62, 'Fecha de VISTA MÉDICA', '20', 'DATE - Válido para almacenar una fecha con año, mes y día, su rango oscila entre  #1000-01-01# y #9999-12-31#.');
 INSERT INTO `sise_legal`.`ref_detalle_tipo` (`cod_detalle_tipo`, `detalle_tipo`, `cod_tipo_dato`, `observaciones`) VALUES (63, 'Hora de VISTA MÉDICA', '22', 'TIME - Válido para almacenar una hora (horas-minutos-segundos). Su rango de horas oscila entre -838-59-59 y 838-59-59. El formato almacenado es #HH:MM:SS#.');
-INSERT INTO `sise_legal`.`ref_detalle_tipo` (`cod_detalle_tipo`, `detalle_tipo`, `cod_tipo_dato`, `observaciones`) VALUES (64, 'En NEGOCIACIÓN', '1', 'BIT - Booleano de 0 o 1.');
-INSERT INTO `sise_legal`.`ref_detalle_tipo` (`cod_detalle_tipo`, `detalle_tipo`, `cod_tipo_dato`, `observaciones`) VALUES (65, 'En ARMADO de DEMANDA', '1', 'BIT - Booleano de 0 o 1.');
-INSERT INTO `sise_legal`.`ref_detalle_tipo` (`cod_detalle_tipo`, `detalle_tipo`, `cod_tipo_dato`, `observaciones`) VALUES (66, 'En COBRO', '1', 'BIT - Booleano de 0 o 1.');
+INSERT INTO `sise_legal`.`ref_detalle_tipo` (`cod_detalle_tipo`, `detalle_tipo`, `cod_tipo_dato`, `observaciones`) VALUES (64, '¿En NEGOCIACIÓN?', '1', 'BIT - Booleano de 0 o 1.');
+INSERT INTO `sise_legal`.`ref_detalle_tipo` (`cod_detalle_tipo`, `detalle_tipo`, `cod_tipo_dato`, `observaciones`) VALUES (65, '¿En ARMADO de DEMANDA?', '1', 'BIT - Booleano de 0 o 1.');
+INSERT INTO `sise_legal`.`ref_detalle_tipo` (`cod_detalle_tipo`, `detalle_tipo`, `cod_tipo_dato`, `observaciones`) VALUES (66, '¿En COBRO?', '1', 'BIT - Booleano de 0 o 1.');
