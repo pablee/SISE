@@ -1,4 +1,4 @@
-INSERT INTO `sise_legal`.`ref_direccion_partido`(`usr_ult_modif`,`fec_ult_modif`, `partido`, `cod_provincia`, `observaciones`) VALUES (1, SYSDATE(), '.', 1, 'CFE - 001');
+#INSERT INTO `sise_legal`.`ref_direccion_partido`(`usr_ult_modif`,`fec_ult_modif`, `partido`, `cod_provincia`, `observaciones`) VALUES (1, SYSDATE(), '.', 1, 'CFE - 001');
 INSERT INTO `sise_legal`.`ref_direccion_partido`(`usr_ult_modif`,`fec_ult_modif`, `partido`, `cod_provincia`, `observaciones`) VALUES (1, SYSDATE(), 'Desconocido', 1, 'CFE - DES');
 INSERT INTO `sise_legal`.`ref_direccion_partido`(`usr_ult_modif`,`fec_ult_modif`, `partido`, `cod_provincia`, `observaciones`) VALUES (1, SYSDATE(), 'Apolinario Saravia', 10, 'SAL - 001');
 INSERT INTO `sise_legal`.`ref_direccion_partido`(`usr_ult_modif`,`fec_ult_modif`, `partido`, `cod_provincia`, `observaciones`) VALUES (1, SYSDATE(), 'Aguaray', 10, 'SAL - 002');

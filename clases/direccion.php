@@ -13,9 +13,9 @@ class Direccion
 								"piso",
 								"departamento",
 								"torre",
-								"cod_localidad",
-								"cod_partido",
 								"cod_provincia ",
+								"cod_partido",
+								"cod_localidad",
 								"codigo_postal ",								
 								"usr_ult_modif",
 								"fec_ult_modif");
@@ -26,17 +26,17 @@ class Direccion
 								"piso",
 								"departamento",
 								"torre",
-								"cod_localidad",
-								"cod_partido",
 								"cod_provincia",
+								"cod_partido",
+								"cod_localidad",
 								"codigo_postal");
 
 //====================================================================================================
 	public function formularioDireccion()
 		{
-		$localidad=new Localidad();
-		$partido=new Partido();
-		$provincia=new Provincia();
+		$localidad = new Localidad();
+		$partido = new Partido();
+		$provincia = new Provincia();
 		
 		foreach($this->campos_input as $campo)
 			{
@@ -46,12 +46,12 @@ class Direccion
 				case "domicilio":					
 					break;
 					
-				case "cod_localidad":
-					echo '<label for="cod_localidad"> Localidad </label>
-					  <select id="cod_localidad" name="cod_localidad" class="form-control">';	
-					  $localidad->verLocalidad();	
+				case "cod_provincia":
+					echo '<label for="cod_provincia"> Provincia </label>
+					  <select id="cod_provincia" name="cod_provincia" class="form-control">';	
+					  $provincia->verProvincia();	
 					echo '</select>';
-					break;
+					break;	
 				
 				case "cod_partido":
 					echo '<label for="cod_partido"> Partido </label>
@@ -60,12 +60,12 @@ class Direccion
 					echo '</select>';
 					break;
 					
-				case "cod_provincia":
-					echo '<label for="cod_provincia"> Provincia </label>
-					  <select id="cod_provincia" name="cod_provincia" class="form-control">';	
-					  $provincia->verProvincia();	
+				case "cod_localidad":
+					echo '<label for="cod_localidad"> Localidad </label>
+					  <select id="cod_localidad" name="cod_localidad" class="form-control">';	
+					  $localidad->verLocalidad();	
 					echo '</select>';
-					break;	
+					break;
 				
 				default:
 				echo '<label for="'.$campo.'">'.ucwords(str_replace("_"," ",$campo)).'</label>';
@@ -83,12 +83,11 @@ class Direccion
 	3-Se requiere guardar el registro que relaciona la dirección guardada con la persona correspondiente.*/
 	public function guardarDireccion($dni,$calle,$numero,$piso,$departamento,$torre,$cod_localidad,$cod_partido,$cod_provincia,$codigo_postal,$usr_ult_modif,$fec_ult_modif)
 		{
-		$domicilio=$calle." ".$numero;
 		$db = new database();
 		$db->conectar();
 		
-		#1-Es necesario obtener el código de la persona a la que corresponde el domicilio.
-		#-----MEJORAR-----Lo mejor sería que haya un objeto y sus métodos, pero bueno, a falta de eso lo hacemos directo.
+		//1-Es necesario obtener el código de la persona a la que corresponde el domicilio.
+		//-----MEJORAR-----Lo mejor sería que haya un objeto y sus métodos, pero bueno, a falta de eso lo hacemos directo.
 		$consulta = "SELECT cod_persona
 					 FROM bsd_persona
 					 WHERE dni = '$dni';";
@@ -99,8 +98,10 @@ class Direccion
 			{
 			$datos = mysqli_fetch_assoc($resultado);
 			$cod_persona = $datos['cod_persona'];
+			//Sería necesario buscar los nombres de las localidades, partidos y provincias y agregar en domicilio.
+			$domicilio=$calle." ".$numero." ".$piso." ".$departamento." ".$torre;
 			
-		#2-Es necesario almacenar la dirección.
+		//2-Es necesario almacenar la dirección.
 			$consulta = "INSERT INTO bsd_direccion (
 							  domicilio
 							, calle
@@ -135,7 +136,7 @@ class Direccion
 			$id_insertado = mysqli_insert_id($db->conexion);
 			echo $id_insertado;
 
-		#3-Se requiere guardar el registro que relaciona la dirección guardada con la persona correspondiente
+		//3-Se requiere guardar el registro que relaciona la dirección guardada con la persona correspondiente
 			$consulta = "	INSERT INTO rel_persona_direccion(
 								  cod_persona
 								, cod_direccion								
@@ -146,7 +147,7 @@ class Direccion
 								, '$id_insertado'								
 								, '$usr_ult_modif'
 								, '$fec_ult_modif');";
-			echo $consulta . "<br>";
+			//echo $consulta . "<br>";
 			
 			$resultado = mysqli_query($db->conexion, $consulta) 
 			or die ("No se pudieron guardar los datos de la relación entre direccion y la persona.");

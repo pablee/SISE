@@ -1,7 +1,7 @@
 USE `sise_legal`;
 CREATE TABLE IF NOT EXISTS `bsd_direccion` 
 (
-	`cod_direccion` INT(11) UNSIGNED NOT NULL COMMENT 'Clave primaria',
+	`cod_direccion` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Clave primaria',
 	`domicilio` VARCHAR(1000) NOT NULL COMMENT 'Descripción referencial del domicilio',
     `calle` VARCHAR(200) DEFAULT NULL COMMENT 'calle de la direccion',
     `numero` VARCHAR(10) DEFAULT NULL COMMENT 'numero de la direccion',
