@@ -10,7 +10,7 @@ class Proceso
 								"Tipo de proceso",
 								"Carátula",
 								"Tipo",
-								"observaciones",
+								"Observaciones",
 								"Modifica",
 								"Fecha"
 								);
@@ -41,13 +41,7 @@ class Proceso
 									"usr_ult_modif",
 									"fec_ult_modif"
 									);
-	/*
-	private $proceso;
-	private $cod_proceso_tipo;
-	private $observaciones;
-	private $usr_ult_modif;
-	private $fec_ult_modif;		
-	*/
+	
 /*=================================================================================================*/
 	public function nuevoProceso()
 	{					

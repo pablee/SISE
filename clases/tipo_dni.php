@@ -7,8 +7,7 @@ class TipoDni	{
 				public function verTipoDNI() 
 					{
 					echo'	<label for="cod_tipo_dni"> Tipo documento </label>
-							<select id="cod_tipo_dni" name="cod_tipo_dni" class="form-control">
-								<option value=""> Elegir... </option>';
+							<select id="cod_tipo_dni" name="cod_tipo_dni" class="form-control">';
 					$i=1;			
 					foreach($this->tipoDni as $tipo)
 						{

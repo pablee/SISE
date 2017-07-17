@@ -37,7 +37,7 @@
 </head>
 
 <body>
-
+	<!--Barra de navegacion -->
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<div class="navbar-header">
@@ -73,23 +73,18 @@
 			</div>
 
 			<div class="col-sm-2 col-md-2 col-lg-2" id="busquedas">
-				Buscar persona
-				<input id="buscarPersona" name="buscarPersona" type="text" class="form-control" placeholder="Ingrese nombre o DNI" onkeypress="buscarPersona(event)"></input>				
+				
 			</div>
 					
 			<div class="col-sm-2 col-md-2 col-lg-2">
-				<br>					
-				<button type="button" class="btn btn-info" onclick="buscarPersona('0')"> 
-					<span class="glyphicon glyphicon-search"></span> 
-				</button>			
+				
 			</div>
 			
 			<div class="col-sm-2 col-md-2 col-lg-2">
 				
 			</div>
 		</div>	
-		
-		
+				
 		<!--Contenido-->	
 		<div id="contenido" class="row text-left">			
 			<div class="col-sm-2 col-md-2 col-lg-2">
@@ -114,13 +109,12 @@
 		<div class="row text-left">			
 			<div class="col-sm-1 col-md-1 col-lg-1"> 	
 			</div>	
+			
 			<div class="col-sm-10 col-md-10 col-lg-10">
-			<hr>
-				
+						
 				<div class="form-group" id="ultimosIngresos">
 					<?php
-					$proceso = new Proceso();
-					$proceso->buscarProceso(NULL);
+					$proceso = new Proceso();					
 					$informacion = $proceso->listarProceso();
 					
 					$persona = new Persona();

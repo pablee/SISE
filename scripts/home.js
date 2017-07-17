@@ -14,7 +14,7 @@ function cargarFormulario(valor)
 	switch (valor) 
 		{
 		case 1:
-			document.getElementById("busquedas").innerHTML='Buscar persona<input id="buscarPersona" name="buscarPersona" type="text" class="form-control" placeholder="Ingrese nombre o DNI" onkeypress="buscarPersona(event)"></input>';				
+			document.getElementById("busquedas").innerHTML='Buscar persona<input id="buscarPersona" name="buscarPersona" type="text" class="form-control" placeholder="Buscar por nombre o apellido" onkeypress="buscarPersona(event)"></input><input id="buscarPersona" name="buscarPersona" type="text" class="form-control" placeholder="Buscar por DNI" onkeypress="buscarPersona(event)"></input>';				
 			xhttp.open("GET", "php/persona/formularioPersona.php", true);
 			document.getElementById("personaProceso").innerHTML="";
 			document.getElementById("ultimosIngresos").innerHTML="";
@@ -65,20 +65,18 @@ function guardarPersona()
 	var observaciones=document.getElementById("observaciones").value;
 	
 	//Direccion
-	var domicilio=document.getElementById("domicilio").value;
+	//var domicilio=document.getElementById("domicilio").value;
 	var calle=document.getElementById("calle").value;
 	var numero=document.getElementById("numero").value;
 	var piso=document.getElementById("piso").value;
 	var departamento=document.getElementById("departamento").value;
 	var torre=document.getElementById("torre").value;
-	//var cod_localidad=document.getElementById("localidad").value;
-	var cod_localidad=1;
-	//var cod_partido=document.getElementById("partido").value;
-	var cod_partido=1;
-	//var cod_provincia=document.getElementById("provincia").value;
-	var cod_provincia=1;
+	var cod_localidad=document.getElementById("cod_localidad").value;
+	var cod_partido=document.getElementById("cod_partido").value;
+	var cod_provincia=document.getElementById("cod_provincia").value;
 	var codigo_postal=document.getElementById("codigo_postal").value;
-	var observaciones_direccion=document.getElementById("observaciones_direccion").value;
+	//No se utiliza
+	//var observaciones_direccion=document.getElementById("observaciones_direccion").value;
 	
 	//Accion (actualizar o guardar)
 	var accion = document.getElementById("accion").value;
@@ -114,7 +112,7 @@ function guardarPersona()
 						"&cod_categoria="+cod_categoria+
 						"&observaciones="+observaciones+
 
-						"&domicilio="+domicilio+
+						//"&domicilio="+domicilio+
 						"&calle="+calle+
 						"&numero="+numero+
 						"&piso="+piso+
@@ -123,8 +121,7 @@ function guardarPersona()
 						"&cod_localidad="+cod_localidad+
 						"&cod_partido="+cod_partido+
 						"&cod_provincia="+cod_provincia+
-						"&codigo_postal="+codigo_postal+
-						"&observaciones_direccion="+observaciones_direccion+
+						"&codigo_postal="+codigo_postal+						
 						"&accion="+accion, true);								
 	xhttp.send();
 	}
@@ -151,6 +148,8 @@ function buscarPersona(event)
 		xhttp.send();
 		}
 	}
+
+	
 
 //====================================================================================================
 function buscarProceso(event)
