@@ -6,8 +6,11 @@ if($_SESSION['login'] == FALSE)
 	{
 	header("location: ../../index.php");	
 	}
-	
-$buscar = $_GET["buscar"];
+
+$buscarPersonaNombre = $_GET["buscarPersonaNombre"];
+$buscarPersonaApellido = $_GET["buscarPersonaApellido"];
+$buscarPersonaDNI = $_GET["buscarPersonaDNI"];
+$buscar = array($buscarPersonaNombre, $buscarPersonaApellido, $buscarPersonaDNI);
 
 $persona = new Persona();	
 $persona->buscarPersona($buscar);

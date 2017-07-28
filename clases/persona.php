@@ -8,7 +8,7 @@ include_once "observaciones.php";
 include_once "direccion.php";
 
 class Persona	
-{
+{	
 	//Campos clase persona para los headers de las tablas
 	private $th=array(
 					"Nombres",
@@ -51,18 +51,6 @@ class Persona
 								"cod_categoria",
 								"observaciones"
 								);
-	
-	private $campos_direccion=array(
-									"domicilio",
-									"calle",
-									"numero",
-									"piso",
-									"departamento",
-									"torre",
-									"cod_localidad",
-									"cod_partido",
-									"cod_provincia",
-									"codigo_postal");
 
 //===============================================================================================
 	//Carga el formulario para ingresar una nueva persona.
@@ -151,7 +139,7 @@ class Persona
 //===============================================================================================
 	//Ingresa la persona cargada en el formulario persona.
 	public function guardarPersona($nombres, $apellidos, $razon_social, $cod_tipo_dni, $dni, $cuil, $fec_nacimiento, $sexo, $cod_nacionalidad, $cod_estado_civil, $telefono, $celular, $correo_personal_1, $correo_personal_2, $correo_laboral_1, $correo_laboral_2, $profesion, $cod_categoria, $observaciones, $usr_ult_modif, $fec_ult_modif)
-	{
+		{
 		$db = new database();
 		$db->conectar();
 		$validacion = "	SELECT dni 
@@ -159,7 +147,7 @@ class Persona
 						WHERE dni = '$dni';";
 		$resultado = mysqli_query($db->conexion, $validacion);
 		if (mysqli_num_rows($resultado) == 0) 
-		{
+			{
 			$consulta = "INSERT INTO bsd_persona (
 						  nombres
 						, apellidos
@@ -206,11 +194,11 @@ class Persona
 						, '$fec_ult_modif');";
 			//echo $consulta;
 			$resultado = mysqli_query($db->conexion, $consulta) or die ("No se pudieron guardar los datos en la tabla persona.\n");
-		}
-		else
-			{
-		    echo "Ya existe una persona con el mismo número de documento.\n";
 			}
+			else
+				{
+				echo "Ya existe una persona con el mismo número de documento.\n";
+				}
 		$db->close();
 	}
 
@@ -268,114 +256,228 @@ class Persona
 		$localidad=new Localidad();
 		$partido=new Partido();
 		$provincia=new Provincia();
-			
-		$consulta = "SELECT * 
-					 FROM bsd_persona PER 
-					 JOIN rel_persona_direccion RPD 
-					 ON PER.cod_persona = RPD.cod_persona 
-					 JOIN bsd_direccion DIR 
-					 ON RPD.cod_direccion = DIR.cod_direccion 
-				   	 WHERE dni = '$buscar'
-				   	 OR nombres LIKE '%$buscar%'
-				   	 OR apellidos LIKE '%$buscar%';";
-
-		$resultado = mysqli_query($db->conexion, $consulta) or die ("No se encontró la persona.\n");
-		$datos = mysqli_fetch_assoc($resultado);
 		
-		foreach($this->nombre_campo as $campo)
+		//Variables de alerta para saber que campo de busqueda fue ingresado
+		$buscarAp=false;
+		$buscarNom=false;
+		$buscarDNI=false;
+		
+		//En caso de que buscar sea un array va a buscar por nombre, apellido o dni, de lo contrario proviene de la funcion "elegirPersona(cod_persona)"
+		if(is_array($buscar))
 			{
-			echo '<br>';						
-			switch ($campo) 
+			$buscarPersonaNombre = $buscar[0];
+			$buscarPersonaApellido = $buscar[1];
+			$buscarPersonaDNI = $buscar[2];
+		
+			$consulta = "SELECT * 
+						 FROM bsd_persona PER 
+						 JOIN rel_persona_direccion RPD 
+						 ON PER.cod_persona = RPD.cod_persona 
+						 JOIN bsd_direccion DIR 
+						 ON RPD.cod_direccion = DIR.cod_direccion 
+						 WHERE ";
+			
+			//Averiguo por que campos esta buscando
+			if($buscarPersonaApellido!="")
 				{
-				case "cod_tipo_dni":
-					$tipoDni->buscarTipoDNI($datos[$campo]);
-					break;
-				
-				case "fec_nacimiento":
-					echo '
-						 <label for="'.$campo.'"> Fecha de nacimiento </label>
-						 <input id="'.$campo.'" name="'.$campo.'" type="date" value="'.$datos[$campo].'" class="form-control"></input>
-						 ';
-					break;
-			   
-				case "sexo":
-					echo '<label for="'.$campo.'"> '.ucwords($campo).' </label>';	
-					if($datos[$campo]=="m")
-						{		
-						echo '<div class="radio">
-								<label class="radio-inline">
-									<input type="radio" id="sexo" name="sexo" value="m" checked="checked"> Masculino
-								</label>
-								<label class="radio-inline">
-									<input type="radio" id="sexo" name="sexo" value="f"> Femenino
-								</label>
-							 </div>';
+				$buscarPorApellido="apellidos LIKE '%$buscarPersonaApellido%'";
+				$buscarAp=true;
+				}
+			if($buscarPersonaNombre!="")
+				{
+				$buscarPorNombre="nombres LIKE '%$buscarPersonaNombre%'";
+				$buscarNom=true;
+				}
+			if($buscarPersonaDNI!="")
+				{
+				$buscarPorDNI="dni = '$buscarPersonaDNI'";
+				$buscarDNI=true;
+				}
+			
+			//Armo la consulta en base a los campos que se hayan ingresado
+			if($buscarAp==true)
+				{
+				$consulta.= $buscarPorApellido;			
+				if($buscarNom==true)
+					{
+					$consulta.= " OR ".$buscarPorNombre;					
+					if($buscarDNI==true)
+						{
+						$consulta.= " OR ".$buscarPorDNI;	
 						}
-						else
-							{
-							echo '<div class="radio">
-									<label class="radio-inline">
-										<input type="radio" id="sexo" name="sexo" value="m"> Masculino
-									</label>
-									<label class="radio-inline">
-										<input type="radio" id="sexo" name="sexo" value="f" checked="checked"> Femenino
-									</label>
-								 </div>';
-							}
-					break;
-				
-				case "cod_nacionalidad":
-					echo '<label for="cod_nacionalidad"> Nacionalidad </label>
-							<select id="cod_nacionalidad" name="cod_nacionalidad" class="form-control">';	
-							$nacionalidad->buscarPais($datos[$campo]);	
-					echo 	'</select>';	
-					break;
-				
-				case "cod_estado_civil":
-					$estadoCivil->buscarEstado($datos[$campo]);
-					break;
-				
-				case "cod_categoria":
-					$categoria->buscarCategoria($datos[$campo]);
-					break;
-				
-				case "observaciones":
-					$observaciones->buscarObservacion($datos["dni"]);
-					break;
-				
-				case "usr_ult_modif":
-					break;
-
-				case "fec_ult_modif":
-					break;		
-					
-				default:
-					echo '<label for="'.$campo.'"> '.ucwords(str_replace("_"," ",$campo)).' </label>';
-					echo '<input id="'.$campo.'" name="'.$campo.'" type="text" class="form-control" value="'.$datos[$campo].'"></input>';
-				}				
+					}
+					else if($buscarDNI==true)
+						{
+						$consulta.= " OR ".$buscarPorDNI;	
+						}
+				}
+				else if($buscarNom==true)
+					{
+					$consulta.= $buscarPorNombre;					
+					if($buscarDNI==true)
+						{
+						$consulta.= " OR ".$buscarPorDNI;	
+						}
+					}	
+					else if($buscarDNI==true)
+						{
+						$consulta.= $buscarPorDNI;	
+						}	
 			}
-		//Boton para guardar las observaciones sin tener que ir al final del formulario.
-		echo '<input id="usr_ult_modif" name="usr_ult_modif" type="hidden" value="<?php echo $_SESSION["cod_usuario"] ?></input>
-			  <input id="fec_ult_modif" name="fec_ult_modif" type="hidden" value="<?php echo $fecha ?>"></input>
-			  <input id="accion" name="accion" type="hidden" value="actualizar"></input>
-			  <input type = "submit" class = "btn btn-info" value = "Guardar" onclick="guardarPersona()"></input>
-			  <br>
-			 ';	
-		
-		$direccion->buscarDireccion($datos);
-		
-		echo '  <br>
-				<input id="usr_ult_modif" name="usr_ult_modif" type="hidden" value="<?php echo $_SESSION["cod_usuario"] ?></input>
-				<input id="fec_ult_modif" name="fec_ult_modif" type="hidden" value="<?php echo $fecha ?>"></input>
-				<input id="accion" name="accion" type="hidden" value="actualizar"></input>
-			 ';
-		//Boton que guarda el formulario.
-		echo '	<input type = "submit" class = "btn btn-info" value = "Guardar" onclick="guardarPersona()"></input>
-				<br>			
-			 ';
-		$db->close();
-		}
+			else{
+				$consulta = "SELECT * 
+							 FROM bsd_persona PER 
+							 JOIN rel_persona_direccion RPD 
+							 ON PER.cod_persona = RPD.cod_persona 
+							 JOIN bsd_direccion DIR 
+							 ON RPD.cod_direccion = DIR.cod_direccion 
+							 WHERE PER.cod_persona = '$buscar';";				
+				}
+			//echo $consulta;
+			$resultado = mysqli_query($db->conexion, $consulta) or die ("No se encontró la persona.\n");
+			
+			//En caso de que haya varias personas con el mismo nombre o apellido.
+			if (mysqli_num_rows($resultado) > 1) 
+				{
+				echo '<h3>Personas encontradas</h3>
+				<br>
+				<div class="table-responsive">
+					<table class="table table-striped">
+						<thead>
+							<tr>';
+							foreach($this->th as $campo)
+								{
+								echo "<th>".$campo."</th>";
+								}	
+				echo '		</tr>
+						</thead>
+						<tbody>';
+				
+				$i = 0;
+				while($datos = mysqli_fetch_assoc($resultado))
+					{
+					echo "<tr>";
+						echo "<td>".$datos["nombres"]."</td>";
+						echo "<td>".$datos["apellidos"]."</td>";
+						echo "<td>".$datos["razon_social"]."</td>";
+						#echo "<td>".$datos["tipo_dni"]."</td>";
+						echo "<td>".$datos["dni"]."</td>";
+						#echo "<td>".$datos["cuil"]."</td>";
+						#echo "<td>".$datos["fec_nacimiento"]."</td>";
+						echo "<td>".$datos["sexo"]."</td>";
+						#echo "<td>".$datos["nacionalidad"]."</td>";
+						#echo "<td>".$datos["estado_civil"]."</td>";
+						echo "<td>".$datos["telefono"]."</td>";
+						echo "<td>".$datos["profesion"]."</td>";
+						echo "<td>".$datos["cod_categoria"]."</td>";
+						echo "<td>".$datos["observaciones"]."</td>";
+						echo "<td>".$datos["usr_ult_modif"]."</td>";
+						echo "<td>".$datos["fec_ult_modif"]."</td>";
+						echo '<td><button type="button" class="btn btn-link" value="'.$datos["cod_persona"].'" onclick="elegirPersona(this.value)">Elegir</button></td>';
+					echo "</tr>";
+					$i++;
+					}
+					
+				echo '	</tbody>
+					</table>
+				</div>';	
+				}
+				else{
+					$datos = mysqli_fetch_assoc($resultado);
+					foreach($this->nombre_campo as $campo)
+						{
+						echo '<br>';						
+						switch ($campo) 
+							{
+							case "cod_tipo_dni":
+								$tipoDni->buscarTipoDNI($datos[$campo]);
+								break;
+							
+							case "fec_nacimiento":
+								echo '
+									 <label for="'.$campo.'"> Fecha de nacimiento </label>
+									 <input id="'.$campo.'" name="'.$campo.'" type="date" value="'.$datos[$campo].'" class="form-control"></input>
+									 ';
+								break;
+						   
+							case "sexo":
+								echo '<label for="'.$campo.'"> '.ucwords($campo).' </label>';	
+								if($datos[$campo]=="m")
+									{		
+									echo '<div class="radio">
+											<label class="radio-inline">
+												<input type="radio" id="sexo" name="sexo" value="m" checked="checked"> Masculino
+											</label>
+											<label class="radio-inline">
+												<input type="radio" id="sexo" name="sexo" value="f"> Femenino
+											</label>
+										 </div>';
+									}
+									else
+										{
+										echo '<div class="radio">
+												<label class="radio-inline">
+													<input type="radio" id="sexo" name="sexo" value="m"> Masculino
+												</label>
+												<label class="radio-inline">
+													<input type="radio" id="sexo" name="sexo" value="f" checked="checked"> Femenino
+												</label>
+											 </div>';
+										}
+								break;
+							
+							case "cod_nacionalidad":
+								echo '<label for="cod_nacionalidad"> Nacionalidad </label>
+										<select id="cod_nacionalidad" name="cod_nacionalidad" class="form-control">';	
+										$nacionalidad->buscarPais($datos[$campo]);	
+								echo 	'</select>';	
+								break;
+							
+							case "cod_estado_civil":
+								$estadoCivil->buscarEstado($datos[$campo]);
+								break;
+							
+							case "cod_categoria":
+								$categoria->buscarCategoria($datos[$campo]);
+								break;
+							
+							case "observaciones":
+								$observaciones->buscarObservacion($datos["dni"]);
+								break;
+							
+							case "usr_ult_modif":
+								break;
 
+							case "fec_ult_modif":
+								break;		
+								
+							default:
+								echo '<label for="'.$campo.'"> '.ucwords(str_replace("_"," ",$campo)).' </label>';
+								echo '<input id="'.$campo.'" name="'.$campo.'" type="text" class="form-control" value="'.$datos[$campo].'"></input>';
+							}				
+						}
+					//Boton para guardar las observaciones sin tener que ir al final del formulario.
+					echo '<input id="usr_ult_modif" name="usr_ult_modif" type="hidden" value="<?php echo $_SESSION["cod_usuario"] ?></input>
+						  <input id="fec_ult_modif" name="fec_ult_modif" type="hidden" value="<?php echo $fecha ?>"></input>
+						  <input id="accion" name="accion" type="hidden" value="actualizar"></input>
+						  <input type = "submit" class = "btn btn-info" value = "Guardar" onclick="guardarPersona()"></input>
+						  <br>
+						 ';	
+				
+					$direccion->buscarDireccion($datos);
+				
+					echo '  <br>
+							<input id="usr_ult_modif" name="usr_ult_modif" type="hidden" value="<?php echo $_SESSION["cod_usuario"] ?></input>
+							<input id="fec_ult_modif" name="fec_ult_modif" type="hidden" value="<?php echo $fecha ?>"></input>
+							<input id="accion" name="accion" type="hidden" value="actualizar"></input>
+						 ';
+					//Boton que guarda el formulario.
+					echo '	<input type = "submit" class = "btn btn-info" value = "Guardar" onclick="guardarPersona()"></input>
+							<br>			
+						 ';
+					$db->close();
+					}
+		}
 //===============================================================================================		
 	//Busca personas en un proceso.
 	public function buscarPersonaProceso($buscar,$persona_condicion)
@@ -467,9 +569,9 @@ class Persona
 				<thead>
 					<tr>';																									
 				foreach($this->th as $campo)
-				{
+					{
 					echo "<th>".$campo."</th>";
-				}	
+					}	
 		echo '		</tr>
 				</thead>
 				<tbody>';

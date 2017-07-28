@@ -41,10 +41,10 @@ class Proceso
 									"usr_ult_modif",
 									"fec_ult_modif"
 									);
-	
+									
 /*=================================================================================================*/
 	public function nuevoProceso()
-	{					
+		{					
 		$cod_proceso = 0;
 		$persona = new Persona();
 		$proceso_tipo = new ProcesoTipo();		
@@ -104,7 +104,7 @@ class Proceso
 			  
 		echo '<br><input type = "submit" class = "btn btn-info" value = "Guardar" onclick="guardarProceso('.$cod_proceso.')"></input>';
 		echo '</form>';
-	}
+		}
 
 /*=================================================================================================*/
 	public function guardarProceso($proceso, $cod_proceso_tipo, $observaciones, $usr_ult_modif, $fec_ult_modif)
@@ -145,7 +145,7 @@ class Proceso
 		{
 		$db = new database();
 		$db->conectar();
-		
+		$user=$_SESSION['cod_usuario'];
 		$consulta = "SELECT 
 						PRO.cod_proceso
 						, PRO.proceso
@@ -155,7 +155,8 @@ class Proceso
 						, PRO.fec_ult_modif
 				   FROM bsd_proceso PRO
 				   JOIN ref_proceso_tipo RPT ON PRO.cod_proceso_tipo = RPT.cod_proceso_tipo
-				   JOIN bsd_usuario U ON PRO.usr_ult_modif = U.cod_usuario;";				
+				   JOIN bsd_usuario U ON PRO.usr_ult_modif = U.cod_usuario
+				   WHERE PRO.usr_ult_modif='$user';";				
 		$resultado = mysqli_query($db->conexion, $consulta) or die ("No se pueden cargar los procesos.");
 		
 		echo '<h3>Últimos procesos ingresados</h3>
@@ -196,22 +197,27 @@ class Proceso
 		//return $cod_proceso;
 		//return $datos;
 		if ($datos = mysqli_fetch_assoc($resultado)) 
-		{
+			{
 			return $procesos;
-		}
+			}
 	}
 
 /*=================================================================================================*/
 	public function buscarProceso($buscar)
-	{
+		{
 		$db = new database();
 		$db->conectar();
 		
 		if (empty($buscar) == true)
-		{
+			{
 			$buscar = '';
-		}
-
+			}
+		
+		$buscarPersonaNombre = $buscar[0];
+		$buscarPersonaApellido = $buscar[1];
+		$buscarPersonaDNI = $buscar[2];
+		$user=$_SESSION['cod_usuario'];
+		
 		$consulta = "SELECT PRO.cod_proceso, 
 							PRO.proceso, 
 							PER.cod_persona, 
@@ -223,9 +229,9 @@ class Proceso
 					JOIN bsd_persona PER ON PCP.cod_persona = PER.cod_persona 
 					JOIN bsd_proceso PRO ON PCP.cod_proceso = PRO.cod_proceso 
 
-					WHERE PER.nombres LIKE '%$buscar%'
-					   OR PER.apellidos LIKE '%$buscar%'
-					   OR PER.dni = '$buscar';";
+					WHERE PER.nombres LIKE '%$buscarPersonaNombre%'
+					   OR PER.apellidos LIKE '%$buscarPersonaApellido%'
+					   OR PER.dni = '$buscarPersonaDNI';";
 					
 		$resultado = mysqli_query($db->conexion, $consulta) or die ("No se pueden cargar los procesos.");
 		
@@ -246,7 +252,7 @@ class Proceso
 					</thead>
 					<tbody>';
 					while($datos = mysqli_fetch_assoc($resultado))
-					{	
+						{	
 						echo '<tr>
 								<!--<td>'.$datos["cod_proceso"].'</td>-->
 								<td>'.$datos["proceso"].'</td>
@@ -256,12 +262,12 @@ class Proceso
 								<td>'.$datos["dni"].'</td>
 								<td><button type="button" class="btn btn-link" value="'.$datos["cod_persona"].'" onclick="elegirProceso(this.value)">Elegir</button></td>
 							  </tr>';
-					}
+						}
 		echo '		</tbody>
 			</table>
 		  </div>';  
 		$db->close();
-	}							
+		}							
 
 /*=================================================================================================*/
 	public function elegirProceso($cod_persona)

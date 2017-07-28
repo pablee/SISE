@@ -14,13 +14,13 @@ function cargarFormulario(valor)
 	switch (valor) 
 		{
 		case 1:
-			document.getElementById("busquedas").innerHTML='Buscar persona<input id="buscarPersona" name="buscarPersona" type="text" class="form-control" placeholder="Buscar por nombre o apellido" onkeypress="buscarPersona(event)"></input><input id="buscarPersona" name="buscarPersona" type="text" class="form-control" placeholder="Buscar por DNI" onkeypress="buscarPersona(event)"></input>';				
+			//document.getElementById("busquedas").innerHTML='Buscar persona<input id="buscarPersona" name="buscarPersona" type="text" class="form-control" placeholder="Buscar por nombre o apellido" onkeypress="buscarPersona(event)"></input>';				
 			xhttp.open("GET", "php/persona/formularioPersona.php", true);
 			document.getElementById("personaProceso").innerHTML="";
 			document.getElementById("ultimosIngresos").innerHTML="";
 			break;
 		case 2:
-			document.getElementById("busquedas").innerHTML='Buscar proceso<input id="buscarProceso" name="buscarProceso" type="text" class="form-control" placeholder="Ingrese nombre o DNI" onkeypress="buscarProceso(event)"></input>';
+			//document.getElementById("busquedas").innerHTML='Buscar proceso<input id="buscarProceso" name="buscarProceso" type="text" class="form-control" placeholder="Ingrese nombre o DNI" onkeypress="buscarProceso(event)"></input>';
 			document.getElementById("ultimosIngresos").innerHTML="";
 			xhttp.open("GET", "php/proceso/formularioProceso.php", true);	
 			break;
@@ -31,11 +31,6 @@ function cargarFormulario(valor)
 		case 4:
 			xhttp.open("GET", "php/persona/buscarPersonaProceso.php", true);
 			break;
-		case 5:
-			day = "Friday";
-			break;
-		case 6:
-			day = "Saturday";
 		} 		
 	xhttp.send();	
 	}	
@@ -132,43 +127,71 @@ function buscarPersona(event)
 	{
 	if(event.which == 13 || event.keyCode == 13 || event==0)
 		{	
-		var buscar = document.getElementById("buscarPersona").value;
-		//alert(buscar);
+		var buscarPersonaNombre = document.getElementById("buscarPersonaNombre").value;
+		var buscarPersonaApellido = document.getElementById("buscarPersonaApellido").value;
+		var buscarPersonaDNI = document.getElementById("buscarPersonaDNI").value;
+		
+		//var buscar = [buscarPersonaNombre, buscarPersonaApellido, buscarPersonaDNI];
+		//alert (buscar[0]);
+		//alert (buscar[1]);
+		//alert (buscar[2]);
+		
 		xhttp = new XMLHttpRequest();			
 		xhttp.onreadystatechange = function()	
 				{					
 				if (this.readyState == 4 && this.status == 200)
 						{
-						document.getElementById("listado").innerHTML = this.responseText;
-						document.getElementById("buscarPersona").value = "";
+						document.getElementById("listado").innerHTML = this.responseText;						
 						}						
 				};
 
-		xhttp.open("GET", "php/persona/buscarPersona.php?buscar="+buscar, true);								
+		xhttp.open("GET", "php/persona/buscarPersona.php?buscarPersonaNombre="+buscarPersonaNombre
+													+"&buscarPersonaApellido="+buscarPersonaApellido
+													+"&buscarPersonaDNI="+buscarPersonaDNI, true);								
 		xhttp.send();
 		}
 	}
-
 	
 
+//====================================================================================================
+function elegirPersona(cod_persona)
+	{
+	xhttp = new XMLHttpRequest();			
+	xhttp.onreadystatechange = function()	
+		{					
+		if (this.readyState == 4 && this.status == 200)
+			{
+			document.getElementById("listado").innerHTML = this.responseText;
+			}						
+		};
+
+	xhttp.open("GET", "php/persona/elegirPersona.php?cod_persona="+cod_persona, true);								
+	xhttp.send();
+	}
+	
+	
+	
 //====================================================================================================
 function buscarProceso(event)
 	{
 	if(event.which == 13 || event.keyCode == 13 || event==0)
 		{	
-		var buscar = document.getElementById("buscarProceso").value;
-		//alert(buscar);
+		var buscarPersonaNombre = document.getElementById("buscarPersonaNombre").value;
+		var buscarPersonaApellido = document.getElementById("buscarPersonaApellido").value;
+		var buscarPersonaDNI = document.getElementById("buscarPersonaDNI").value;
+		
 		xhttp = new XMLHttpRequest();			
 		xhttp.onreadystatechange = function()	
 			{					
 			if (this.readyState == 4 && this.status == 200)
 				{
 				document.getElementById("listado").innerHTML = this.responseText;
-				document.getElementById("buscarProceso").value = "";
 				}						
 			};
 
-		xhttp.open("GET", "php/proceso/buscarProceso.php?buscar="+buscar, true);								
+		xhttp.open("GET", "php/proceso/buscarProceso.php?buscarPersonaNombre="+buscarPersonaNombre
+													+"&buscarPersonaApellido="+buscarPersonaApellido
+													+"&buscarPersonaDNI="+buscarPersonaDNI, true);								
 		xhttp.send();
 		}
 	}
