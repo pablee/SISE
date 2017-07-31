@@ -170,6 +170,10 @@ function elegirPersona(cod_persona)
 	}
 	
 	
+<<<<<<< HEAD
+=======
+	
+>>>>>>> origin/master
 //====================================================================================================
 function buscarProceso(event)
 	{

@@ -238,7 +238,11 @@ class Proceso
 					WHERE PER.nombres LIKE '%$buscarPersonaNombre%'
 					   OR PER.apellidos LIKE '%$buscarPersonaApellido%'
 					   OR PER.dni = '$buscarPersonaDNI';";
+<<<<<<< HEAD
 		//echo $consulta;
+=======
+					
+>>>>>>> origin/master
 		$resultado = mysqli_query($db->conexion, $consulta) or die ("No se pueden cargar los procesos.");
 		
 		echo '<h3>Seleccione un proceso para editar</h3>
@@ -269,8 +273,11 @@ class Proceso
 								<td><button type="button" class="btn btn-link" onclick="elegirProceso(\''.$datos["cod_persona"].'\',\''.$datos["cod_proceso"].'\')">Elegir</button></td>
 							  </tr>';
 						}
+<<<<<<< HEAD
 						// echo '<a href=# onclick="return ReAssign(\'' + $valuationId + '\',\'' + $user + '\')">Re-Assign</a>';
 
+=======
+>>>>>>> origin/master
 		echo '		</tbody>
 			</table>
 		  </div>';  

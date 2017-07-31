@@ -381,7 +381,11 @@ class Persona
 				echo '	</tbody>
 					</table>
 				</div>';	
+<<<<<<< HEAD
 				}//En caso de que solo exista un resultado(una sola persona encontrada).
+=======
+				}
+>>>>>>> origin/master
 				else{
 					$datos = mysqli_fetch_assoc($resultado);
 					foreach($this->nombre_campo as $campo)
@@ -477,6 +481,7 @@ class Persona
 						 ';
 					$db->close();
 					}
+<<<<<<< HEAD
 		}
 //===============================================================================================		
 	//Busca personas en un proceso.
@@ -600,6 +605,9 @@ class Persona
 		}			
 
 		
+=======
+		}
+>>>>>>> origin/master
 //===============================================================================================		
 	//Busca personas en un proceso.
 	public function agregarPersonaProceso($cod_persona,$persona_condicion)
