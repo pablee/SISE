@@ -20,7 +20,7 @@ class Direccion
 								"usr_ult_modif",
 								"fec_ult_modif");
 								
-	private $campos_input=array("domicilio",
+	private $campos_input=array(//"domicilio",
 								"calle",
 								"numero",
 								"piso",

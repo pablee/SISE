@@ -41,10 +41,10 @@ class Proceso
 									"usr_ult_modif",
 									"fec_ult_modif"
 									);
-	
+									
 /*=================================================================================================*/
 	public function nuevoProceso()
-	{					
+		{					
 		$cod_proceso = 0;
 		$persona = new Persona();
 		$proceso_tipo = new ProcesoTipo();		
@@ -57,12 +57,15 @@ class Proceso
 					<select id="persona_condicion" name="persona_condicion" class="form-control" onchange="habilitarBusqueda()">';
 					$i = 0;
 					foreach($this->condiciones as $condicion)
-					{
+						{
 						echo '<option value="'.$i.'"> '.ucwords($condicion).' </option>';	
 						$i++;
-					}	
+						}							
 		echo '		</select>	
-					<input id="buscarPersonaProceso" name="buscarPersonaProceso" type="text" class="form-control" placeholder="Ingrese nombre o DNI" onkeypress="buscarPersonaProceso(event)" disabled></input>
+		
+					<input id="buscarPersonaProcesoApellido" name="buscarPersonaProcesoApellido" type="text" class="form-control" placeholder="Buscar por apellido" onkeypress="buscarPersonaProceso(event)" disabled></input>
+					<input id="buscarPersonaProcesoNombre" name="buscarPersonaProcesoNombre" type="text" class="form-control" placeholder="Buscar por nombre" onkeypress="buscarPersonaProceso(event)" disabled></input>
+					<input id="buscarPersonaProcesoDNI" name="buscarPersonaProcesoDNI" type="text" class="form-control" placeholder="Buscar por DNI" onkeypress="buscarPersonaProceso(event)" disabled></input>
 					<button type="button" class="btn btn-info" onclick="buscarPersonaProceso(0)"> 
 						<span class="glyphicon glyphicon-search"></span> 
 					</button>
@@ -71,7 +74,7 @@ class Proceso
 			  <form action="php/detalle/guardarDetalle.php" method="POST">
 				<br>
 				<div class="table-responsive">
-					<table class="table table-striped" id="personaEncontrada">
+					<table class="table table-striped">
 						<thead>
 							<tr>
 								<th> Nombres/Razón Social </th>
@@ -81,7 +84,10 @@ class Proceso
 								<th> Condición </th>
 							</tr>
 						</thead>
-						<tbody> 
+						<tbody  id="personaEncontrada"> 
+
+						</tbody>
+						<tbody  id="personaElegida"> 
 
 						</tbody>
 					</table>
@@ -104,11 +110,11 @@ class Proceso
 			  
 		echo '<br><input type = "submit" class = "btn btn-info" value = "Guardar" onclick="guardarProceso('.$cod_proceso.')"></input>';
 		echo '</form>';
-	}
+		}
 
 /*=================================================================================================*/
 	public function guardarProceso($proceso, $cod_proceso_tipo, $observaciones, $usr_ult_modif, $fec_ult_modif)
-	{	
+		{	
 		$db = new database();
 		$db->conectar();
 		
@@ -145,7 +151,7 @@ class Proceso
 		{
 		$db = new database();
 		$db->conectar();
-		
+		$user=$_SESSION['cod_usuario'];
 		$consulta = "SELECT 
 						PRO.cod_proceso
 						, PRO.proceso
@@ -155,7 +161,8 @@ class Proceso
 						, PRO.fec_ult_modif
 				   FROM bsd_proceso PRO
 				   JOIN ref_proceso_tipo RPT ON PRO.cod_proceso_tipo = RPT.cod_proceso_tipo
-				   JOIN bsd_usuario U ON PRO.usr_ult_modif = U.cod_usuario;";				
+				   JOIN bsd_usuario U ON PRO.usr_ult_modif = U.cod_usuario
+				   WHERE PRO.usr_ult_modif='$user';";				
 		$resultado = mysqli_query($db->conexion, $consulta) or die ("No se pueden cargar los procesos.");
 		
 		echo '<h3>Últimos procesos ingresados</h3>
@@ -196,22 +203,27 @@ class Proceso
 		//return $cod_proceso;
 		//return $datos;
 		if ($datos = mysqli_fetch_assoc($resultado)) 
-		{
+			{
 			return $procesos;
-		}
+			}
 	}
 
 /*=================================================================================================*/
 	public function buscarProceso($buscar)
-	{
+		{
 		$db = new database();
 		$db->conectar();
 		
 		if (empty($buscar) == true)
-		{
+			{
 			$buscar = '';
-		}
-
+			}
+		
+		$buscarPersonaNombre = $buscar[0];
+		$buscarPersonaApellido = $buscar[1];
+		$buscarPersonaDNI = $buscar[2];
+		$user=$_SESSION['cod_usuario'];
+		
 		$consulta = "SELECT PRO.cod_proceso, 
 							PRO.proceso, 
 							PER.cod_persona, 
@@ -223,10 +235,10 @@ class Proceso
 					JOIN bsd_persona PER ON PCP.cod_persona = PER.cod_persona 
 					JOIN bsd_proceso PRO ON PCP.cod_proceso = PRO.cod_proceso 
 
-					WHERE PER.nombres LIKE '%$buscar%'
-					   OR PER.apellidos LIKE '%$buscar%'
-					   OR PER.dni = '$buscar';";
-					
+					WHERE PER.nombres LIKE '%$buscarPersonaNombre%'
+					   OR PER.apellidos LIKE '%$buscarPersonaApellido%'
+					   OR PER.dni = '$buscarPersonaDNI';";
+		//echo $consulta;
 		$resultado = mysqli_query($db->conexion, $consulta) or die ("No se pueden cargar los procesos.");
 		
 		echo '<h3>Seleccione un proceso para editar</h3>
@@ -246,7 +258,7 @@ class Proceso
 					</thead>
 					<tbody>';
 					while($datos = mysqli_fetch_assoc($resultado))
-					{	
+						{	
 						echo '<tr>
 								<!--<td>'.$datos["cod_proceso"].'</td>-->
 								<td>'.$datos["proceso"].'</td>
@@ -254,17 +266,19 @@ class Proceso
 								<td>'.$datos["nombres"].'</td>
 								<td>'.$datos["apellidos"].'</td>
 								<td>'.$datos["dni"].'</td>
-								<td><button type="button" class="btn btn-link" value="'.$datos["cod_persona"].'" onclick="elegirProceso(this.value)">Elegir</button></td>
+								<td><button type="button" class="btn btn-link" onclick="elegirProceso(\''.$datos["cod_persona"].'\',\''.$datos["cod_proceso"].'\')">Elegir</button></td>
 							  </tr>';
-					}
+						}
+						// echo '<a href=# onclick="return ReAssign(\'' + $valuationId + '\',\'' + $user + '\')">Re-Assign</a>';
+
 		echo '		</tbody>
 			</table>
 		  </div>';  
 		$db->close();
-	}							
+		}							
 
 /*=================================================================================================*/
-	public function elegirProceso($cod_persona)
+	public function elegirProceso($cod_persona, $cod_proceso)
 		{
 		$db = new database();
 		$db->conectar();
@@ -285,8 +299,9 @@ class Proceso
 					JOIN bsd_persona PER ON PCP.cod_persona=PER.cod_persona 
 					WHERE PCP.cod_proceso=(	SELECT cod_proceso 
 											FROM rel_pers_cond_proc 
-											WHERE cod_persona='$cod_persona');";	   
-				   
+											WHERE cod_persona='$cod_persona'
+											AND cod_proceso='$cod_proceso');";	   
+		//echo $consulta;	   
 		$resultado = mysqli_query($db->conexion, $consulta) or die ("No se pueden cargar los procesos.");
 		
 		$i = 0;
@@ -301,12 +316,12 @@ class Proceso
 		}			
 
 /*=================================================================================================*/
-	public function editarProceso($cod_persona)
+	public function editarProceso($cod_persona,$cod_proceso)
 		{
 		$persona = new Persona();
 		$proceso_tipo = new ProcesoTipo();		
 		$detalleTipo = new DetalleTipo();	
-		$procesos = $this->elegirProceso($cod_persona);
+		$procesos = $this->elegirProceso($cod_persona,$cod_proceso);
 		
 		echo '<h3>Personas en proceso</h3>
 			  <form action="php/detalle/guardarDetalle.php" method="POST">
@@ -327,7 +342,7 @@ class Proceso
 						foreach($procesos as $proceso)
 							{
 							echo '<tr>';
-							$persona->buscarPersonaProceso($procesos[$i]["dni"],$procesos[$i]["cod_persona_condicion"]);
+							$persona->buscarPersonaProceso($procesos[$i]["cod_persona"],$procesos[$i]["cod_persona_condicion"]);
 							echo '</tr>';
 							$i++;
 							}
@@ -391,7 +406,7 @@ class Proceso
 
 /*=================================================================================================*/
 	public function ultimoProcesoIngresado()
-	{
+		{
 		$db = new database();
 		$db->conectar();
 		

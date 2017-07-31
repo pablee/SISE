@@ -28,6 +28,7 @@
 	-->
 	<!--Bootstrap local-->
 	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/legal.css">
 	<script src="jquery/jquery.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 	<script src="bootstrap/js/bootstrap.min.js"></script>
@@ -47,6 +48,7 @@
 				<li class=""><a href="home.php">Home</a></li>
 				<li><a href="#" onclick="cargarFormulario(1)">Persona</a></li>
 				<li><a href="#" onclick="cargarFormulario(2)">Proceso</a></li>
+				<li><a href="#" onclick="cargarFormulario(3)">Informes</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<p class="navbar-text">	<?php echo $fecha2 ?> </p>
@@ -66,52 +68,43 @@
 	</nav>
 
 	<div class="container-fluid">
-		<!--Menu: Buscar/Comandos-->
-		<div class="row">							
+		<!--Menu: Buscar/Comandos>
+		<div class="row" id="busqueda">							
 			<div class="col-sm-2 col-md-2 col-lg-2">
-			
+				
 			</div>
 
-			<div class="col-sm-2 col-md-2 col-lg-2" id="busquedas">
-				
-			</div>
-					
 			<div class="col-sm-2 col-md-2 col-lg-2">
-				
+				<input id="buscarPersonaApellido" name="buscarPersonaApellido" type="text" class="form-control" placeholder="Buscar por apellido" onkeypress="buscarPersona(event)"></input>
 			</div>
 			
 			<div class="col-sm-2 col-md-2 col-lg-2">
-				
+				<input id="buscarPersonaNombre" name="buscarPersonaNombre" type="text" class="form-control" placeholder="Buscar por nombre" onkeypress="buscarPersona(event)"></input>
 			</div>
-		</div>	
+			
+			<div class="col-sm-2 col-md-2 col-lg-2">
+				<input id="buscarPersonaDNI" name="buscarPersonaDNI" type="text" class="form-control" placeholder="Buscar por DNI" onkeypress="buscarPersona(event)"></input>
+			</div>
+			
+			<div class="col-sm-2 col-md-2 col-lg-2">
+				<button type="button" class="btn btn-info" onclick="buscarPersona(0)"> 
+					<span class="glyphicon glyphicon-search"></span> 
+				</button>
+			</div>
+		</div-->	
 				
 		<!--Contenido-->	
 		<div id="contenido" class="row text-left">			
-			<div class="col-sm-2 col-md-2 col-lg-2">
-			
+			<div class="col-sm-1 col-md-1 col-lg-1">
 			</div>
 								
-			<div class="col-sm-8 col-md-8 col-lg-8">
-			<hr>
-				<div class="" id="personaProceso">
-			
-				</div>
-				<div class="form-group" id="listado">
-					
-				</div>	
-			</div>
-			
-			<div class="col-sm-2 col-md-2 col-lg-2"> 	
-			</div>	
-		</div>
-		
-		<!--Tablas con los ultimos ingresos-->	
-		<div class="row text-left">			
-			<div class="col-sm-1 col-md-1 col-lg-1"> 	
-			</div>	
-			
 			<div class="col-sm-10 col-md-10 col-lg-10">
-						
+				<div class="" id="personaProceso">
+				</div>
+				
+				<div class="form-group" id="listado">	
+				</div>
+				
 				<div class="form-group" id="ultimosIngresos">
 					<?php
 					$proceso = new Proceso();					
@@ -120,11 +113,37 @@
 					$persona = new Persona();
 					$personas = $persona->listarPersona();
 					?>
-				</div>	
+				</div>
 			</div>
-			<div class="col-sm-1 col-md-1 col-lg-1"> 	
+			
+			<div class="col-sm-1 col-md-1 col-lg-1">	
 			</div>	
 		</div>
+		
+		<!--Tablas con los ultimos ingresos	
+		<div class="row text-left">	
+		
+			<div class="col-sm-1 col-md-1 col-lg-1"> 	
+			</div>
+			
+			<div class="col-sm-10 col-md-10 col-lg-10">
+			
+				<div class="form-group" id="ultimosIngresos">
+					<?php/*
+					$proceso = new Proceso();					
+					$informacion = $proceso->listarProceso();
+					
+					$persona = new Persona();
+					$personas = $persona->listarPersona();*/
+					?>
+				</div>
+
+			</div>
+
+			<div class="col-sm-1 col-md-1 col-lg-1"> 	
+			</div>
+			
+		</div-->
 		
 	</div>
 </body>

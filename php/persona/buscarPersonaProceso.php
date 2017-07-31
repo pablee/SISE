@@ -2,17 +2,14 @@
 session_start();
 include_once "../../clases/persona.php";
 
-$buscarPersonaProceso = $_GET["buscarPersonaProceso"];
+$buscarPersonaProcesoNombre = $_GET["buscarPersonaProcesoNombre"];
+$buscarPersonaProcesoApellido = $_GET["buscarPersonaProcesoApellido"];
+$buscarPersonaProcesoDNI = $_GET["buscarPersonaProcesoDNI"];
 $persona_condicion = $_GET["persona_condicion"];	
+
+$buscarPersonaProceso = array($buscarPersonaProcesoNombre, $buscarPersonaProcesoApellido, $buscarPersonaProcesoDNI);
 
 $persona = new Persona();
 $cod_persona = $persona->buscarPersonaProceso($buscarPersonaProceso,$persona_condicion);
-
-//Array que almacena la persona buscada (DNI) y la condicion (cliente, oponente...).
-if($cod_persona!=0)
-	{
-	$_SESSION["personas"][$_SESSION["i"]] = array(array($cod_persona,$persona_condicion));
-	$_SESSION["i"]++;
-	}
 
 ?>

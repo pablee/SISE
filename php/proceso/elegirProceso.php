@@ -8,8 +8,9 @@ if($_SESSION['login'] == FALSE)
 	}
 	
 $cod_persona=$_GET["cod_persona"];
+$cod_proceso=$_GET["cod_proceso"];
 
 $proceso=new Proceso();	
-$proceso->editarProceso($cod_persona);
+$proceso->editarProceso($cod_persona,$cod_proceso);
 
 ?>
