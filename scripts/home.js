@@ -25,8 +25,8 @@ function cargarFormulario(valor)
 			xhttp.open("GET", "php/proceso/formularioProceso.php", true);	
 			break;
 		case 3:
-			//document.getElementById("ultimosIngresos").innerHTML="";
-			//xhttp.open("GET", "php/detalle/formularioDetalle.php", true);
+			document.getElementById("ultimosIngresos").innerHTML="";
+			xhttp.open("GET", "php/proceso/informe.php", true);
 			break;
 		case 4:
 			xhttp.open("GET", "php/persona/buscarPersonaProceso.php", true);
@@ -170,10 +170,6 @@ function elegirPersona(cod_persona)
 	}
 	
 	
-<<<<<<< HEAD
-=======
-	
->>>>>>> origin/master
 //====================================================================================================
 function buscarProceso(event)
 	{

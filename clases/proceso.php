@@ -238,11 +238,7 @@ class Proceso
 					WHERE PER.nombres LIKE '%$buscarPersonaNombre%'
 					   OR PER.apellidos LIKE '%$buscarPersonaApellido%'
 					   OR PER.dni = '$buscarPersonaDNI';";
-<<<<<<< HEAD
 		//echo $consulta;
-=======
-					
->>>>>>> origin/master
 		$resultado = mysqli_query($db->conexion, $consulta) or die ("No se pueden cargar los procesos.");
 		
 		echo '<h3>Seleccione un proceso para editar</h3>
@@ -273,11 +269,8 @@ class Proceso
 								<td><button type="button" class="btn btn-link" onclick="elegirProceso(\''.$datos["cod_persona"].'\',\''.$datos["cod_proceso"].'\')">Elegir</button></td>
 							  </tr>';
 						}
-<<<<<<< HEAD
 						// echo '<a href=# onclick="return ReAssign(\'' + $valuationId + '\',\'' + $user + '\')">Re-Assign</a>';
 
-=======
->>>>>>> origin/master
 		echo '		</tbody>
 			</table>
 		  </div>';  
@@ -308,8 +301,8 @@ class Proceso
 											FROM rel_pers_cond_proc 
 											WHERE cod_persona='$cod_persona'
 											AND cod_proceso='$cod_proceso');";	   
-		//echo $consulta;	   
-		$resultado = mysqli_query($db->conexion, $consulta) or die ("No se pueden cargar los procesos.");
+		echo $consulta;	   
+		$resultado = mysqli_query($db->conexion, $consulta) or die ("Elegir Proceso: No se pueden cargar los procesos.");
 		
 		$i = 0;
 		while($datos = mysqli_fetch_assoc($resultado))
@@ -433,7 +426,7 @@ class Proceso
 		//return $cod_proceso;
 		//return $datos;
 		return $procesos;
-	}				
+		}				
 
 /*=================================================================================================*/
 //Genera el insert en la tabla pers_cond_proc.(guarda la relacion de una o mas personas, clientes u oponentes, con un proceso)
@@ -459,5 +452,50 @@ class Proceso
 		$resultado = mysqli_query($db->conexion, $consulta) or die ("No se pudo hacer el insert en la tabla rel_pers_cond_proc.");
 		$db->close();
 		}
-	}
+	
+	
+/*=================================================================================================*/
+	public function informe($usr_ult_modif)
+		{
+		$db = new database();
+		$db->conectar();
+		
+		$consulta ="SELECT 
+						PRO.cod_proceso, 
+						PRO.proceso, 
+						PRO.cod_proceso_tipo, 
+						PRO.observaciones, 
+						PRO.usr_ult_modif, 
+						PRO.fec_ult_modif, 
+						PCP.cod_persona, 
+						PCP.cod_persona_condicion, 
+						PER.dni							
+					FROM rel_pers_cond_proc PCP 
+					JOIN bsd_proceso PRO ON PCP.cod_proceso=PRO.cod_proceso 
+					JOIN ref_persona_condicion PC ON PCP.cod_persona_condicion=PC.cod_persona_condicion 
+					JOIN bsd_persona PER ON PCP.cod_persona=PER.cod_persona 
+					WHERE PRO.usr_ult_modif='$usr_ult_modif';";	 
+					
+		$resultado = mysqli_query($db->conexion, $consulta) or die ("No se pueden cargar los datos del informe.");
+				
+		while($datos = mysqli_fetch_assoc($resultado))
+			{
+			echo '	 
+			<div class="row"> 
+			   <div class="panel panel-default">
+					<div class="panel-heading">
+						<button type="button" class="btn btn-link" onclick="elegirProceso(\''.$datos["cod_persona"].'\',\''.$datos["cod_proceso"].'\')">'.$datos["proceso"].'</button>						
+					</div>
+					<div class="panel-body">Cliente</div>
+					<div class="panel-body">Oponente</div>
+					<div class="panel-body">'.$datos["observaciones"].'</div>
+			   </div>
+			</div>
+			';
+			}
+		  
+		$db->close();
+		}			
+	
+}
 ?>
