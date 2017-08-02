@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS `bsd_proceso`
 	`proceso` VARCHAR(100) DEFAULT NULL COMMENT 'descripcion opcional del proceso',
 	`cod_proceso_tipo` INT(3) UNSIGNED DEFAULT NULL COMMENT 'tipo de proceso usado para saber que documentos de la documentacion pedir',
 	`observaciones` TEXT DEFAULT NULL COMMENT 'observaciones de texto libre de 65.635',
+	`ultimas_novedades` TEXT DEFAULT NULL COMMENT 'últimas novedades de texto libre de 65.635',
 	`usr_ult_modif` int(3) UNSIGNED DEFAULT NULL COMMENT 'usuario de ultima modificacion',
 	`fec_ult_modif` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'fecha de ultima modificacion',
 	PRIMARY KEY (`cod_proceso`),
