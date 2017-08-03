@@ -301,7 +301,7 @@ class Proceso
 											FROM rel_pers_cond_proc 
 											WHERE cod_persona='$cod_persona'
 											AND cod_proceso='$cod_proceso');";	   
-		echo $consulta;	   
+		// echo $consulta;	   
 		$resultado = mysqli_query($db->conexion, $consulta) or die ("Elegir Proceso: No se pueden cargar los procesos.");
 		
 		$i = 0;

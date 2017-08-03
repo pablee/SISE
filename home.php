@@ -107,11 +107,11 @@
 				
 				<div class="form-group" id="ultimosIngresos">
 					<?php
-					$proceso = new Proceso();					
-					$informacion = $proceso->listarProceso();
+					// $proceso = new Proceso();					
+					// $informacion = $proceso->listarProceso();
 					
-					$persona = new Persona();
-					$personas = $persona->listarPersona();
+					// $persona = new Persona();
+					// $personas = $persona->listarPersona();
 					?>
 				</div>
 			</div>
