@@ -139,7 +139,7 @@ class Proceso
 						, '$usr_ult_modif'
 						, '$fec_ult_modif'
 					);";
-										
+		
 		$resultado = mysqli_query($db->conexion, $consulta) or die ("No se pudo ingresar el proceso.");
 		$cod_proceso = mysqli_insert_id($db->conexion);
 		$db->close();
@@ -151,7 +151,8 @@ class Proceso
 		{
 		$db = new database();
 		$db->conectar();
-		$user=$_SESSION['cod_usuario'];
+		$user = $_SESSION['cod_usuario'];
+
 		$consulta = "SELECT 
 						PRO.cod_proceso
 						, PRO.proceso
@@ -162,7 +163,8 @@ class Proceso
 				   FROM bsd_proceso PRO
 				   JOIN ref_proceso_tipo RPT ON PRO.cod_proceso_tipo = RPT.cod_proceso_tipo
 				   JOIN bsd_usuario U ON PRO.usr_ult_modif = U.cod_usuario
-				   WHERE PRO.usr_ult_modif='$user';";				
+				   WHERE PRO.usr_ult_modif='$user';";
+		
 		$resultado = mysqli_query($db->conexion, $consulta) or die ("No se pueden cargar los procesos.");
 		
 		echo '<h3>Últimos procesos ingresados</h3>
@@ -475,7 +477,7 @@ class Proceso
 					JOIN ref_persona_condicion PC ON PCP.cod_persona_condicion=PC.cod_persona_condicion 
 					JOIN bsd_persona PER ON PCP.cod_persona=PER.cod_persona 
 					WHERE PRO.usr_ult_modif='$usr_ult_modif';";	 
-					
+		// echo $consulta;
 		$resultado = mysqli_query($db->conexion, $consulta) or die ("No se pueden cargar los datos del informe.");
 				
 		while($datos = mysqli_fetch_assoc($resultado))
