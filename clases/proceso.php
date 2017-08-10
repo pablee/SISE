@@ -26,7 +26,7 @@ class Proceso
 
 	private $condiciones = array(
 								"elegir",
-								"otro",
+								//"otro",
 								"cliente",
 								"oponente",
 								"empleador"
@@ -164,7 +164,7 @@ class Proceso
 				   JOIN ref_proceso_tipo RPT ON PRO.cod_proceso_tipo = RPT.cod_proceso_tipo
 				   JOIN bsd_usuario U ON PRO.usr_ult_modif = U.cod_usuario
 				   WHERE PRO.usr_ult_modif='$user';";
-		
+
 		$resultado = mysqli_query($db->conexion, $consulta) or die ("No se pueden cargar los procesos.");
 		
 		echo '<h3>Últimos procesos ingresados</h3>
@@ -212,14 +212,14 @@ class Proceso
 
 /*=================================================================================================*/
 	public function buscarProceso($buscar)
-		{
+	{
 		$db = new database();
 		$db->conectar();
 		
 		if (empty($buscar) == true)
-			{
+		{
 			$buscar = '';
-			}
+		}
 		
 		$buscarPersonaNombre = $buscar[0];
 		$buscarPersonaApellido = $buscar[1];
@@ -260,7 +260,7 @@ class Proceso
 					</thead>
 					<tbody>';
 					while($datos = mysqli_fetch_assoc($resultado))
-						{	
+					{	
 						echo '<tr>
 								<!--<td>'.$datos["cod_proceso"].'</td>-->
 								<td>'.$datos["proceso"].'</td>
@@ -270,18 +270,18 @@ class Proceso
 								<td>'.$datos["dni"].'</td>
 								<td><button type="button" class="btn btn-link" onclick="elegirProceso(\''.$datos["cod_persona"].'\',\''.$datos["cod_proceso"].'\')">Elegir</button></td>
 							  </tr>';
-						}
+					}
 						// echo '<a href=# onclick="return ReAssign(\'' + $valuationId + '\',\'' + $user + '\')">Re-Assign</a>';
 
 		echo '		</tbody>
 			</table>
 		  </div>';  
 		$db->close();
-		}							
+	}							
 
 /*=================================================================================================*/
 	public function elegirProceso($cod_persona, $cod_proceso)
-		{
+	{
 		$db = new database();
 		$db->conectar();
 		
@@ -308,14 +308,14 @@ class Proceso
 		
 		$i = 0;
 		while($datos = mysqli_fetch_assoc($resultado))
-			{	
+		{	
 			$procesos[$i] = $datos;
 			$i++;
-			}
+		}
 		  
 		$db->close();
 		return $procesos;
-		}			
+	}			
 
 /*=================================================================================================*/
 	public function editarProceso($cod_persona,$cod_proceso)
