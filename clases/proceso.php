@@ -384,12 +384,12 @@ class Proceso
 		$db = new database();
 		$db->conectar();
 		
-		echo $cod_proceso;
-		echo $proceso;
-		echo $cod_proceso_tipo;
-		echo $observaciones;
-		echo $usr_ult_modif; 
-		echo $fec_ult_modif;
+		//echo $cod_proceso;
+		//echo $proceso;
+		//echo $cod_proceso_tipo;
+		//echo $observaciones;
+		//echo $usr_ult_modif; 
+		//echo $fec_ult_modif;
 		
 		$consulta = "UPDATE bsd_proceso 
 					SET 
@@ -399,8 +399,10 @@ class Proceso
 						usr_ult_modif='$usr_ult_modif', 
 						fec_ult_modif='$fec_ult_modif'
 					WHERE cod_proceso='$cod_proceso';";
-										
-		$resultado = mysqli_query($db->conexion, $consulta) or die ("No se pudo actualizar el proceso.");
+		//echo $consulta;
+					
+		$resultado = mysqli_query($db->conexion, $consulta) 
+		or die ("No se pudo actualizar el proceso.");
 		$cod_proceso = mysqli_insert_id($db->conexion);
 		$db->close();
 		return $cod_proceso;
@@ -412,8 +414,8 @@ class Proceso
 		$db = new database();
 		$db->conectar();
 		
-		$consulta = "SELECT *
-				   FROM bsd_proceso;";
+		$consulta = "	SELECT *
+				   		FROM bsd_proceso;";
 				   
 		$resultado = mysqli_query($db->conexion, $consulta) or die ("No se pueden cargar los procesos.");
 		$i = 0;
@@ -436,6 +438,7 @@ class Proceso
 		{
 		$db = new database();
 		$db->conectar();
+
 		$consulta = "INSERT INTO rel_pers_cond_proc (
 						cod_proceso, 
 						cod_persona, 
@@ -451,7 +454,11 @@ class Proceso
 						'$orden', '$observaciones', 
 						'$usr_ult_modif', 
 						'$fec_ult_modif');";
-		$resultado = mysqli_query($db->conexion, $consulta) or die ("No se pudo hacer el insert en la tabla rel_pers_cond_proc.");
+		//echo $consulta;
+
+		$resultado = mysqli_query($db->conexion, $consulta) 
+		or die ("No se pudo hacer el insert en la tabla rel_pers_cond_proc.");
+
 		$db->close();
 		}
 	

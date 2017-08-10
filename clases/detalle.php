@@ -16,18 +16,21 @@ class Detalle
 		"usr_ult_modif",
 		"fec_ult_modif"
 		);
-													
+
+									
+/*=================================================================================================*/
 	public function ingresarDetalle($cod_persona, $cod_proceso, $cod_detalle_tipo, $valor, $observaciones, $usr_ult_modif, $fec_ult_modif)
 		{
-		echo "ESTOY EN GUARDAR DETALLE INICIO";
+		//echo "ESTOY EN GUARDAR DETALLE INICIO";
 		$db = new database();
 		$db->conectar();
-		
+
 		$consulta = "INSERT INTO bsd_detalle (
 							cod_persona, 
 							cod_proceso, 
 							cod_detalle_tipo, 
-							valor, observaciones, 
+							valor, 
+							observaciones, 
 							usr_ult_modif, 
 							fec_ult_modif
 					) VALUES (
@@ -39,20 +42,29 @@ class Detalle
 							'$usr_ult_modif', 
 							'$fec_ult_modif'
 					);";
-		$resultado=mysqli_query($db->conexion, $consulta) or die ("No se pudieron guardar los datos en la tabla bsd_detalle.");
+		//echo $consulta;
+
+		$resultado=mysqli_query($db->conexion, $consulta) 
+		or die ("No se pudieron guardar los datos en la tabla bsd_detalle.");
 		
 		$db->close();
-		echo "ESTOY EN GUARDAR DETALLE FIN";
+		//echo "ESTOY EN GUARDAR DETALLE FIN";
 		}
 				
-				
+
+									
+/*=================================================================================================*/
 		public function actualizarDetalle($cod_persona, $cod_proceso, $cod_detalle_tipo, $valor, $observaciones, $usr_ult_modif, $fec_ult_modif)
 			{
 			$db = new database();
 			$db->conectar();
 		
 			$consulta= "UPDATE bsd_detalle 
-						SET valor='$valor', usr_ult_modif='$usr_ult_modif', fec_ult_modif='$fec_ult_modif'
+						SET 
+						valor='$valor', 
+						usr_ult_modif='$usr_ult_modif', 
+						fec_ult_modif='$fec_ult_modif'
+						
 						WHERE  cod_detalle_tipo='$cod_detalle_tipo'
 						  AND cod_persona = '$cod_persona' 
 						  AND cod_proceso='$cod_proceso';";
@@ -63,4 +75,6 @@ class Detalle
 			}
 				
 		}	
+									
+/*=================================================================================================*/
 ?>
