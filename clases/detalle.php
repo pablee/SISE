@@ -44,7 +44,7 @@ class Detalle
 					);";
 		//echo $consulta;
 
-		$resultado=mysqli_query($db->conexion, $consulta) 
+		$resultado = mysqli_query($db->conexion, $consulta) 
 		or die ("No se pudieron guardar los datos en la tabla bsd_detalle.");
 		
 		$db->close();
@@ -64,7 +64,7 @@ class Detalle
 						valor='$valor', 
 						usr_ult_modif='$usr_ult_modif', 
 						fec_ult_modif='$fec_ult_modif'
-						
+
 						WHERE  cod_detalle_tipo='$cod_detalle_tipo'
 						  AND cod_persona = '$cod_persona' 
 						  AND cod_proceso='$cod_proceso';";

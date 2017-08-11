@@ -1,4 +1,5 @@
 <?php
+header("Content-Type: text/html;charset=utf-8");
 include_once "database.php";
 include_once "proceso_tipo.php";
 include_once "persona.php";
@@ -26,7 +27,7 @@ class Proceso
 
 	private $condiciones = array(
 								"elegir",
-								//"otro",
+								"otro",
 								"cliente",
 								"oponente",
 								"empleador"
@@ -140,7 +141,8 @@ class Proceso
 						, '$fec_ult_modif'
 					);";
 		
-		$resultado = mysqli_query($db->conexion, $consulta) or die ("No se pudo ingresar el proceso.");
+		$resultado = mysqli_query($db->conexion, $consulta) 
+		or die ("No se pudo ingresar el proceso.");
 		$cod_proceso = mysqli_insert_id($db->conexion);
 		$db->close();
 		return $cod_proceso;
@@ -400,7 +402,7 @@ class Proceso
 						fec_ult_modif='$fec_ult_modif'
 					WHERE cod_proceso='$cod_proceso';";
 		//echo $consulta;
-					
+
 		$resultado = mysqli_query($db->conexion, $consulta) 
 		or die ("No se pudo actualizar el proceso.");
 		$cod_proceso = mysqli_insert_id($db->conexion);
@@ -454,7 +456,7 @@ class Proceso
 						'$orden', '$observaciones', 
 						'$usr_ult_modif', 
 						'$fec_ult_modif');";
-		//echo $consulta;
+		echo $consulta;
 
 		$resultado = mysqli_query($db->conexion, $consulta) 
 		or die ("No se pudo hacer el insert en la tabla rel_pers_cond_proc.");

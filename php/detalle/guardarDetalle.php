@@ -27,9 +27,9 @@ if($accion=="guardar"&&isset($_SESSION["personas"])&&$_SESSION["personas"]!="")
 {
 	foreach($_SESSION["personas"] as $pers)
 	{	
-		if($pers[0][1]==2)//condicion de persona (cliente, oponente, etc...) es igual a 2(Cliente)
+		if($pers[0][1] == 2)//condicion de persona (cliente, oponente, etc...) es igual a 2(Cliente)
 		{
-			$codigo_persona=$pers[0][0];//cod_persona
+			$codigo_persona = $pers[0][0];//cod_persona
 		}
 		$cod_persona = $pers[0][0];
 		//echo $cod_persona;
