@@ -1,5 +1,4 @@
 <?php
-header("Content-Type: text/html;charset=utf-8");
 include_once "database.php";
 include_once "proceso_tipo.php";
 include_once "persona.php";

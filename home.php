@@ -20,7 +20,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 	<title>SISE</title>
 	<!--Bootstrap online
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
