@@ -20,6 +20,7 @@ class Proceso
 								"proceso",
 								"cod_proceso_tipo",
 								"observaciones",
+								"ultimas_novedades",
 								"usr_ult_modif",
 								"fec_ult_modif"
 								);
@@ -44,7 +45,7 @@ class Proceso
 									
 /*=================================================================================================*/
 	public function nuevoProceso()
-		{					
+	{					
 		$cod_proceso = 0;
 		$persona = new Persona();
 		$proceso_tipo = new ProcesoTipo();		
@@ -57,10 +58,10 @@ class Proceso
 					<select id="persona_condicion" name="persona_condicion" class="form-control" onchange="habilitarBusqueda()">';
 					$i = 0;
 					foreach($this->condiciones as $condicion)
-						{
+					{
 						echo '<option value="'.$i.'"> '.ucwords($condicion).' </option>';	
 						$i++;
-						}							
+					}							
 		echo '		</select>	
 		
 					<input id="buscarPersonaProcesoApellido" name="buscarPersonaProcesoApellido" type="text" class="form-control" placeholder="Buscar por apellido" onkeypress="buscarPersonaProceso(event)" disabled></input>
@@ -93,7 +94,8 @@ class Proceso
 					</table>
 				</div>'; 		
 		
-		echo '<br>';	
+		echo '<br>';
+
 		$proceso_tipo->selectProcesoTipo();
 		
 		echo '<input id="accion" name="accion" type="hidden" class="form-control" value="guardar"></input>';
@@ -107,28 +109,32 @@ class Proceso
 		
 		echo '<br><label for="observaciones"> Observaciones </label>
 			  <textarea id="observaciones" name="observaciones" type="text" class="form-control" rows="5" cols="60"></textarea>';
-			  
+
+		echo '<br><label for="ultimas_novedades"> ultimas_novedades </label>
+			  <textarea id="ultimas_novedades" name="ultimas_novedades" type="text" class="form-control" rows="5" cols="60"></textarea>';
+
 		echo '<br><input type = "submit" class = "btn btn-info" value = "Guardar" onclick="guardarProceso('.$cod_proceso.')"></input>';
 		echo '</form>';
-		}
+	}
 
 /*=================================================================================================*/
 	public function guardarProceso($proceso, $cod_proceso_tipo, $observaciones, $usr_ult_modif, $fec_ult_modif)
-		{	
+	{	
 		$db = new database();
 		$db->conectar();
 		
-		echo $proceso;
-		echo $cod_proceso_tipo;
-		echo $observaciones;
-		echo $usr_ult_modif;
-		echo $fec_ult_modif;
+		//echo $proceso;
+		//echo $cod_proceso_tipo;
+		//echo $observaciones;
+		//echo $usr_ult_modif;
+		//echo $fec_ult_modif;
 		
 		$consulta = "INSERT INTO bsd_proceso (
 						cod_proceso
 						, proceso
 						, cod_proceso_tipo
 						, observaciones
+						, ultimas_novedades
 						, usr_ult_modif
 						, fec_ult_modif
 					) VALUES (
@@ -136,6 +142,7 @@ class Proceso
 						, '$proceso'
 						, '$cod_proceso_tipo'
 						, '$observaciones'
+						, '$ultimas_novedades'
 						, '$usr_ult_modif'
 						, '$fec_ult_modif'
 					);";
@@ -174,10 +181,10 @@ class Proceso
 				<table class="table table-striped">
 					<thead>
 						<tr>';
-					foreach($this->encabezados as $campo)
-					{
-						echo "<th>".$campo."</th>";
-					}	
+							foreach($this->encabezados as $campo)
+							{
+								echo "<th>".$campo."</th>";
+							}	
 		echo '			</tr>
 					</thead>
 					<tbody>';
@@ -190,6 +197,7 @@ class Proceso
 				echo "<td>".$datos["proceso"]."</td>";
 				echo "<td>".$datos["proceso_tipo"]."</td>";
 				echo "<td>".$datos["observaciones"]."</td>";
+				echo "<td>".$datos["ultimas_novedades"]."</td>";
 				echo "<td>".$datos["usuario"]."</td>";
 				echo "<td>".$datos["fec_ult_modif"]."</td>";							
 			echo "</tr>";
@@ -206,9 +214,9 @@ class Proceso
 		//return $cod_proceso;
 		//return $datos;
 		if ($datos = mysqli_fetch_assoc($resultado)) 
-			{
+		{
 			return $procesos;
-			}
+		}
 	}
 
 /*=================================================================================================*/
@@ -225,7 +233,7 @@ class Proceso
 		$buscarPersonaNombre = $buscar[0];
 		$buscarPersonaApellido = $buscar[1];
 		$buscarPersonaDNI = $buscar[2];
-		$user=$_SESSION['cod_usuario'];
+		$user = $_SESSION['cod_usuario'];
 		
 		$consulta = "SELECT PRO.cod_proceso, 
 							PRO.proceso, 
@@ -357,7 +365,8 @@ class Proceso
 		echo '<input id="cod_persona" name="cod_persona" type="hidden" class="form-control" value="'.$cod_persona.'"></input>';	
 		echo '<input id="cod_proceso" name="cod_proceso" type="hidden" class="form-control" value="'.$procesos[0]["cod_proceso"].'"></input>';	
 		
-		echo '<br>';	
+		echo '<br>';
+
 		$proceso_tipo->buscarProcesoTipo($procesos[0]["cod_proceso_tipo"]);
 		
 		echo '<br><label for="proceso"> Carátula </label>
@@ -369,9 +378,13 @@ class Proceso
 		
 		echo '<br><label for="observaciones"> Observaciones </label>
 			  <textarea id="observaciones" name="observaciones" type="text" class="form-control" value="'.$procesos[0]["observaciones"].'" rows="5" cols="60"></textarea>';	
-		
+
+		echo '<br><label for="ultimas_novedades"> ultimas_novedades </label>
+			  <textarea id="ultimas_novedades" name="ultimas_novedades" type="text" class="form-control" value="'.$procesos[0]["ultimas_novedades"].'" rows="5" cols="60"></textarea>';	
+
 		//Buscar las preguntas y respuestas para la persona buscada en el proceso elegido.
-		echo '<br>';						
+		echo '<br>';
+
 		$cod_proceso = $procesos[0]["cod_proceso"];
 		$detalleTipo->buscarDetalleTipo($cod_persona,$cod_proceso);
 
@@ -380,7 +393,7 @@ class Proceso
 		}
 
 /*=================================================================================================*/
-	public function actualizarProceso($cod_proceso, $proceso, $cod_proceso_tipo, $observaciones, $usr_ult_modif, $fec_ult_modif)
+	public function actualizarProceso($cod_proceso, $proceso, $cod_proceso_tipo, $observaciones, $ultimas_novedades, $usr_ult_modif, $fec_ult_modif)
 		{	
 		$db = new database();
 		$db->conectar();
@@ -397,6 +410,7 @@ class Proceso
 						proceso='$proceso', 
 						cod_proceso_tipo='$cod_proceso_tipo', 
 						observaciones='$observaciones', 
+						ultimas_novedades='$ultimas_novedades'
 						usr_ult_modif='$usr_ult_modif', 
 						fec_ult_modif='$fec_ult_modif'
 					WHERE cod_proceso='$cod_proceso';";
@@ -411,19 +425,21 @@ class Proceso
 
 /*=================================================================================================*/
 	public function ultimoProcesoIngresado()
-		{
+	{
 		$db = new database();
 		$db->conectar();
 		
 		$consulta = "	SELECT *
 				   		FROM bsd_proceso;";
 				   
-		$resultado = mysqli_query($db->conexion, $consulta) or die ("No se pueden cargar los procesos.");
+		$resultado = mysqli_query($db->conexion, $consulta) 
+		or die ("No se pueden cargar los procesos.");
+
 		$i = 0;
 		while($datos = mysqli_fetch_assoc($resultado))
 		{
-			$procesos[$i]=$datos;
-			$cod_proceso=$datos["cod_proceso"];
+			$procesos[$i] = $datos;
+			$cod_proceso = $datos["cod_proceso"];
 			$i++;
 		}
 
@@ -431,12 +447,12 @@ class Proceso
 		//return $cod_proceso;
 		//return $datos;
 		return $procesos;
-		}				
+	}				
 
 /*=================================================================================================*/
 //Genera el insert en la tabla pers_cond_proc.(guarda la relacion de una o mas personas, clientes u oponentes, con un proceso)
 	public function guardarPersCondProc($cod_proceso, $cod_persona, $cod_persona_condicion, $orden, $observaciones, $usr_ult_modif, $fec_ult_modif)
-		{
+	{
 		$db = new database();
 		$db->conectar();
 
@@ -461,12 +477,12 @@ class Proceso
 		or die ("No se pudo hacer el insert en la tabla rel_pers_cond_proc.");
 
 		$db->close();
-		}
+	}
 	
 	
 /*=================================================================================================*/
 	public function informe($usr_ult_modif)
-		{
+	{
 		$db = new database();
 		$db->conectar();
 		
@@ -475,6 +491,7 @@ class Proceso
 						PRO.proceso, 
 						PRO.cod_proceso_tipo, 
 						PRO.observaciones, 
+						PRO.ultimas_novedades,
 						PRO.usr_ult_modif, 
 						PRO.fec_ult_modif, 
 						PCP.cod_persona, 
@@ -489,7 +506,7 @@ class Proceso
 		$resultado = mysqli_query($db->conexion, $consulta) or die ("No se pueden cargar los datos del informe.");
 				
 		while($datos = mysqli_fetch_assoc($resultado))
-			{
+		{
 			echo '	 
 			<div class="row"> 
 			   <div class="panel panel-default">
@@ -502,10 +519,10 @@ class Proceso
 			   </div>
 			</div>
 			';
-			}
+		}
 		  
 		$db->close();
-		}			
+	}			
 	
 }
 ?>
