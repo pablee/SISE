@@ -110,13 +110,14 @@ class Proceso
 		echo '<br><label for="observaciones"> Observaciones </label>
 			  <textarea id="observaciones" name="observaciones" type="text" class="form-control" rows="5" cols="60"></textarea>';
 
-		echo '<br><label for="ultimas_novedades"> ultimas_novedades </label>
+		echo '<br><label for="ultimas_novedades"> Ultimas novedades </label>
 			  <textarea id="ultimas_novedades" name="ultimas_novedades" type="text" class="form-control" rows="5" cols="60"></textarea>';
 
 		echo '<br><input type = "submit" class = "btn btn-info" value = "Guardar" onclick="guardarProceso('.$cod_proceso.')"></input>';
 		echo '</form>';
 	}
 
+	
 /*=================================================================================================*/
 	public function guardarProceso($proceso, $cod_proceso_tipo, $observaciones, $usr_ult_modif, $fec_ult_modif)
 	{	
@@ -154,6 +155,7 @@ class Proceso
 		return $cod_proceso;
 	}
 
+	
 /*=================================================================================================*/
 	public function listarProceso()
 		{
@@ -219,6 +221,7 @@ class Proceso
 		}
 	}
 
+	
 /*=================================================================================================*/
 	public function buscarProceso($buscar)
 	{
@@ -288,6 +291,7 @@ class Proceso
 		$db->close();
 	}							
 
+	
 /*=================================================================================================*/
 	public function elegirProceso($cod_persona, $cod_proceso)
 	{
@@ -299,6 +303,7 @@ class Proceso
 						PRO.proceso, 
 						PRO.cod_proceso_tipo, 
 						PRO.observaciones, 
+						PRO.ultimas_novedades, 
 						PRO.usr_ult_modif, 
 						PRO.fec_ult_modif, 
 						PCP.cod_persona, 
@@ -326,9 +331,10 @@ class Proceso
 		return $procesos;
 	}			
 
+	
 /*=================================================================================================*/
 	public function editarProceso($cod_persona,$cod_proceso)
-		{
+	{
 		$persona = new Persona();
 		$proceso_tipo = new ProcesoTipo();		
 		$detalleTipo = new DetalleTipo();	
@@ -379,7 +385,7 @@ class Proceso
 		echo '<br><label for="observaciones"> Observaciones </label>
 			  <textarea id="observaciones" name="observaciones" type="text" class="form-control" value="'.$procesos[0]["observaciones"].'" rows="5" cols="60"></textarea>';	
 
-		echo '<br><label for="ultimas_novedades"> ultimas_novedades </label>
+		echo '<br><label for="ultimas_novedades"> Ultimas novedades </label>
 			  <textarea id="ultimas_novedades" name="ultimas_novedades" type="text" class="form-control" value="'.$procesos[0]["ultimas_novedades"].'" rows="5" cols="60"></textarea>';	
 
 		//Buscar las preguntas y respuestas para la persona buscada en el proceso elegido.
@@ -392,9 +398,10 @@ class Proceso
 		echo '</form>';					
 		}
 
+		
 /*=================================================================================================*/
 	public function actualizarProceso($cod_proceso, $proceso, $cod_proceso_tipo, $observaciones, $ultimas_novedades, $usr_ult_modif, $fec_ult_modif)
-		{	
+	{	
 		$db = new database();
 		$db->conectar();
 		
@@ -423,6 +430,7 @@ class Proceso
 		return $cod_proceso;
 		}
 
+		
 /*=================================================================================================*/
 	public function ultimoProcesoIngresado()
 	{
@@ -449,6 +457,7 @@ class Proceso
 		return $procesos;
 	}				
 
+	
 /*=================================================================================================*/
 //Genera el insert en la tabla pers_cond_proc.(guarda la relacion de una o mas personas, clientes u oponentes, con un proceso)
 	public function guardarPersCondProc($cod_proceso, $cod_persona, $cod_persona_condicion, $orden, $observaciones, $usr_ult_modif, $fec_ult_modif)
@@ -524,5 +533,50 @@ class Proceso
 		$db->close();
 	}			
 	
+	
+/*=================================================================================================*/
+	public function buscarInforme($buscar)
+	{	
+		$filtroDetalleTipoBoolean = $buscar[0];
+		$respuestaBoolean = $buscar[1];
+		$filtroDetalleTipo = $buscar[2];
+		$respuestaTexto = $buscar[3];
+		
+		$db = new database();
+		$db->conectar();
+		
+		////////////////////////////////////////////////////////
+		///// ACA VA LA CONSULTA PARA FILTRAR LOS INFORMES /////
+		////////////////////////////////////////////////////////
+		$consulta ="SELECT * 
+					FROM bsd_detalle
+					WHERE (cod_detalle_tipo = $filtroDetalleTipoBoolean
+					AND  valor = '$respuestaBoolean')
+					OR (cod_detalle_tipo = $filtroDetalleTipo
+					AND  valor = '$respuestaTexto');";	 
+
+		//echo $consulta;
+		$resultado = mysqli_query($db->conexion, $consulta) or die ("No se pueden filtrar los datos del informe.");
+				
+		while($datos = mysqli_fetch_assoc($resultado))
+		{
+			echo '	 
+			<div class="row"> 
+			   <div class="panel panel-default">
+					<div class="panel-heading">
+						<button type="button" class="btn btn-link" onclick="elegirProceso(\''.$datos["cod_persona"].'\',\''.$datos["cod_proceso"].'\')">'.$datos["proceso"].'</button>						
+					</div>
+					<div class="panel-body">Pregunta</div>
+					'.$datos["cod_detalle_tipo"].'
+					<div class="panel-body">Respuesta</div>
+					'.$datos["valor"].'
+					<div class="panel-body">'.$datos["observaciones"].'</div>
+			   </div>
+			</div>
+			';
+		}
+		  
+		$db->close();
+	}			
 }
 ?>

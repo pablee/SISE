@@ -195,7 +195,34 @@ function buscarProceso(event)
 		}
 	}
 
+//====================================================================================================
+function buscarInforme(event)
+	{
+	if(event.which == 13 || event.keyCode == 13 || event==0)
+		{	
+		var filtroDetalleTipoBoolean = document.getElementById("filtroDetalleTipoBoolean").value;
+		var respuestaBoolean = document.getElementById("respuestaBoolean").value;
+		var filtroDetalleTipo = document.getElementById("filtroDetalleTipo").value;
+		var respuestaTexto = document.getElementById("respuestaTexto").value;
+		
+		xhttp = new XMLHttpRequest();			
+		xhttp.onreadystatechange = function()	
+			{					
+			if (this.readyState == 4 && this.status == 200)
+				{
+				document.getElementById("listado").innerHTML = this.responseText;
+				}						
+			};
 
+		xhttp.open("GET", "php/proceso/buscarInforme.php?filtroDetalleTipoBoolean="+filtroDetalleTipoBoolean
+													+"&respuestaBoolean="+respuestaBoolean
+													+"&filtroDetalleTipo="+filtroDetalleTipo
+													+"&respuestaTexto="+respuestaTexto, true);								
+		xhttp.send();
+		}
+	}
+	
+	
 //====================================================================================================
 function elegirProceso(cod_persona,cod_proceso)
 	{	

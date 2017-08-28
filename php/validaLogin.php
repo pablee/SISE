@@ -2,11 +2,12 @@
 session_start();
 include "../clases/database.php";
 
+/*
 if($_SESSION['login'] == FALSE)
 		{
-		header("location: index.php");	
+		header("location: ../index.php");	
 		}
-
+*/
 $usuario = $_POST['usuario'];
 $password = $_POST['password'];
 if(isset($_POST['recordar']))
