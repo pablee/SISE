@@ -21,3 +21,21 @@ LEFT JOIN ref_persona_condicion AS COND_OPO
 	ON (PCP_OPO.cod_persona_condicion = COND_OPO.cod_persona_condicion)
 		, ref_proceso_tipo AS PRO_T
 WHERE PRO.cod_proceso_tipo = PRO_T.cod_proceso_tipo
+  AND (PRO.cod_proceso IN 
+						(
+						SELECT cod_proceso
+						FROM bsd_detalle
+						WHERE 	(	
+								cod_detalle_tipo = 1/*$filtroDetalleTipoBoolean*/
+								AND 
+                                valor = 1/*'$respuestaBoolean'*/
+                                )
+						   OR 	(
+								cod_detalle_tipo = 1/*$filtroDetalleTipo*/
+                                AND
+                                valor = 1 /*'$respuestaTexto'*/
+                                )
+						)
+	   OR (1=1 /*$filtroDetalleTipoBoolean == null*/)
+	   OR (1=1 /*$filtroDetalleTipo == null*/)
+       )
