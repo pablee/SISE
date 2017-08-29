@@ -12,6 +12,7 @@ $usr_ult_modif = $_SESSION['cod_usuario'];
 $fec_ult_modif = $_SESSION['fecha'];
 
 /*
+$_SESSION["personas"] viene de "agregarPersonaProceso.php"
 foreach ($_SESSION["personas"] as $pers)
 	{
 	echo "contador(posicion):".$i."/";

@@ -29,6 +29,18 @@
 	<!--Bootstrap local-->
 	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/legal.css">
+	<style>
+	.caratula
+	{
+		margin-top: 0px;
+		margin-bottom: 0px;
+		font-size: 18px;
+		font-family: inherit;
+		font-weight: 500;
+		line-height: 1.1;
+		color: inherit;
+	}
+	</style>
 	<script src="jquery/jquery.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 	<script src="bootstrap/js/bootstrap.min.js"></script>
@@ -41,9 +53,15 @@
 	<!--Barra de navegacion -->
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
-			<div class="navbar-header">
+			<div class="navbar-header">				
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+				 <span class="icon-bar"></span>
+				 <span class="icon-bar"></span>
+				 <span class="icon-bar"></span>                        
+			    </button>
 				<a class="navbar-brand" href="home.php">SISE</a>
 			</div>
+		  <div class="collapse navbar-collapse" id="myNavbar"> 	
 			<ul class="nav navbar-nav">
 				<li class=""><a href="home.php">Home</a></li>
 				<li><a href="#" onclick="cargarFormulario(1)">Persona</a></li>
@@ -64,6 +82,7 @@
 					</a>
 				</li>	
 			</ul>
+		  </div>	
 		</div>
 	</nav>
 

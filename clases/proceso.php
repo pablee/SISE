@@ -494,7 +494,7 @@ class Proceso
 	{
 		$db = new database();
 		$db->conectar();
-		
+		/*
 		$consulta ="SELECT 
 						PRO.cod_proceso, 
 						PRO.proceso, 
@@ -511,9 +511,78 @@ class Proceso
 					JOIN ref_persona_condicion PC ON PCP.cod_persona_condicion=PC.cod_persona_condicion 
 					JOIN bsd_persona PER ON PCP.cod_persona=PER.cod_persona 
 					WHERE PRO.usr_ult_modif='$usr_ult_modif';";	 
+		*/
+					
+		$consulta = "SELECT PRO.cod_proceso, PRO.proceso, PRO.observaciones, PRO.ultimas_novedades, PRO.cod_proceso_tipo, PRO_T.proceso_tipo
+							, PCP_CLI.cod_persona AS cod_persona_cliente
+                            , PER_CLI.nombres AS cliente_nombre
+                            , PER_CLI.apellidos AS cliente_apellido
+                            , PER_CLI.razon_social AS cliente_rs
+                            , PER_CLI.dni AS cliente_dni
+                            , PER_CLI.celular AS cliente_celular
+                            , PCP_CLI.cod_persona_condicion AS cliente_cod_persona_condicion
+                            , COND_CLI.persona_condicion AS cliente_persona_condicion
+							, PCP_OPO.cod_persona AS oponente_cod_persona
+							, PER_OPO.nombres AS oponente_nombres
+                            , PER_OPO.apellidos AS oponente_apellidos
+                            , PER_OPO.razon_social AS oponente_rs
+                            , PER_OPO.dni AS oponente_dni
+                            , PER_OPO.celular AS oponente_celular
+							, PCP_OPO.cod_persona_condicion AS oponente_cod_persona_condicion
+                            , COND_OPO.persona_condicion AS oponente_persona_condicion
+						FROM bsd_proceso AS PRO 
+						LEFT JOIN rel_pers_cond_proc AS PCP_CLI 
+							ON (PRO.cod_proceso = PCP_CLI.cod_proceso AND PCP_CLI.cod_persona_condicion = 2)
+						LEFT JOIN rel_pers_cond_proc AS PCP_OPO 
+							ON (PRO.cod_proceso = PCP_OPO.cod_proceso AND (PCP_OPO.cod_persona_condicion = 3 OR PCP_OPO.cod_persona_condicion = 4))
+						LEFT JOIN bsd_persona AS PER_CLI 
+							ON (PCP_CLI.cod_persona = PER_CLI.cod_persona)
+						LEFT JOIN bsd_persona AS PER_OPO
+							ON (PCP_OPO.cod_persona = PER_OPO.cod_persona)
+						LEFT JOIN ref_persona_condicion AS COND_CLI
+							ON (PCP_CLI.cod_persona_condicion = COND_CLI.cod_persona_condicion)
+						LEFT JOIN ref_persona_condicion AS COND_OPO
+							ON (PCP_OPO.cod_persona_condicion = COND_OPO.cod_persona_condicion)
+								, ref_proceso_tipo AS PRO_T
+						WHERE PRO.cod_proceso_tipo = PRO_T.cod_proceso_tipo
+						AND PRO.usr_ult_modif='$usr_ult_modif';";			
+						
 		// echo $consulta;
 		$resultado = mysqli_query($db->conexion, $consulta) or die ("No se pueden cargar los datos del informe.");
-				
+		while($datos = mysqli_fetch_assoc($resultado))
+		{
+			echo '	 
+			<div class="row"> 
+			   <div class="panel panel-default">
+					<div class="panel-heading">
+						<span class="caratula">Carátula:<button type="button" class="btn btn-link btn-lg" onclick="elegirProceso(\''.$datos["cod_persona_cliente"].'\',\''.$datos["cod_proceso"].'\')">'.$datos["proceso"].'</button></span>					
+						<br>
+						<b>Tipo de proceso: '.$datos["proceso_tipo"].'</b>						
+					</div>
+					<div class="panel-body">
+						<h4>'.$datos["cliente_persona_condicion"].'</h4>
+						<p>'.$datos["cliente_apellido"].' '.$datos["cliente_nombre"].'</p>
+						<p>'.$datos["cliente_rs"].'</p>
+						<p>Documento: '.$datos["cliente_dni"].'</p>
+						<p>Celular: '.$datos["cliente_celular"].'</p>									
+					</div>					
+					<div class="panel-body">
+						<h4>'.$datos["oponente_persona_condicion"].'</h4>
+						<p>'.$datos["oponente_apellidos"].' '.$datos["oponente_nombres"].'</p>
+						<p>'.$datos["oponente_rs"].'</p>
+						<p>Documento: '.$datos["oponente_dni"].'</p>
+						<p>Celular: '.$datos["oponente_celular"].'</p>
+					</div>					
+					<div class="panel-body">
+						'.$datos["observaciones"].'
+						<br>
+						'.$datos["ultimas_novedades"].'
+					</div>
+			   </div>
+			</div>
+			';
+		}
+		/*		
 		while($datos = mysqli_fetch_assoc($resultado))
 		{
 			echo '	 
@@ -529,7 +598,7 @@ class Proceso
 			</div>
 			';
 		}
-		  
+		*/  
 		$db->close();
 	}			
 	
@@ -548,22 +617,32 @@ class Proceso
 		////////////////////////////////////////////////////////
 		///// ACA VA LA CONSULTA PARA FILTRAR LOS INFORMES /////
 		////////////////////////////////////////////////////////
+		/*
 		$consulta ="SELECT * 
 					FROM bsd_detalle
 					WHERE (cod_detalle_tipo = $filtroDetalleTipoBoolean
 					AND  valor = '$respuestaBoolean')
 					OR (cod_detalle_tipo = $filtroDetalleTipo
 					AND  valor = '$respuestaTexto');";
-
-		$consulta = "SELECT 	  PRO.cod_proceso, PRO.proceso, PRO.ultimas_novedades
-								, PRO.cod_proceso_tipo, PRO_T.proceso_tipo
-								, PCP_CLI.cod_persona
-						        , PER_CLI.nombres, PER_CLI.apellidos, PER_CLI.razon_social, PER_CLI.dni, PER_CLI.celular
-						        , PCP_CLI.cod_persona_condicion, COND_CLI.persona_condicion
-						        , PCP_OPO.cod_persona
-						        , PER_OPO.nombres, PER_OPO.apellidos, PER_OPO.razon_social, PER_OPO.dni, PER_OPO.celular
-						        , PCP_OPO.cod_persona_condicion, COND_OPO.persona_condicion
-						FROM 	  bsd_proceso AS PRO 
+*/
+		$consulta = "SELECT PRO.cod_proceso, PRO.proceso, PRO.observaciones, PRO.ultimas_novedades, PRO.cod_proceso_tipo, PRO_T.proceso_tipo
+							, PCP_CLI.cod_persona AS cod_persona_cliente
+                            , PER_CLI.nombres AS cliente_nombre
+                            , PER_CLI.apellidos AS cliente_apellido
+                            , PER_CLI.razon_social AS cliente_rs
+                            , PER_CLI.dni AS cliente_dni
+                            , PER_CLI.celular AS cliente_celular
+                            , PCP_CLI.cod_persona_condicion AS cliente_cod_persona_condicion
+                            , COND_CLI.persona_condicion AS cliente_persona_condicion
+							, PCP_OPO.cod_persona AS oponente_cod_persona
+							, PER_OPO.nombres AS oponente_nombres
+                            , PER_OPO.apellidos AS oponente_apellidos
+                            , PER_OPO.razon_social AS oponente_rs
+                            , PER_OPO.dni AS oponente_dni
+                            , PER_OPO.celular AS oponente_celular
+							, PCP_OPO.cod_persona_condicion AS oponente_cod_persona_condicion
+                            , COND_OPO.persona_condicion AS oponente_persona_condicion
+						FROM bsd_proceso AS PRO 
 						LEFT JOIN rel_pers_cond_proc AS PCP_CLI 
 							ON (PRO.cod_proceso = PCP_CLI.cod_proceso AND PCP_CLI.cod_persona_condicion = 2)
 						LEFT JOIN rel_pers_cond_proc AS PCP_OPO 
@@ -578,41 +657,67 @@ class Proceso
 							ON (PCP_OPO.cod_persona_condicion = COND_OPO.cod_persona_condicion)
 								, ref_proceso_tipo AS PRO_T
 						WHERE PRO.cod_proceso_tipo = PRO_T.cod_proceso_tipo
-						  AND (PRO.cod_proceso IN 
+						AND (PRO.cod_proceso IN 
 												(
 												SELECT cod_proceso
 												FROM bsd_detalle
 												WHERE 	(	
-														cod_detalle_tipo = $filtroDetalleTipoBoolean
+														cod_detalle_tipo = '$filtroDetalleTipoBoolean'
 														AND 
 						                                valor = '$respuestaBoolean'
 						                                )
 												   OR 	(
-														cod_detalle_tipo = $filtroDetalleTipo
+														cod_detalle_tipo = '$filtroDetalleTipo'
 						                                AND
-						                                valor = 1 '$respuestaTexto'
+						                                valor = '$respuestaTexto'
 						                                )
 												)
-							   OR ($filtroDetalleTipoBoolean = null)
-							   OR ($filtroDetalleTipo = null)
-       );";
-
+						
+						);";
+						//Tuve que sacar esto porque al tener campos del filtro en blanco rompe la consulta					
+						/*
+						OR ($filtroDetalleTipoBoolean = null)
+						OR ($filtroDetalleTipo = null)
+						*/
+		
+		
 		//echo $consulta;
 		$resultado = mysqli_query($db->conexion, $consulta) or die ("No se pueden filtrar los datos del informe.");
-				
+		
+		if(mysqli_num_rows($resultado)==0)
+		{
+			echo 'No existen informes con estos datos';
+		}		
+		
 		while($datos = mysqli_fetch_assoc($resultado))
 		{
 			echo '	 
 			<div class="row"> 
 			   <div class="panel panel-default">
 					<div class="panel-heading">
-						<button type="button" class="btn btn-link" onclick="elegirProceso(\''.$datos["cod_persona"].'\',\''.$datos["cod_proceso"].'\')">'.$datos["proceso"].'</button>						
+						<span class="caratula">Carátula:<button type="button" class="btn btn-link btn-lg" onclick="elegirProceso(\''.$datos["cod_persona_cliente"].'\',\''.$datos["cod_proceso"].'\')">'.$datos["proceso"].'</button></span>					
+						<br>
+						<b>Tipo de proceso: '.$datos["proceso_tipo"].'</b>						
 					</div>
-					<div class="panel-body">Pregunta</div>
-					'.$datos["cod_detalle_tipo"].'
-					<div class="panel-body">Respuesta</div>
-					'.$datos["valor"].'
-					<div class="panel-body">'.$datos["observaciones"].'</div>
+					<div class="panel-body">
+						<h4>'.$datos["cliente_persona_condicion"].'</h4>
+						<p>'.$datos["cliente_apellido"].' '.$datos["cliente_nombre"].'</p>
+						<p>'.$datos["cliente_rs"].'</p>
+						<p>Documento: '.$datos["cliente_dni"].'</p>
+						<p>Celular: '.$datos["cliente_celular"].'</p>									
+					</div>					
+					<div class="panel-body">
+						<h4>'.$datos["oponente_persona_condicion"].'</h4>
+						<p>'.$datos["oponente_apellidos"].' '.$datos["oponente_nombres"].'</p>
+						<p>'.$datos["oponente_rs"].'</p>
+						<p>Documento: '.$datos["oponente_dni"].'</p>
+						<p>Celular: '.$datos["oponente_celular"].'</p>
+					</div>					
+					<div class="panel-body">
+						'.$datos["observaciones"].'
+						<br>
+						'.$datos["ultimas_novedades"].'
+					</div>
 			   </div>
 			</div>
 			';
