@@ -3,6 +3,7 @@ include_once "database.php";
 include_once "proceso_tipo.php";
 include_once "persona.php";
 include_once "detalle_tipo.php";
+include_once "observaciones.php";
 
 class Proceso	
 {
@@ -119,7 +120,7 @@ class Proceso
 
 	
 /*=================================================================================================*/
-	public function guardarProceso($proceso, $cod_proceso_tipo, $observaciones, $usr_ult_modif, $fec_ult_modif)
+	public function guardarProceso($proceso, $cod_proceso_tipo, $observaciones, $ultimas_novedades, $usr_ult_modif, $fec_ult_modif)
 	{	
 		$db = new database();
 		$db->conectar();
@@ -378,16 +379,19 @@ class Proceso
 		echo '<br><label for="proceso"> Carátula </label>
 			  <input id="proceso" name="proceso" type="text" class="form-control" placeholder="Descripcion del proceso" value="'.$procesos[0]["proceso"].'"></input>';	
 		
-		echo '<br><div id="detalleTipo">
-				
+		echo '<br>
+			  <div id="detalleTipo">
 			  </div>';
 		
+		$observaciones = new Observacion();
+		$observaciones->buscarObservacionNovedadProceso($cod_proceso);
+		/*
 		echo '<br><label for="observaciones"> Observaciones </label>
 			  <textarea id="observaciones" name="observaciones" type="text" class="form-control" value="'.$procesos[0]["observaciones"].'" rows="5" cols="60"></textarea>';	
 
 		echo '<br><label for="ultimas_novedades"> Ultimas novedades </label>
 			  <textarea id="ultimas_novedades" name="ultimas_novedades" type="text" class="form-control" value="'.$procesos[0]["ultimas_novedades"].'" rows="5" cols="60"></textarea>';	
-
+		*/
 		//Buscar las preguntas y respuestas para la persona buscada en el proceso elegido.
 		echo '<br>';
 
@@ -411,13 +415,21 @@ class Proceso
 		//echo $observaciones;
 		//echo $usr_ult_modif; 
 		//echo $fec_ult_modif;
-		
+		if($observaciones!="")
+			{
+			$observaciones="<br>".$observaciones;
+			}
+		if($ultimas_novedades!="")
+			{
+			$ultimas_novedades="<br>".$ultimas_novedades;
+			}
+			
 		$consulta = "UPDATE bsd_proceso 
 					SET 
 						proceso='$proceso', 
-						cod_proceso_tipo='$cod_proceso_tipo', 
-						observaciones='$observaciones', 
-						ultimas_novedades='$ultimas_novedades'
+						cod_proceso_tipo='$cod_proceso_tipo', 						
+						observaciones=CONCAT(observaciones, '$observaciones'),					
+						ultimas_novedades=CONCAT(ultimas_novedades, '$ultimas_novedades'),
 						usr_ult_modif='$usr_ult_modif', 
 						fec_ult_modif='$fec_ult_modif'
 					WHERE cod_proceso='$cod_proceso';";

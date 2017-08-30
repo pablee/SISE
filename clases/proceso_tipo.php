@@ -25,8 +25,8 @@ class ProcesoTipo
 		or die ("No se encontraron los tipos de carátula.");
 		
 		echo '<label for="cod_proceso_tipo"> Tipo de proceso </label>
-			  <select id="cod_proceso_tipo" name="cod_proceso_tipo" class="form-control" onchange="verPreguntasProceso(this.value)">';	
-			//echo "<option value=1>Elegir proceso</option>";	
+			  <select id="cod_proceso_tipo" name="cod_proceso_tipo" class="form-control" onchange="verPreguntasProceso(this.value)" required>';	
+			echo '<option value="">Elegir proceso</option>';	
 		while($datos = mysqli_fetch_assoc($resultado))
 		{
 			echo "<option value=".$datos['cod_proceso_tipo'].">".$datos['proceso_tipo']."</option>";							

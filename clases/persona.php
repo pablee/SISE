@@ -83,10 +83,10 @@ class Persona
 					echo '<label for="'.$campo.'"> '.ucwords($campo).' </label>';		
 					echo '<div class="radio">
 							<label class="radio-inline">
-								<input type="radio" id="sexo" name="sexo" value="m"> Masculino
+								<input type="radio" id="m" name="sexo" value="m"> Masculino
 							</label>
 							<label class="radio-inline">
-								<input type="radio" id="sexo" name="sexo" value="f"> Femenino
+								<input type="radio" id="f" name="sexo" value="f"> Femenino
 							</label>
 						 </div>';		
 					break;
@@ -406,10 +406,10 @@ class Persona
 									{		
 									echo '<div class="radio">
 											<label class="radio-inline">
-												<input type="radio" id="sexo" name="sexo" value="m" checked="checked"> Masculino
+												<input type="radio" id="m" name="sexo" value="m" checked="checked"> Masculino
 											</label>
 											<label class="radio-inline">
-												<input type="radio" id="sexo" name="sexo" value="f"> Femenino
+												<input type="radio" id="f" name="sexo" value="f"> Femenino
 											</label>
 										 </div>';
 									}
@@ -417,10 +417,10 @@ class Persona
 										{
 										echo '<div class="radio">
 												<label class="radio-inline">
-													<input type="radio" id="sexo" name="sexo" value="m"> Masculino
+													<input type="radio" id="m" name="sexo" value="m"> Masculino
 												</label>
 												<label class="radio-inline">
-													<input type="radio" id="sexo" name="sexo" value="f" checked="checked"> Femenino
+													<input type="radio" id="f" name="sexo" value="f" checked="checked"> Femenino
 												</label>
 											 </div>';
 										}

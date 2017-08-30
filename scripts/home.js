@@ -46,7 +46,16 @@ function guardarPersona()
 	var dni=document.getElementById("dni").value;
 	var cuil=document.getElementById("cuil").value;
 	var fec_nacimiento=document.getElementById("fec_nacimiento").value;
-	var sexo=document.getElementById("sexo").value;
+	
+	if (document.getElementById('m').checked) 
+	{	
+	var sexo=document.getElementById("m").value;
+	}
+	else if (document.getElementById('f').checked) 
+		{	
+		var sexo=document.getElementById("f").value;
+		}
+	
 	var cod_nacionalidad=document.getElementById("cod_nacionalidad").value;
 	var cod_estado_civil=document.getElementById("cod_estado_civil").value;
 	var telefono=document.getElementById("telefono").value;
@@ -248,6 +257,8 @@ function guardarProceso(cod_proceso)
 	var proceso = document.getElementById("proceso").value;	
 	var cod_proceso_tipo = document.getElementById("cod_proceso_tipo").value;	
 	var observaciones = document.getElementById("observaciones").value;	
+	var ultimas_novedades = document.getElementById("ultimas_novedades").value;	
+	alert(ultimas_novedades);
 	
 	xhttp = new XMLHttpRequest();			
 	xhttp.onreadystatechange = function()	
@@ -257,7 +268,7 @@ function guardarProceso(cod_proceso)
 					document.getElementById("listado").innerHTML=this.responseText;
 					}						
 			};
-	xhttp.open("GET", "php/proceso/guardarProceso.php?cod_proceso="+cod_proceso+"&proceso="+proceso+"&cod_proceso_tipo="+cod_proceso_tipo+"&observaciones="+observaciones, true);								
+	xhttp.open("GET", "php/proceso/guardarProceso.php?cod_proceso="+cod_proceso+"&proceso="+proceso+"&cod_proceso_tipo="+cod_proceso_tipo+"&observaciones="+observaciones+"&ultimas_novedades="+ultimas_novedades, true);								
 	xhttp.send();	
 	}	
 
