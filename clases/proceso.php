@@ -557,7 +557,7 @@ class Proceso
 							ON (PCP_OPO.cod_persona_condicion = COND_OPO.cod_persona_condicion)
 								, ref_proceso_tipo AS PRO_T
 						WHERE PRO.cod_proceso_tipo = PRO_T.cod_proceso_tipo
-						AND PRO.usr_ult_modif='$usr_ult_modif';";			
+						  AND PRO.usr_ult_modif='$usr_ult_modif';";			
 						
 		// echo $consulta;
 		$resultado = mysqli_query($db->conexion, $consulta) or die ("No se pueden cargar los datos del informe.");
@@ -681,7 +681,7 @@ class Proceso
 												   OR 	(
 														cod_detalle_tipo = '$filtroDetalleTipo'
 						                                AND
-						                                valor = '$respuestaTexto'
+						                                valor LIKE '%$respuestaTexto%'
 						                                )
 												)
 						

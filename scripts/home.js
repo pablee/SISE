@@ -258,7 +258,7 @@ function guardarProceso(cod_proceso)
 	var cod_proceso_tipo = document.getElementById("cod_proceso_tipo").value;	
 	var observaciones = document.getElementById("observaciones").value;	
 	var ultimas_novedades = document.getElementById("ultimas_novedades").value;	
-	alert(ultimas_novedades);
+	//alert(ultimas_novedades);
 	
 	xhttp = new XMLHttpRequest();			
 	xhttp.onreadystatechange = function()	
