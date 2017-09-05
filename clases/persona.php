@@ -24,8 +24,8 @@ class Persona
 					"Teléfono",
 #					"Código postal",
 					"Profesión",
-					"Categoría",
-					"Observaciones",
+				//	"Categoría",
+				//	"Observaciones",
 					"Usr. última modif.",
 					"Fec. última modif."
 					);
@@ -52,6 +52,7 @@ class Persona
 								"observaciones"
 								);
 
+								
 //===============================================================================================
 	//Carga el formulario para ingresar una nueva persona.
 	public function formularioPersona()
@@ -136,6 +137,7 @@ class Persona
 			 ';
 		}		
 
+		
 //===============================================================================================
 	//Ingresa la persona cargada en el formulario persona.
 	public function guardarPersona($nombres, $apellidos, $razon_social, $cod_tipo_dni, $dni, $cuil, $fec_nacimiento, $sexo, $cod_nacionalidad, $cod_estado_civil, $telefono, $celular, $correo_personal_1, $correo_personal_2, $correo_laboral_1, $correo_laboral_2, $profesion, $cod_categoria, $observaciones, $usr_ult_modif, $fec_ult_modif)
@@ -194,6 +196,13 @@ class Persona
 						, '$fec_ult_modif');";
 			//echo $consulta;
 			$resultado = mysqli_query($db->conexion, $consulta) or die ("No se pudieron guardar los datos en la tabla persona.\n");
+			
+			echo '<h2>La persona '.$nombres." ".$apellidos.' fue ingresada con exito</h2>';
+			echo '
+				 <a href="home.php">
+					<input type = "button" class = "btn btn-success" value = "Volver">
+				 </a>
+				 ';	
 			}
 			else
 				{
@@ -202,6 +211,7 @@ class Persona
 		$db->close();
 	}
 
+	
 //===============================================================================================
 	//Actualiza los datos de la persona.
 	public function actualizarPersona($nombres, $apellidos, $razon_social, $cod_tipo_dni, $dni, $cuil, $fec_nacimiento, $sexo, $cod_nacionalidad, $cod_estado_civil, $telefono, $celular, $correo_personal_1, $correo_personal_2, $correo_laboral_1, $correo_laboral_2, $profesion, $cod_categoria, $observaciones, $usr_ult_modif, $fec_ult_modif)
@@ -241,6 +251,7 @@ class Persona
 		$db->close();
 		}
 
+		
 //===============================================================================================
 	//Busca una persona en la base de datos y la muestra.
 	public function buscarPersona($buscar)
@@ -268,13 +279,15 @@ class Persona
 			$buscarPersonaNombre = $buscar[0];
 			$buscarPersonaApellido = $buscar[1];
 			$buscarPersonaDNI = $buscar[2];
-		
+			
 			$consulta = "SELECT * 
 						 FROM bsd_persona PER 
 						 JOIN rel_persona_direccion RPD 
 						 ON PER.cod_persona = RPD.cod_persona 
 						 JOIN bsd_direccion DIR 
 						 ON RPD.cod_direccion = DIR.cod_direccion 
+						 JOIN bsd_usuario USR
+						 ON PER.usr_ult_modif = USR.cod_usuario 
 						 WHERE ";
 			
 			//Averiguo por que campos esta buscando
@@ -369,9 +382,9 @@ class Persona
 						#echo "<td>".$datos["estado_civil"]."</td>";
 						echo "<td>".$datos["telefono"]."</td>";
 						echo "<td>".$datos["profesion"]."</td>";
-						echo "<td>".$datos["cod_categoria"]."</td>";
-						echo "<td>".$datos["observaciones"]."</td>";
-						echo "<td>".$datos["usr_ult_modif"]."</td>";
+						//echo "<td>".$datos["cod_categoria"]."</td>";
+						//echo "<td>".$datos["observaciones"]."</td>";
+						echo "<td>".$datos["usuario"]."</td>";
 						echo "<td>".$datos["fec_ult_modif"]."</td>";
 						echo '<td><button type="button" class="btn btn-link" value="'.$datos["cod_persona"].'" onclick="elegirPersona(this.value)">Elegir</button></td>';
 					echo "</tr>";
@@ -478,6 +491,8 @@ class Persona
 					$db->close();
 					}
 		}
+		
+		
 //===============================================================================================		
 	//Busca personas en un proceso.
 	public function buscarPersonaProceso($buscar,$persona_condicion)
@@ -594,7 +609,7 @@ class Persona
 			}
 			else
 				{
-				echo "La persona no existe, por favor verifique que los datos ingresados sean el correcto.";
+				echo "La persona no existe, por favor verifique que los datos ingresados sean correctos.";
 				}
 		$db->close();
 		}			
@@ -728,6 +743,7 @@ class Persona
 		return $personas;
 		}
 
+		
 //===============================================================================================	
 	//Busca el codigo de la persona en la tabla persona(se utiliza en la edicion de proceso).
 	public function buscarCodigoPersona($persona)

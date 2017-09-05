@@ -56,7 +56,7 @@ class Proceso
 			  <div class="form-inline">
 				<div class="form-group">
 					<label for="agregar">Condición:</label>	
-					<select id="persona_condicion" name="persona_condicion" class="form-control" onchange="habilitarBusqueda()">';
+					<select id="persona_condicion" name="persona_condicion" class="form-control" onchange="habilitarBusqueda()" required>';
 					$i = 0;
 					foreach($this->condiciones as $condicion)
 					{
@@ -68,6 +68,11 @@ class Proceso
 					<input id="buscarPersonaProcesoApellido" name="buscarPersonaProcesoApellido" type="text" class="form-control" placeholder="Buscar por apellido" onkeypress="buscarPersonaProceso(event)" disabled></input>
 					<input id="buscarPersonaProcesoNombre" name="buscarPersonaProcesoNombre" type="text" class="form-control" placeholder="Buscar por nombre" onkeypress="buscarPersonaProceso(event)" disabled></input>
 					<input id="buscarPersonaProcesoDNI" name="buscarPersonaProcesoDNI" type="text" class="form-control" placeholder="Buscar por DNI" onkeypress="buscarPersonaProceso(event)" disabled></input>
+			';
+			
+		//Input Hidden se usa para validar que el usuario ingrese al menos una persona en el proceso.
+		echo'
+					<input id="existen_personas" name="existen_personas" type="hidden" class="form-control" value="no"></input>
 					<button type="button" class="btn btn-info" onclick="buscarPersonaProceso(0)"> 
 						<span class="glyphicon glyphicon-search"></span> 
 					</button>
@@ -76,7 +81,7 @@ class Proceso
 			  <form action="php/detalle/guardarDetalle.php" method="POST">
 				<br>
 				<div class="table-responsive">
-					<table class="table table-striped">
+					<table class="table table-default">
 						<thead>
 							<tr>
 								<th> Nombres/Razón Social </th>
@@ -367,7 +372,9 @@ class Proceso
 		echo '			</tbody>
 					</table>
 				</div>'; 		
-		
+				
+		//Input Hidden se usa para validar que el usuario ingrese al menos una persona en el proceso.
+		echo '<input id="existen_personas" name="existen_personas" type="hidden" class="form-control" value="si"></input>';
 		echo '<input id="accion" name="accion" type="hidden" class="form-control" value="actualizar"></input>';	
 		echo '<input id="cod_persona" name="cod_persona" type="hidden" class="form-control" value="'.$cod_persona.'"></input>';	
 		echo '<input id="cod_proceso" name="cod_proceso" type="hidden" class="form-control" value="'.$procesos[0]["cod_proceso"].'"></input>';	

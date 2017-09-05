@@ -62,13 +62,13 @@ else if($accion=="nuevo_ingreso")
 	$direccion->guardarDireccion($dni,$calle,$numero,$piso,$departamento,$torre,$cod_localidad,$cod_partido,$cod_provincia,$codigo_postal,$usr_ult_modif,$fec_ult_modif);
 	}
 
+/*
 echo '<h2>La persona '.$nombres." ".$apellidos.' fue '.$accion.' con exito</h2>';
 echo '
 	 <a href="home.php">
 		<input type = "button" class = "btn btn-success" value = "Volver">
 	 </a>
 	 ';		
-
-//echo "<p>".$nombres.$apellidos."</p>";
+*/
 
 ?>

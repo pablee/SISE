@@ -134,7 +134,7 @@ class Direccion
 			or die ("No se pudieron guardar los datos en la tabla direccion.\n");
 			
 			$id_insertado = mysqli_insert_id($db->conexion);
-			echo $id_insertado;
+			//echo $id_insertado;
 
 		//3-Se requiere guardar el registro que relaciona la dirección guardada con la persona correspondiente
 			$consulta = "	INSERT INTO rel_persona_direccion(

@@ -204,6 +204,7 @@ function buscarProceso(event)
 		}
 	}
 
+	
 //====================================================================================================
 function buscarInforme(event)
 	{
@@ -252,25 +253,32 @@ function elegirProceso(cod_persona,cod_proceso)
 
 //====================================================================================================
 function guardarProceso(cod_proceso)
-	{
+{
 	//alert(cod_proceso);
 	var proceso = document.getElementById("proceso").value;	
 	var cod_proceso_tipo = document.getElementById("cod_proceso_tipo").value;	
 	var observaciones = document.getElementById("observaciones").value;	
 	var ultimas_novedades = document.getElementById("ultimas_novedades").value;	
 	//alert(ultimas_novedades);
+	var existen_personas = document.getElementById("existen_personas").value;	
 	
+	if(existen_personas=='si')
+	{
 	xhttp = new XMLHttpRequest();			
 	xhttp.onreadystatechange = function()	
-			{					
-			if (this.readyState == 4 && this.status == 200)
-					{
-					document.getElementById("listado").innerHTML=this.responseText;
-					}						
-			};
+		{					
+		if (this.readyState == 4 && this.status == 200)
+				{
+				document.getElementById("listado").innerHTML=this.responseText;
+				}						
+		};
 	xhttp.open("GET", "php/proceso/guardarProceso.php?cod_proceso="+cod_proceso+"&proceso="+proceso+"&cod_proceso_tipo="+cod_proceso_tipo+"&observaciones="+observaciones+"&ultimas_novedades="+ultimas_novedades, true);								
-	xhttp.send();	
-	}	
+	xhttp.send();		
+	}
+	else{
+		alert("Se deben ingresar dos personas para poder guardar un proceso.");
+		}
+}	
 
 
 //====================================================================================================
@@ -293,6 +301,8 @@ function buscarPersonaProceso(event)
 		var buscarPersonaProcesoApellido = document.getElementById("buscarPersonaProcesoApellido").value;
 		var buscarPersonaProcesoDNI = document.getElementById("buscarPersonaProcesoDNI").value;
 		
+		document.getElementById("existen_personas").value = "si";
+		
 		xhttp = new XMLHttpRequest();			
 		xhttp.onreadystatechange = function()	
 			{					
@@ -307,7 +317,8 @@ function buscarPersonaProceso(event)
 											+"&buscarPersonaProcesoDNI="+buscarPersonaProcesoDNI	
 											+"&persona_condicion="+persona_condicion, true);
 		xhttp.send();	
-		//document.getElementById("persona_condicion").value='';
+		
+		
 		}
 	}		
 		
@@ -315,6 +326,7 @@ function buscarPersonaProceso(event)
 function agregarPersonaProceso(cod_persona)
 	{
 	var persona_condicion = document.getElementById("persona_condicion").value;		
+	document.getElementById("persona_condicion").value="Elegir";
 	
 	xhttp = new XMLHttpRequest();			
 	xhttp.onreadystatechange = function()	
@@ -328,7 +340,7 @@ function agregarPersonaProceso(cod_persona)
 			fila.innerHTML=persona;
 			}						
 		};
-
+	
 	xhttp.open("GET", "php/persona/agregarPersonaProceso.php?cod_persona="+cod_persona
 										+"&persona_condicion="+persona_condicion, true);
 	xhttp.send();		
