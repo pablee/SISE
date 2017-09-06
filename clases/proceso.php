@@ -180,6 +180,7 @@ class Proceso
 				   JOIN ref_proceso_tipo RPT ON PRO.cod_proceso_tipo = RPT.cod_proceso_tipo
 				   JOIN bsd_usuario U ON PRO.usr_ult_modif = U.cod_usuario
 				   WHERE PRO.usr_ult_modif='$user';";
+		//echo $consulta;
 
 		$resultado = mysqli_query($db->conexion, $consulta) or die ("No se pueden cargar los procesos.");
 		
@@ -244,20 +245,38 @@ class Proceso
 		$buscarPersonaDNI = $buscar[2];
 		$user = $_SESSION['cod_usuario'];
 		
-		$consulta = "SELECT PRO.cod_proceso, 
+		$consulta = "SELECT	PRO.cod_proceso, 
 							PRO.proceso, 
-							PER.cod_persona, 
-							PER.nombres, 
-							PER.apellidos, 
-							PER.dni 
+							PER_CLI.cod_persona, 
+							PER_CLI.nombres, 
+							PER_CLI.apellidos, 
+							PER_CLI.dni, 
+							PER_OPO.cod_persona, 
+							PER_OPO.nombres, 
+							PER_OPO.apellidos, 
+							PER_OPO.dni, 
+							PER_EMPL.cod_persona, 
+							PER_EMPL.nombres, 
+							PER_EMPL.apellidos, 
+							PER_EMPL.dni 
 
-					FROM rel_pers_cond_proc PCP 
-					JOIN bsd_persona PER ON PCP.cod_persona = PER.cod_persona 
-					JOIN bsd_proceso PRO ON PCP.cod_proceso = PRO.cod_proceso 
+					FROM bsd_proceso PRO
+                    LEFT JOIN rel_pers_cond_proc PCP_CLI ON PCP_CLI.cod_proceso = PRO.cod_proceso AND PCP_CLI.cod_persona_condicion = 2
+                    LEFT JOIN rel_pers_cond_proc PCP_OPO ON PCP_OPO.cod_proceso = PRO.cod_proceso AND PCP_CLI.cod_persona_condicion = 3
+                    LEFT JOIN rel_pers_cond_proc PCP_EMPL ON PCP_EMPL.cod_proceso = PRO.cod_proceso AND PCP_EMPL.cod_persona_condicion = 4
+					LEFT JOIN bsd_persona PER_CLI ON PCP_CLI.cod_persona = PER_CLI.cod_persona 
+					LEFT JOIN bsd_persona PER_OPO ON PCP_OPO.cod_persona = PER_OPO.cod_persona 
+					LEFT JOIN bsd_persona PER_EMPL ON PCP_EMPL.cod_persona = PER_EMPL.cod_persona 
 
-					WHERE PER.nombres LIKE '%$buscarPersonaNombre%'
-					   OR PER.apellidos LIKE '%$buscarPersonaApellido%'
-					   OR PER.dni = '$buscarPersonaDNI';";
+					WHERE PER_CLI.nombres LIKE '%$buscarPersonaNombre%'
+					   OR PER_CLI.apellidos LIKE '%$buscarPersonaApellido%'
+					   OR PER_CLI.dni = '$buscarPersonaDNI'
+                       OR PER_OPO.nombres LIKE '%$buscarPersonaNombre%'
+					   OR PER_OPO.apellidos LIKE '%$buscarPersonaApellido%'
+					   OR PER_OPO.dni = '$buscarPersonaDNI'
+                       OR PER_EMPL.nombres LIKE '%$buscarPersonaNombre%'
+					   OR PER_EMPL.apellidos LIKE '%$buscarPersonaApellido%'
+					   OR PER_EMPL.dni = '$buscarPersonaDNI';";
 		//echo $consulta;
 		$resultado = mysqli_query($db->conexion, $consulta) or die ("No se pueden cargar los procesos.");
 		
