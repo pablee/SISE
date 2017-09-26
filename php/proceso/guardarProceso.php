@@ -7,7 +7,7 @@ $cod_proceso = $_GET["cod_proceso"];
 $proceso = $_GET["proceso"];
 $cod_proceso_tipo = $_GET["cod_proceso_tipo"];
 $observaciones = $_GET["observaciones"];
-$ultimas_novedades = $_GET["ultimas_novedades"];
+echo $ultimas_novedades = $_GET["ultimas_novedades"];
 $usr_ult_modif = $_SESSION['cod_usuario'];
 $fec_ult_modif = $_SESSION['fecha'];
 

@@ -56,7 +56,7 @@ class Proceso
 			  <div class="form-inline">
 				<div class="form-group">
 					<label for="agregar">Condición:</label>	
-					<select id="persona_condicion" name="persona_condicion" class="form-control" onchange="habilitarBusqueda()" required>';
+					<select id="persona_condicion" name="persona_condicion" class="form-control" onchange="habilitarBusqueda()">';
 					$i = 0;
 					foreach($this->condiciones as $condicion)
 					{
@@ -68,11 +68,6 @@ class Proceso
 					<input id="buscarPersonaProcesoApellido" name="buscarPersonaProcesoApellido" type="text" class="form-control" placeholder="Buscar por apellido" onkeypress="buscarPersonaProceso(event)" disabled></input>
 					<input id="buscarPersonaProcesoNombre" name="buscarPersonaProcesoNombre" type="text" class="form-control" placeholder="Buscar por nombre" onkeypress="buscarPersonaProceso(event)" disabled></input>
 					<input id="buscarPersonaProcesoDNI" name="buscarPersonaProcesoDNI" type="text" class="form-control" placeholder="Buscar por DNI" onkeypress="buscarPersonaProceso(event)" disabled></input>
-			';
-			
-		//Input Hidden se usa para validar que el usuario ingrese al menos una persona en el proceso.
-		echo'
-					<input id="existen_personas" name="existen_personas" type="hidden" class="form-control" value="no"></input>
 					<button type="button" class="btn btn-info" onclick="buscarPersonaProceso(0)"> 
 						<span class="glyphicon glyphicon-search"></span> 
 					</button>
@@ -81,7 +76,7 @@ class Proceso
 			  <form action="php/detalle/guardarDetalle.php" method="POST">
 				<br>
 				<div class="table-responsive">
-					<table class="table table-default">
+					<table class="table table-striped">
 						<thead>
 							<tr>
 								<th> Nombres/Razón Social </th>
@@ -180,7 +175,6 @@ class Proceso
 				   JOIN ref_proceso_tipo RPT ON PRO.cod_proceso_tipo = RPT.cod_proceso_tipo
 				   JOIN bsd_usuario U ON PRO.usr_ult_modif = U.cod_usuario
 				   WHERE PRO.usr_ult_modif='$user';";
-		//echo $consulta;
 
 		$resultado = mysqli_query($db->conexion, $consulta) or die ("No se pueden cargar los procesos.");
 		
@@ -245,38 +239,20 @@ class Proceso
 		$buscarPersonaDNI = $buscar[2];
 		$user = $_SESSION['cod_usuario'];
 		
-		$consulta = "SELECT	PRO.cod_proceso, 
+		$consulta = "SELECT PRO.cod_proceso, 
 							PRO.proceso, 
-							PER_CLI.cod_persona, 
-							PER_CLI.nombres, 
-							PER_CLI.apellidos, 
-							PER_CLI.dni, 
-							PER_OPO.cod_persona, 
-							PER_OPO.nombres, 
-							PER_OPO.apellidos, 
-							PER_OPO.dni, 
-							PER_EMPL.cod_persona, 
-							PER_EMPL.nombres, 
-							PER_EMPL.apellidos, 
-							PER_EMPL.dni 
+							PER.cod_persona, 
+							PER.nombres, 
+							PER.apellidos, 
+							PER.dni 
 
-					FROM bsd_proceso PRO
-                    LEFT JOIN rel_pers_cond_proc PCP_CLI ON PCP_CLI.cod_proceso = PRO.cod_proceso AND PCP_CLI.cod_persona_condicion = 2
-                    LEFT JOIN rel_pers_cond_proc PCP_OPO ON PCP_OPO.cod_proceso = PRO.cod_proceso AND PCP_CLI.cod_persona_condicion = 3
-                    LEFT JOIN rel_pers_cond_proc PCP_EMPL ON PCP_EMPL.cod_proceso = PRO.cod_proceso AND PCP_EMPL.cod_persona_condicion = 4
-					LEFT JOIN bsd_persona PER_CLI ON PCP_CLI.cod_persona = PER_CLI.cod_persona 
-					LEFT JOIN bsd_persona PER_OPO ON PCP_OPO.cod_persona = PER_OPO.cod_persona 
-					LEFT JOIN bsd_persona PER_EMPL ON PCP_EMPL.cod_persona = PER_EMPL.cod_persona 
+					FROM rel_pers_cond_proc PCP 
+					JOIN bsd_persona PER ON PCP.cod_persona = PER.cod_persona 
+					JOIN bsd_proceso PRO ON PCP.cod_proceso = PRO.cod_proceso 
 
-					WHERE PER_CLI.nombres LIKE '%$buscarPersonaNombre%'
-					   OR PER_CLI.apellidos LIKE '%$buscarPersonaApellido%'
-					   OR PER_CLI.dni = '$buscarPersonaDNI'
-                       OR PER_OPO.nombres LIKE '%$buscarPersonaNombre%'
-					   OR PER_OPO.apellidos LIKE '%$buscarPersonaApellido%'
-					   OR PER_OPO.dni = '$buscarPersonaDNI'
-                       OR PER_EMPL.nombres LIKE '%$buscarPersonaNombre%'
-					   OR PER_EMPL.apellidos LIKE '%$buscarPersonaApellido%'
-					   OR PER_EMPL.dni = '$buscarPersonaDNI';";
+					WHERE PER.nombres LIKE '%$buscarPersonaNombre%'
+					   OR PER.apellidos LIKE '%$buscarPersonaApellido%'
+					   OR PER.dni = '$buscarPersonaDNI';";
 		//echo $consulta;
 		$resultado = mysqli_query($db->conexion, $consulta) or die ("No se pueden cargar los procesos.");
 		
@@ -391,9 +367,7 @@ class Proceso
 		echo '			</tbody>
 					</table>
 				</div>'; 		
-				
-		//Input Hidden se usa para validar que el usuario ingrese al menos una persona en el proceso.
-		echo '<input id="existen_personas" name="existen_personas" type="hidden" class="form-control" value="si"></input>';
+		
 		echo '<input id="accion" name="accion" type="hidden" class="form-control" value="actualizar"></input>';	
 		echo '<input id="cod_persona" name="cod_persona" type="hidden" class="form-control" value="'.$cod_persona.'"></input>';	
 		echo '<input id="cod_proceso" name="cod_proceso" type="hidden" class="form-control" value="'.$procesos[0]["cod_proceso"].'"></input>';	
@@ -583,7 +557,7 @@ class Proceso
 							ON (PCP_OPO.cod_persona_condicion = COND_OPO.cod_persona_condicion)
 								, ref_proceso_tipo AS PRO_T
 						WHERE PRO.cod_proceso_tipo = PRO_T.cod_proceso_tipo
-						  AND PRO.usr_ult_modif='$usr_ult_modif';";			
+						AND PRO.usr_ult_modif='$usr_ult_modif';";			
 						
 		// echo $consulta;
 		$resultado = mysqli_query($db->conexion, $consulta) or die ("No se pueden cargar los datos del informe.");
@@ -707,7 +681,7 @@ class Proceso
 												   OR 	(
 														cod_detalle_tipo = '$filtroDetalleTipo'
 						                                AND
-						                                valor LIKE '%$respuestaTexto%'
+						                                valor = '$respuestaTexto'
 						                                )
 												)
 						
