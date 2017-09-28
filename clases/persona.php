@@ -142,12 +142,29 @@ class Persona
 		{
 		$db = new database();
 		$db->conectar();
-		$validacion = "	SELECT dni 
+		 
+		//En caso de no tener dni, le asigno un nuevo DNI usando el id.
+		$consulta="	SELECT * 
+					FROM `bsd_persona` 
+					ORDER BY cod_persona DESC 
+					LIMIT 1";		
+		$persona=mysqli_query($db->conexion, $consulta) 
+		or die ("No se encontro la persona en la actualizacion de la direccion.\n");		
+		$datos_persona=mysqli_fetch_assoc($persona);
+		$dni_nueva_persona=$datos_persona["cod_persona"];
+		
+		$validacion = "	SELECT dni
 						FROM bsd_persona 
 						WHERE dni = '$dni';";
+						
 		$resultado = mysqli_query($db->conexion, $validacion);
-		if (mysqli_num_rows($resultado) == 0) 
+		if (mysqli_num_rows($resultado) == 0 || $dni=="") 
 			{
+			if($dni=="")
+				{
+					$dni=$dni_nueva_persona+1;
+				}
+				
 			$consulta = "INSERT INTO bsd_persona (
 						  nombres
 						, apellidos
@@ -193,20 +210,35 @@ class Persona
 						, '$usr_ult_modif'
 						, '$fec_ult_modif');";
 			//echo $consulta;
-			$resultado = mysqli_query($db->conexion, $consulta) or die ("No se pudieron guardar los datos en la tabla persona.\n");
+			//$resultado = mysqli_query($db->conexion, $consulta) or die ("No se pudieron guardar los datos en la tabla persona.\n");
+			
+			if ($resultado = mysqli_query($db->conexion, $consulta) 
+				or die ("No se pudieron guardar los datos en la tabla persona.\n")) 
+			{
+				$cod_persona = mysqli_insert_id($db->conexion);				
+			}
+			
+			echo '<h2>La persona '.$nombres." ".$apellidos.' fue ingresada con exito</h2>';
+			echo '
+				 <a href="home.php">
+					<input type = "button" class = "btn btn-success" value = "Volver">
+				 </a>
+				 ';				
 			}
 			else
 				{
+				$cod_persona = "";				
 				echo "Ya existe una persona con el mismo número de documento.\n";
 				}
 		$db->close();
+		return $cod_persona;
 	}
 
 //===============================================================================================
 	//Actualiza los datos de la persona.
 	public function actualizarPersona($nombres, $apellidos, $razon_social, $cod_tipo_dni, $dni, $cuil, $fec_nacimiento, $sexo, $cod_nacionalidad, $cod_estado_civil, $telefono, $celular, $correo_personal_1, $correo_personal_2, $correo_laboral_1, $correo_laboral_2, $profesion, $cod_categoria, $observaciones, $usr_ult_modif, $fec_ult_modif)
 		{
-		$db = new database();
+		$db=new database();
 		$db->conectar();
 		
 		if($observaciones!="")
@@ -238,7 +270,21 @@ class Persona
 						fec_ult_modif='$fec_ult_modif'
 					WHERE dni='$dni';";
 		$resultado=mysqli_query($db->conexion, $consulta) or die ("No se actualizaron los datos en la tabla persona.\n");
+		
+		$consultar_id= "SELECT cod_persona
+						FROM bsd_persona
+						WHERE nombres='$nombres'
+						AND apellidos='$apellidos'
+						AND razon_social='$razon_social'
+						AND dni='$dni'
+						AND cuil='$cuil';";
+		
+		$resultado = mysqli_query($db->conexion, $consultar_id) or die ("No se pudieron guardar los datos en la tabla persona.\n");
+		$datos_persona=mysqli_fetch_assoc($resultado);
+		$cod_persona=$datos_persona["cod_persona"];		
+			
 		$db->close();
+		return $cod_persona;
 		}
 
 //===============================================================================================
@@ -285,7 +331,7 @@ class Persona
 				}
 			if($buscarPersonaNombre!="")
 				{
-				$buscarPorNombre="nombres LIKE '%$buscarPersonaNombre%'";
+				$buscarPorNombre="nombres LIKE '%$buscarPersonaNombre%' OR razon_social LIKE '%$buscarPersonaNombre%'";
 				$buscarNom=true;
 				}
 			if($buscarPersonaDNI!="")
@@ -499,7 +545,8 @@ class Persona
 		
 		$consulta = "SELECT	P.cod_persona, 
 							P.nombres, 
-							P.apellidos, 
+							P.apellidos,
+							P.razon_social,
 							TD.tipo_dni, 
 							P.dni
 					FROM bsd_persona P, 
@@ -514,7 +561,8 @@ class Persona
 			}
 		if($buscarPersonaNombre!="")
 			{
-			$buscarPorNombre="nombres LIKE '%$buscarPersonaNombre%'";
+			//$buscarPorNombre="nombres LIKE '%$buscarPersonaNombre%'";
+			$buscarPorNombre="nombres LIKE '%$buscarPersonaNombre%' OR razon_social LIKE '%$buscarPersonaNombre%'";
 			$buscarNom=true;
 			}
 		if($buscarPersonaDNI!="")
@@ -559,7 +607,8 @@ class Persona
 			$agregarPersona=false;
 			$consulta ="SELECT	P.cod_persona, 
 							P.nombres, 
-							P.apellidos, 
+							P.apellidos,
+							P.razon_social,
 							TD.tipo_dni, 
 							P.dni, 
 							PC.persona_condicion
@@ -578,7 +627,7 @@ class Persona
 			while($datos = mysqli_fetch_assoc($resultado))
 				{
 				echo '<tr>';
-				echo   '<td>'.$datos["nombres"].'</td>';
+				echo   '<td>'.$datos["nombres"].$datos["razon_social"].'</td>';
 				echo   '<td>'.$datos["apellidos"].'</td>';
 				echo   '<td>'.$datos["tipo_dni"].'</td>';
 				echo   '<td>'.$datos["dni"].'</td>';

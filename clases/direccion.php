@@ -81,13 +81,14 @@ class Direccion
 	1-Es necesario obtener el código de la persona a la que corresponde el domicilio. 
 	2-Es necesario almacenar la dirección. 
 	3-Se requiere guardar el registro que relaciona la dirección guardada con la persona correspondiente.*/
-	public function guardarDireccion($dni,$calle,$numero,$piso,$departamento,$torre,$cod_localidad,$cod_partido,$cod_provincia,$codigo_postal,$usr_ult_modif,$fec_ult_modif)
+	public function guardarDireccion($cod_persona,$dni,$calle,$numero,$piso,$departamento,$torre,$cod_localidad,$cod_partido,$cod_provincia,$codigo_postal,$usr_ult_modif,$fec_ult_modif)
 		{
 		$db = new database();
 		$db->conectar();
 		
 		//1-Es necesario obtener el código de la persona a la que corresponde el domicilio.
 		//-----MEJORAR-----Lo mejor sería que haya un objeto y sus métodos, pero bueno, a falta de eso lo hacemos directo.
+		/*
 		$consulta = "SELECT cod_persona
 					 FROM bsd_persona
 					 WHERE dni = '$dni';";
@@ -99,9 +100,10 @@ class Direccion
 			$datos = mysqli_fetch_assoc($resultado);
 			$cod_persona = $datos['cod_persona'];
 			//Sería necesario buscar los nombres de las localidades, partidos y provincias y agregar en domicilio.
-			$domicilio=$calle." ".$numero." ".$piso." ".$departamento." ".$torre;
 			
+		*/
 		//2-Es necesario almacenar la dirección.
+			$domicilio=$calle." ".$numero." ".$piso." ".$departamento." ".$torre;
 			$consulta = "INSERT INTO bsd_direccion (
 							  domicilio
 							, calle
@@ -134,7 +136,7 @@ class Direccion
 			or die ("No se pudieron guardar los datos en la tabla direccion.\n");
 			
 			$id_insertado = mysqli_insert_id($db->conexion);
-			echo $id_insertado;
+			//echo $id_insertado;
 
 		//3-Se requiere guardar el registro que relaciona la dirección guardada con la persona correspondiente
 			$consulta = "	INSERT INTO rel_persona_direccion(
@@ -151,7 +153,7 @@ class Direccion
 			
 			$resultado = mysqli_query($db->conexion, $consulta) 
 			or die ("No se pudieron guardar los datos de la relación entre direccion y la persona.");
-			}
+			//}
 		$db->close();
 		}
 	
@@ -216,20 +218,21 @@ class Direccion
 	
 	
 //====================================================================================================
-	public function actualizarDireccion($dni,$calle,$numero,$piso,$departamento,$torre,$cod_localidad,$cod_partido,$cod_provincia,$codigo_postal,$usr_ult_modif,$fec_ult_modif)
+	public function actualizarDireccion($cod_persona,$dni,$calle,$numero,$piso,$departamento,$torre,$cod_localidad,$cod_partido,$cod_provincia,$codigo_postal,$usr_ult_modif,$fec_ult_modif)
 		{
 		$domicilio=$calle." ".$numero;
 		$db = new database();
 		$db->conectar();
-		
+		/*
 		$consulta="SELECT *
 				   FROM bsd_persona
 				   WHERE dni='$dni';";
 		$persona=mysqli_query($db->conexion, $consulta) 
 		or die ("No se encontro la persona en la actualizacion de la direccion.\n");
+		
 		$datos_persona=mysqli_fetch_assoc($persona);
 		$cod_persona=$datos_persona["cod_persona"];
-		
+		*/
 		$consulta="SELECT *
 				   FROM rel_persona_direccion
 				   WHERE cod_persona='$cod_persona';";

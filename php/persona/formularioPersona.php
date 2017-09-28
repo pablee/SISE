@@ -15,7 +15,7 @@ echo'
 		</div>
 		
 		<div class="col-sm-2 col-md-2 col-lg-2">
-			<input id="buscarPersonaNombre" name="buscarPersonaNombre" type="text" class="form-control" placeholder="Buscar por nombre" onkeypress="buscarPersona(event)"></input>
+			<input id="buscarPersonaNombre" name="buscarPersonaNombre" type="text" class="form-control" placeholder="Buscar nombre o razon social" onkeypress="buscarPersona(event)"></input>
 		</div>
 		
 		<div class="col-sm-2 col-md-2 col-lg-2">
