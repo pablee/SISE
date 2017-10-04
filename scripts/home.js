@@ -204,6 +204,7 @@ function buscarProceso(event)
 		}
 	}
 
+	
 //====================================================================================================
 function buscarInforme(event)
 	{
@@ -252,13 +253,11 @@ function elegirProceso(cod_persona,cod_proceso)
 
 //====================================================================================================
 function guardarProceso(cod_proceso)
-	{
-	//alert(cod_proceso);
+	{	
 	var proceso = document.getElementById("proceso").value;	
 	var cod_proceso_tipo = document.getElementById("cod_proceso_tipo").value;	
 	var observaciones = document.getElementById("observaciones").value;	
 	var ultimas_novedades = document.getElementById("ultimas_novedades").value;	
-	alert(ultimas_novedades);
 	
 	xhttp = new XMLHttpRequest();			
 	xhttp.onreadystatechange = function()	

@@ -136,6 +136,7 @@ class Persona
 			 ';
 		}		
 
+		
 //===============================================================================================
 	//Ingresa la persona cargada en el formulario persona.
 	public function guardarPersona($nombres, $apellidos, $razon_social, $cod_tipo_dni, $dni, $cuil, $fec_nacimiento, $sexo, $cod_nacionalidad, $cod_estado_civil, $telefono, $celular, $correo_personal_1, $correo_personal_2, $correo_laboral_1, $correo_laboral_2, $profesion, $cod_categoria, $observaciones, $usr_ult_modif, $fec_ult_modif)
@@ -234,6 +235,7 @@ class Persona
 		return $cod_persona;
 	}
 
+	
 //===============================================================================================
 	//Actualiza los datos de la persona.
 	public function actualizarPersona($nombres, $apellidos, $razon_social, $cod_tipo_dni, $dni, $cuil, $fec_nacimiento, $sexo, $cod_nacionalidad, $cod_estado_civil, $telefono, $celular, $correo_personal_1, $correo_personal_2, $correo_laboral_1, $correo_laboral_2, $profesion, $cod_categoria, $observaciones, $usr_ult_modif, $fec_ult_modif)
@@ -287,6 +289,7 @@ class Persona
 		return $cod_persona;
 		}
 
+		
 //===============================================================================================
 	//Busca una persona en la base de datos y la muestra.
 	public function buscarPersona($buscar)
@@ -524,6 +527,8 @@ class Persona
 					$db->close();
 					}
 		}
+
+		
 //===============================================================================================		
 	//Busca personas en un proceso.
 	public function buscarPersonaProceso($buscar,$persona_condicion)
@@ -658,6 +663,7 @@ class Persona
 				
 		$consulta ="SELECT	P.cod_persona, 
 							P.nombres, 
+							P.razon_social,
 							P.apellidos, 
 							TD.tipo_dni, 
 							P.dni, 
@@ -675,7 +681,7 @@ class Persona
 				{
 				$cod_persona = $datos['cod_persona'];		
 				echo "<tr>";
-				echo   "<td>".$datos['nombres']."</td>
+				echo   "<td>".$datos['nombres'].$datos["razon_social"]."</td>
 						<td>".$datos['apellidos']."</td>
 						<td>".$datos['tipo_dni']."</td>
 						<td>".$datos['dni']."</td>
@@ -777,6 +783,7 @@ class Persona
 		return $personas;
 		}
 
+		
 //===============================================================================================	
 	//Busca el codigo de la persona en la tabla persona(se utiliza en la edicion de proceso).
 	public function buscarCodigoPersona($persona)

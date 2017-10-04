@@ -66,7 +66,7 @@ class Proceso
 		echo '		</select>	
 		
 					<input id="buscarPersonaProcesoApellido" name="buscarPersonaProcesoApellido" type="text" class="form-control" placeholder="Buscar por apellido" onkeypress="buscarPersonaProceso(event)" disabled></input>
-					<input id="buscarPersonaProcesoNombre" name="buscarPersonaProcesoNombre" type="text" class="form-control" placeholder="Buscar por nombre" onkeypress="buscarPersonaProceso(event)" disabled></input>
+					<input id="buscarPersonaProcesoNombre" name="buscarPersonaProcesoNombre" type="text" class="form-control" placeholder="Buscar por nombre o razon social" onkeypress="buscarPersonaProceso(event)" disabled></input>
 					<input id="buscarPersonaProcesoDNI" name="buscarPersonaProcesoDNI" type="text" class="form-control" placeholder="Buscar por DNI" onkeypress="buscarPersonaProceso(event)" disabled></input>
 					<button type="button" class="btn btn-info" onclick="buscarPersonaProceso(0)"> 
 						<span class="glyphicon glyphicon-search"></span> 
@@ -238,11 +238,12 @@ class Proceso
 		$buscarPersonaApellido = $buscar[1];
 		$buscarPersonaDNI = $buscar[2];
 		$user = $_SESSION['cod_usuario'];
-		
+		/*
 		$consulta = "SELECT PRO.cod_proceso, 
 							PRO.proceso, 
 							PER.cod_persona, 
 							PER.nombres, 
+							PER.razon_social, 
 							PER.apellidos, 
 							PER.dni 
 
@@ -250,10 +251,99 @@ class Proceso
 					JOIN bsd_persona PER ON PCP.cod_persona = PER.cod_persona 
 					JOIN bsd_proceso PRO ON PCP.cod_proceso = PRO.cod_proceso 
 
-					WHERE PER.nombres LIKE '%$buscarPersonaNombre%'
-					   OR PER.apellidos LIKE '%$buscarPersonaApellido%'
-					   OR PER.dni = '$buscarPersonaDNI';";
-		//echo $consulta;
+					WHERE PER.nombres LIKE '%$buscarPersonaNombre%' 
+						OR PER.razon_social LIKE '%$buscarPersonaNombre%' 
+						OR PER.apellidos LIKE '%$buscarPersonaApellido%'
+						OR PER.dni = '$buscarPersonaDNI';";
+		*/
+		//En caso de que buscar sea un array va a buscar por nombre, apellido o dni, de lo contrario proviene de la funcion "elegirPersona(cod_persona)"
+		if(is_array($buscar))
+			{
+			$buscarPersonaNombre = $buscar[0];
+			$buscarPersonaApellido = $buscar[1];
+			$buscarPersonaDNI = $buscar[2];
+			
+			//Variables de alerta para saber que campo de busqueda fue ingresado
+			$buscarAp=false;
+			$buscarNom=false;
+			$buscarDNI=false;
+			
+			$consulta = "SELECT PRO.cod_proceso, 
+							PRO.proceso, 
+							PER.cod_persona, 
+							PER.nombres, 
+							PER.razon_social, 
+							PER.apellidos, 
+							PER.dni 
+						FROM rel_pers_cond_proc PCP 
+						JOIN bsd_persona PER ON PCP.cod_persona = PER.cod_persona 
+						JOIN bsd_proceso PRO ON PCP.cod_proceso = PRO.cod_proceso 
+						WHERE ";
+			
+			//Averiguo por que campos esta buscando
+			if($buscarPersonaApellido!="")
+				{
+				$buscarPorApellido="PER.apellidos LIKE '%$buscarPersonaApellido%'";
+				$buscarAp=true;
+				}
+			if($buscarPersonaNombre!="")
+				{
+				$buscarPorNombre="PER.nombres LIKE '%$buscarPersonaNombre%' OR razon_social LIKE '%$buscarPersonaNombre%'";
+				$buscarNom=true;
+				}
+			if($buscarPersonaDNI!="")
+				{
+				$buscarPorDNI="PER.dni = '$buscarPersonaDNI'";
+				$buscarDNI=true;
+				}
+			
+			//Armo la consulta en base a los campos que se hayan ingresado
+			if($buscarAp==true)
+				{
+				$consulta.= $buscarPorApellido;			
+				if($buscarNom==true)
+					{
+					$consulta.= " OR ".$buscarPorNombre;					
+					if($buscarDNI==true)
+						{
+						$consulta.= " OR ".$buscarPorDNI;	
+						}
+					}
+					else if($buscarDNI==true)
+						{
+						$consulta.= " OR ".$buscarPorDNI;	
+						}
+				}
+				else if($buscarNom==true)
+					{
+					$consulta.= $buscarPorNombre;					
+					if($buscarDNI==true)
+						{
+						$consulta.= " OR ".$buscarPorDNI;	
+						}
+					}	
+					else if($buscarDNI==true)
+						{
+						$consulta.= $buscarPorDNI;	
+						}	
+			}
+			else{			
+				$consulta ="SELECT 	PRO.cod_proceso, 
+									PRO.proceso, 
+									PER.cod_persona, 
+									PER.nombres, 
+									PER.razon_social, 
+									PER.apellidos, 
+									PER.dni 
+							FROM rel_pers_cond_proc PCP 
+							JOIN bsd_persona PER ON PCP.cod_persona = PER.cod_persona 
+							JOIN bsd_proceso PRO ON PCP.cod_proceso = PRO.cod_proceso 
+							WHERE PER.nombres LIKE '%$buscarPersonaNombre%' 
+								OR PER.razon_social LIKE '%$buscarPersonaNombre%' 
+								OR PER.apellidos LIKE '%$buscarPersonaApellido%'
+								OR PER.dni = '$buscarPersonaDNI';";
+				}
+		
 		$resultado = mysqli_query($db->conexion, $consulta) or die ("No se pueden cargar los procesos.");
 		
 		echo '<h3>Seleccione un proceso para editar</h3>
@@ -278,7 +368,7 @@ class Proceso
 								<!--<td>'.$datos["cod_proceso"].'</td>-->
 								<td>'.$datos["proceso"].'</td>
 								<!--<td>'.$datos["cod_persona"].'</td>-->
-								<td>'.$datos["nombres"].'</td>
+								<td>'.$datos["nombres"].$datos["razon_social"].'</td>
 								<td>'.$datos["apellidos"].'</td>
 								<td>'.$datos["dni"].'</td>
 								<td><button type="button" class="btn btn-link" onclick="elegirProceso(\''.$datos["cod_persona"].'\',\''.$datos["cod_proceso"].'\')">Elegir</button></td>
