@@ -8,7 +8,6 @@ CREATE TABLE IF NOT EXISTS `ref_direccion_localidad`
 	`usr_ult_modif` INT(3) UNSIGNED DEFAULT NULL COMMENT 'usuario de ultima modificacion',
 	`fec_ult_modif` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'fecha de ultima modificacion',
 	PRIMARY KEY (`cod_localidad`),
-	UNIQUE KEY `localidad` (`localidad`),
 	KEY `cod_partido` (`cod_partido`), 
 	CONSTRAINT `ref_direccion_localidad_cod_partido_FK` FOREIGN KEY (`cod_partido`) REFERENCES `ref_direccion_partido`(`cod_partido`),
 	KEY `usr_ult_modif` (`usr_ult_modif`), 
