@@ -140,18 +140,16 @@ function buscarPersona(event)
 		var buscarPersonaApellido = document.getElementById("buscarPersonaApellido").value;
 		var buscarPersonaDNI = document.getElementById("buscarPersonaDNI").value;
 		
-		//var buscar = [buscarPersonaNombre, buscarPersonaApellido, buscarPersonaDNI];
-		//alert (buscar[0]);
-		//alert (buscar[1]);
-		//alert (buscar[2]);
-		
 		xhttp = new XMLHttpRequest();			
 		xhttp.onreadystatechange = function()	
 				{					
 				if (this.readyState == 4 && this.status == 200)
 						{
-						document.getElementById("listado").innerHTML = this.responseText;						
-						}						
+						document.getElementById("listado").innerHTML = this.responseText;
+						document.getElementById("buscarPersonaNombre").value="";
+						document.getElementById("buscarPersonaApellido").value="";
+						document.getElementById("buscarPersonaDNI").value="";
+						}
 				};
 
 		xhttp.open("GET", "php/persona/buscarPersona.php?buscarPersonaNombre="+buscarPersonaNombre
@@ -194,6 +192,9 @@ function buscarProceso(event)
 			if (this.readyState == 4 && this.status == 200)
 				{
 				document.getElementById("listado").innerHTML = this.responseText;
+				document.getElementById("buscarPersonaNombre").value="";
+				document.getElementById("buscarPersonaApellido").value="";
+				document.getElementById("buscarPersonaDNI").value="";
 				}						
 			};
 
@@ -298,6 +299,9 @@ function buscarPersonaProceso(event)
 			if (this.readyState == 4 && this.status == 200)
 				{
 				document.getElementById("personaEncontrada").innerHTML=this.responseText;
+				document.getElementById("buscarPersonaProcesoNombre").value="";
+				document.getElementById("buscarPersonaProcesoApellido").value="";
+				document.getElementById("buscarPersonaProcesoDNI").value="";
 				}						
 			};
 
@@ -325,6 +329,8 @@ function agregarPersonaProceso(cod_persona)
 			var tabla = document.getElementById("personaElegida");
 			var fila = tabla.insertRow(-1);
 			fila.innerHTML=persona;
+
+			document.getElementById("persona_condicion").value="";
 			}						
 		};
 

@@ -124,13 +124,7 @@ class Proceso
 	{	
 		$db = new database();
 		$db->conectar();
-		
-		//echo $proceso;
-		//echo $cod_proceso_tipo;
-		//echo $observaciones;
-		//echo $usr_ult_modif;
-		//echo $fec_ult_modif;
-		
+
 		$consulta = "INSERT INTO bsd_proceso (
 						cod_proceso
 						, proceso
@@ -499,27 +493,23 @@ class Proceso
 		$db = new database();
 		$db->conectar();
 		
-		//echo $cod_proceso;
-		//echo $proceso;
-		//echo $cod_proceso_tipo;
-		//echo $observaciones;
-		//echo $usr_ult_modif; 
-		//echo $fec_ult_modif;
 		if($observaciones!="")
 			{
 			$observaciones="<br>".$observaciones;
 			}
+		/*
 		if($ultimas_novedades!="")
 			{
 			$ultimas_novedades="<br>".$ultimas_novedades;
 			}
-			
+		*/
+		//ultimas_novedades=CONCAT(ultimas_novedades, '$ultimas_novedades')
 		$consulta = "UPDATE bsd_proceso 
 					SET 
 						proceso='$proceso', 
 						cod_proceso_tipo='$cod_proceso_tipo', 						
 						observaciones=CONCAT(observaciones, '$observaciones'),					
-						ultimas_novedades=CONCAT(ultimas_novedades, '$ultimas_novedades'),
+						ultimas_novedades='$ultimas_novedades',
 						usr_ult_modif='$usr_ult_modif', 
 						fec_ult_modif='$fec_ult_modif'
 					WHERE cod_proceso='$cod_proceso';";
@@ -596,24 +586,6 @@ class Proceso
 	{
 		$db = new database();
 		$db->conectar();
-		/*
-		$consulta ="SELECT 
-						PRO.cod_proceso, 
-						PRO.proceso, 
-						PRO.cod_proceso_tipo, 
-						PRO.observaciones, 
-						PRO.ultimas_novedades,
-						PRO.usr_ult_modif, 
-						PRO.fec_ult_modif, 
-						PCP.cod_persona, 
-						PCP.cod_persona_condicion, 
-						PER.dni							
-					FROM rel_pers_cond_proc PCP 
-					JOIN bsd_proceso PRO ON PCP.cod_proceso=PRO.cod_proceso 
-					JOIN ref_persona_condicion PC ON PCP.cod_persona_condicion=PC.cod_persona_condicion 
-					JOIN bsd_persona PER ON PCP.cod_persona=PER.cod_persona 
-					WHERE PRO.usr_ult_modif='$usr_ult_modif';";	 
-		*/
 					
 		$consulta = "SELECT PRO.cod_proceso, PRO.proceso, PRO.observaciones, PRO.ultimas_novedades, PRO.cod_proceso_tipo, PRO_T.proceso_tipo
 							, PCP_CLI.cod_persona AS cod_persona_cliente
