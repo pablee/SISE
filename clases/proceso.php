@@ -12,6 +12,9 @@ class Proceso
 								"Carátula",
 								"Tipo",
 								"Observaciones",
+								"ultimas novedades",
+								"usuario de creacion",
+								"usuario de cooperacion",
 								"Modifica",
 								"Fecha"
 								);
@@ -22,6 +25,8 @@ class Proceso
 								"cod_proceso_tipo",
 								"observaciones",
 								"ultimas_novedades",
+								"usr_creacion",
+								"usr_cooperacion",
 								"usr_ult_modif",
 								"fec_ult_modif"
 								);
@@ -131,6 +136,8 @@ class Proceso
 						, cod_proceso_tipo
 						, observaciones
 						, ultimas_novedades
+						, usr_creacion
+						, usr_cooperacion
 						, usr_ult_modif
 						, fec_ult_modif
 					) VALUES (
@@ -139,6 +146,8 @@ class Proceso
 						, '$cod_proceso_tipo'
 						, '$observaciones'
 						, '$ultimas_novedades'
+						, '$usr_ult_modif'
+						, '$usr_ult_modif'
 						, '$usr_ult_modif'
 						, '$fec_ult_modif'
 					);";
@@ -163,12 +172,15 @@ class Proceso
 						, PRO.proceso
 						, RPT.proceso_tipo
 						, PRO.observaciones
+						, PRO.usr_creacion
+						, PRO.usr_cooperacion
 						, U.usuario
 						, PRO.fec_ult_modif
 				   FROM bsd_proceso PRO
 				   JOIN ref_proceso_tipo RPT ON PRO.cod_proceso_tipo = RPT.cod_proceso_tipo
 				   JOIN bsd_usuario U ON PRO.usr_ult_modif = U.cod_usuario
-				   WHERE PRO.usr_ult_modif='$user';";
+				   WHERE PRO.usr_creacion='$user'
+				      OR PRO.usr_cooperacion='$user';";
 
 		$resultado = mysqli_query($db->conexion, $consulta) or die ("No se pueden cargar los procesos.");
 		
@@ -569,7 +581,8 @@ class Proceso
 						'$cod_proceso', 
 						'$cod_persona', 
 						'$cod_persona_condicion', 
-						'$orden', '$observaciones', 
+						'$orden', 
+						'$observaciones', 
 						'$usr_ult_modif', 
 						'$fec_ult_modif');";
 		echo $consulta;
@@ -619,7 +632,8 @@ class Proceso
 							ON (PCP_OPO.cod_persona_condicion = COND_OPO.cod_persona_condicion)
 								, ref_proceso_tipo AS PRO_T
 						WHERE PRO.cod_proceso_tipo = PRO_T.cod_proceso_tipo
-						AND PRO.usr_ult_modif='$usr_ult_modif';";			
+						AND (PRO.usr_creacion='$usr_ult_modif'
+						  OR PRO.usr_cooperacion='$usr_ult_modif';";			
 						
 		// echo $consulta;
 		$resultado = mysqli_query($db->conexion, $consulta) or die ("No se pueden cargar los datos del informe.");
