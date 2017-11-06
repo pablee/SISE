@@ -14,9 +14,9 @@ CREATE TABLE IF NOT EXISTS `bsd_proceso`
 	KEY `cod_proceso_tipo` (`cod_proceso_tipo`),
 	CONSTRAINT `bsd_proceso_cod_proceso_tipo_FK` FOREIGN KEY (`cod_proceso_tipo`) REFERENCES `ref_proceso_tipo`(`cod_proceso_tipo`),
 	KEY `usr_ult_modif_KEY` (`usr_ult_modif`),
-	CONSTRAINT `bsd_proceso_usr_ult_modif_FK` FOREIGN KEY (`usr_ult_modif`) REFERENCES `bsd_usuario`(`cod_usuario`)
+	CONSTRAINT `bsd_proceso_usr_ult_modif_FK` FOREIGN KEY (`usr_ult_modif`) REFERENCES `bsd_usuario`(`cod_usuario`),
 	KEY `usr_creacion_KEY` (`usr_creacion`),
-	CONSTRAINT `bsd_proceso_usr_creacion_FK` FOREIGN KEY (`usr_creacion`) REFERENCES `bsd_usuario`(`cod_usuario`)
+	CONSTRAINT `bsd_proceso_usr_creacion_FK` FOREIGN KEY (`usr_creacion`) REFERENCES `bsd_usuario`(`cod_usuario`),
 	KEY `usr_cooperacion_KEY` (`usr_cooperacion`),
 	CONSTRAINT `bsd_proceso_usr_cooperacion_FK` FOREIGN KEY (`usr_cooperacion`) REFERENCES `bsd_usuario`(`cod_usuario`)
 ) 

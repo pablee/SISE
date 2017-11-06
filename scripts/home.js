@@ -255,7 +255,8 @@ function elegirProceso(cod_persona,cod_proceso)
 //====================================================================================================
 function guardarProceso(cod_proceso)
 	{	
-	var proceso = document.getElementById("proceso").value;	
+	var proceso = document.getElementById("proceso").value;
+    var id_colaborador = document.getElementById("id_colaborador").value;
 	var cod_proceso_tipo = document.getElementById("cod_proceso_tipo").value;	
 	var observaciones = document.getElementById("observaciones").value;	
 	var ultimas_novedades = document.getElementById("ultimas_novedades").value;	
@@ -268,7 +269,7 @@ function guardarProceso(cod_proceso)
 					document.getElementById("listado").innerHTML=this.responseText;
 					}						
 			};
-	xhttp.open("GET", "php/proceso/guardarProceso.php?cod_proceso="+cod_proceso+"&proceso="+proceso+"&cod_proceso_tipo="+cod_proceso_tipo+"&observaciones="+observaciones+"&ultimas_novedades="+ultimas_novedades, true);								
+	xhttp.open("GET", "php/proceso/guardarProceso.php?cod_proceso="+cod_proceso+"&proceso="+proceso+"&id_colaborador="+id_colaborador+"&cod_proceso_tipo="+cod_proceso_tipo+"&observaciones="+observaciones+"&ultimas_novedades="+ultimas_novedades, true);
 	xhttp.send();	
 	}	
 

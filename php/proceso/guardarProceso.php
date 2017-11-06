@@ -5,6 +5,7 @@ include_once "../../clases/proceso.php";
 //Guardar proceso.
 $cod_proceso = $_GET["cod_proceso"];
 $proceso = $_GET["proceso"];
+$id_colaborador = $_GET["id_colaborador"];
 $cod_proceso_tipo = $_GET["cod_proceso_tipo"];
 $observaciones = $_GET["observaciones"];
 $ultimas_novedades = $_GET["ultimas_novedades"];
@@ -16,12 +17,12 @@ $nuevoProceso = new Proceso();
 if($cod_proceso==0)
 	{
 	echo "guardo el proceso";
-	$cod_proceso = $nuevoProceso->guardarProceso($proceso, $cod_proceso_tipo, $observaciones, $ultimas_novedades, $usr_ult_modif, $fec_ult_modif);
+	$cod_proceso = $nuevoProceso->guardarProceso($proceso, $cod_proceso_tipo, $observaciones, $ultimas_novedades, $usr_ult_modif, $fec_ult_modif, $id_colaborador);
 	}
 	else
 		{
 		echo "actualizo el proceso";
-		$cod_proceso = $nuevoProceso->actualizarProceso($cod_proceso, $proceso, $cod_proceso_tipo, $observaciones, $ultimas_novedades, $usr_ult_modif, $fec_ult_modif);
+		$cod_proceso = $nuevoProceso->actualizarProceso($cod_proceso, $proceso, $cod_proceso_tipo, $observaciones, $ultimas_novedades, $usr_ult_modif, $fec_ult_modif, $id_colaborador);
 		}
 		
 $_SESSION["cod_proceso"] = $cod_proceso;	

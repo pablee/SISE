@@ -4,6 +4,7 @@ include_once "proceso_tipo.php";
 include_once "persona.php";
 include_once "detalle_tipo.php";
 include_once "observaciones.php";
+include_once "usuario.php";
 
 class Proceso	
 {
@@ -55,7 +56,9 @@ class Proceso
 		$cod_proceso = 0;
 		$persona = new Persona();
 		$proceso_tipo = new ProcesoTipo();		
-		
+		$usuario = new usuario();
+
+
 		echo '<h3>Agregar una persona al proceso</h3>
 			  <br>
 			  <div class="form-inline">
@@ -105,7 +108,21 @@ class Proceso
 		$proceso_tipo->selectProcesoTipo();
 		
 		echo '<input id="accion" name="accion" type="hidden" class="form-control" value="guardar"></input>';
-		
+
+		$usuarios = $usuario->listar();
+
+        echo '<h3>Agregar un colaborador al proceso</h3>
+			  <br>
+			  
+			  <label for="agregar">Colaborador:</label>	
+			  <select id="id_colaborador" name="id_colaborador" class="form-control">';
+              foreach($usuarios as $user)
+              {
+                  echo '<option value="'.$user["cod_usuario"].'"> '.ucwords($user["usuario"]).' </option>';
+              }
+        echo '</select>';
+
+
 		echo '<br><label for="proceso"> Carátula </label>
 			  <input id="proceso" name="proceso" type="text" class="form-control" placeholder="Descripcion del proceso"></input>';	
 		
@@ -125,7 +142,7 @@ class Proceso
 
 	
 /*=================================================================================================*/
-	public function guardarProceso($proceso, $cod_proceso_tipo, $observaciones, $ultimas_novedades, $usr_ult_modif, $fec_ult_modif)
+	public function guardarProceso($proceso, $cod_proceso_tipo, $observaciones, $ultimas_novedades, $usr_ult_modif, $fec_ult_modif, $id_colaborador)
 	{	
 		$db = new database();
 		$db->conectar();
@@ -147,7 +164,7 @@ class Proceso
 						, '$observaciones'
 						, '$ultimas_novedades'
 						, '$usr_ult_modif'
-						, '$usr_ult_modif'
+						, '$id_colaborador'
 						, '$usr_ult_modif'
 						, '$fec_ult_modif'
 					);";
@@ -244,24 +261,7 @@ class Proceso
 		$buscarPersonaApellido = $buscar[1];
 		$buscarPersonaDNI = $buscar[2];
 		$user = $_SESSION['cod_usuario'];
-		/*
-		$consulta = "SELECT PRO.cod_proceso, 
-							PRO.proceso, 
-							PER.cod_persona, 
-							PER.nombres, 
-							PER.razon_social, 
-							PER.apellidos, 
-							PER.dni 
 
-					FROM rel_pers_cond_proc PCP 
-					JOIN bsd_persona PER ON PCP.cod_persona = PER.cod_persona 
-					JOIN bsd_proceso PRO ON PCP.cod_proceso = PRO.cod_proceso 
-
-					WHERE PER.nombres LIKE '%$buscarPersonaNombre%' 
-						OR PER.razon_social LIKE '%$buscarPersonaNombre%' 
-						OR PER.apellidos LIKE '%$buscarPersonaApellido%'
-						OR PER.dni = '$buscarPersonaDNI';";
-		*/
 		//En caso de que buscar sea un array va a buscar por nombre, apellido o dni, de lo contrario proviene de la funcion "elegirPersona(cod_persona)"
 		if(is_array($buscar))
 			{
@@ -402,6 +402,8 @@ class Proceso
 						PRO.cod_proceso_tipo, 
 						PRO.observaciones, 
 						PRO.ultimas_novedades, 
+						PRO.usr_creacion,
+						PRO.usr_cooperacion,
 						PRO.usr_ult_modif, 
 						PRO.fec_ult_modif, 
 						PCP.cod_persona, 
@@ -437,6 +439,7 @@ class Proceso
 		$proceso_tipo = new ProcesoTipo();		
 		$detalleTipo = new DetalleTipo();	
 		$procesos = $this->elegirProceso($cod_persona,$cod_proceso);
+        $usuario = new usuario();
 		
 		echo '<h3>Personas en proceso</h3>
 			  <form action="php/detalle/guardarDetalle.php" method="POST">
@@ -472,7 +475,22 @@ class Proceso
 		echo '<br>';
 
 		$proceso_tipo->buscarProcesoTipo($procesos[0]["cod_proceso_tipo"]);
-		
+
+        $usuarios = $usuario->listar();
+        $usuario_colaborador = $usuario->buscar($procesos[0]["usr_cooperacion"]);
+
+        echo '<h3>Agregar un colaborador al proceso</h3>
+			  <br>
+			  
+			  <label for="agregar">Colaborador:</label>	
+			  <select id="id_colaborador" name="id_colaborador" class="form-control">';
+        echo '<option value="'.$usuario_colaborador["cod_usuario"].'"> '.ucwords($usuario_colaborador["usuario"]).' </option>';
+        foreach($usuarios as $user)
+        {
+            echo '<option value="'.$user["cod_usuario"].'"> '.ucwords($user["usuario"]).' </option>';
+        }
+        echo '</select>';
+
 		echo '<br><label for="proceso"> Carátula </label>
 			  <input id="proceso" name="proceso" type="text" class="form-control" placeholder="Descripcion del proceso" value="'.$procesos[0]["proceso"].'"></input>';	
 		
@@ -501,7 +519,7 @@ class Proceso
 
 		
 /*=================================================================================================*/
-	public function actualizarProceso($cod_proceso, $proceso, $cod_proceso_tipo, $observaciones, $ultimas_novedades, $usr_ult_modif, $fec_ult_modif)
+	public function actualizarProceso($cod_proceso, $proceso, $cod_proceso_tipo, $observaciones, $ultimas_novedades, $usr_ult_modif, $fec_ult_modif, $id_colaborador)
 	{	
 		$db = new database();
 		$db->conectar();
@@ -522,7 +540,8 @@ class Proceso
 						proceso='$proceso', 
 						cod_proceso_tipo='$cod_proceso_tipo', 						
 						observaciones=CONCAT(observaciones, '$observaciones'),					
-						ultimas_novedades='$ultimas_novedades',
+						ultimas_novedades='$ultimas_novedades',						
+						usr_cooperacion='$id_colaborador',
 						usr_ult_modif='$usr_ult_modif', 
 						fec_ult_modif='$fec_ult_modif'
 					WHERE cod_proceso='$cod_proceso';";
@@ -598,6 +617,7 @@ class Proceso
 /*=================================================================================================*/
 	public function informe($usr_ult_modif)
 	{
+        $informe_ant="";
 		$db = new database();
 		$db->conectar();
 					
@@ -636,60 +656,100 @@ class Proceso
 						AND (PRO.usr_creacion=$usr_ult_modif
 						  OR PRO.usr_cooperacion=$usr_ult_modif);";			
 						
-		// echo $consulta;
+		
 		$resultado = mysqli_query($db->conexion, $consulta) 
 		or die ("No se pueden cargar los datos del informe.");
 
+		$i=0;
 		while($datos = mysqli_fetch_assoc($resultado))
 		{
-			echo '	 
-			<div class="row"> 
-			   <div class="panel panel-default">
-					<div class="panel-heading">
-						<span class="caratula">Carátula:<button type="button" class="btn btn-link btn-lg" onclick="elegirProceso(\''.$datos["cod_persona_cliente"].'\',\''.$datos["cod_proceso"].'\')">'.$datos["proceso"].'</button></span>					
-						<br>
-						<b>Tipo de proceso: '.$datos["proceso_tipo"].'</b>						
-					</div>
-					<div class="panel-body">
-						<h4>'.$datos["cliente_persona_condicion"].'</h4>
-						<p>'.$datos["cliente_apellido"].' '.$datos["cliente_nombre"].'</p>
-						<p>'.$datos["cliente_rs"].'</p>
-						<p>Documento: '.$datos["cliente_dni"].'</p>
-						<p>Celular: '.$datos["cliente_celular"].'</p>									
-					</div>					
-					<div class="panel-body">
-						<h4>'.$datos["oponente_persona_condicion"].'</h4>
-						<p>'.$datos["oponente_apellidos"].' '.$datos["oponente_nombres"].'</p>
-						<p>'.$datos["oponente_rs"].'</p>
-						<p>Documento: '.$datos["oponente_dni"].'</p>
-						<p>Celular: '.$datos["oponente_celular"].'</p>
-					</div>					
-					<div class="panel-body">
-						'.$datos["observaciones"].'
-						<br>
-						'.$datos["ultimas_novedades"].'
-					</div>
-			   </div>
-			</div>
-			';
-		}
-		/*		
-		while($datos = mysqli_fetch_assoc($resultado))
-		{
-			echo '	 
-			<div class="row"> 
-			   <div class="panel panel-default">
-					<div class="panel-heading">
-						<button type="button" class="btn btn-link" onclick="elegirProceso(\''.$datos["cod_persona"].'\',\''.$datos["cod_proceso"].'\')">'.$datos["proceso"].'</button>						
-					</div>
-					<div class="panel-body">Cliente</div>
-					<div class="panel-body">Oponente</div>
-					<div class="panel-body">'.$datos["observaciones"].'</div>
-			   </div>
-			</div>
-			';
-		}
-		*/  
+		    $informes[$i]=$datos;
+		    $i++;
+        }
+
+        foreach($informes as $informe)
+        {
+            if($informe_ant=="")
+            {
+                $informe_ant=$informe;
+            }
+            else if($informe_ant["cod_proceso"]!=$informe["cod_proceso"])
+                {
+                    echo '	 
+                        <div class="row"> 
+                           <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <span class="caratula">Carátula:<button type="button" class="btn btn-link btn-lg" onclick="elegirProceso(\''.$informe_ant["cod_persona_cliente"].'\',\''.$informe_ant["cod_proceso"].'\')">'.$informe_ant["proceso"].'</button></span>					
+                                    <br>
+                                    <b>Tipo de proceso: '.$informe_ant["proceso_tipo"].'</b>						
+                                </div>
+                                <div class="panel-body">
+                                    <h4>'.$informe_ant["cliente_persona_condicion"].'</h4>
+                                    <p>'.$informe_ant["cliente_apellido"].' '.$informe_ant["cliente_nombre"].'</p>
+                                    <p>'.$informe_ant["cliente_rs"].'</p>
+                                    <p>Documento: '.$informe_ant["cliente_dni"].'</p>
+                                    <p>Celular: '.$informe_ant["cliente_celular"].'</p>									
+                                </div>					
+                                <div class="panel-body">
+                                    <h4>'.$informe_ant["oponente_persona_condicion"].'</h4>
+                                    <p>'.$informe_ant["oponente_apellidos"].' '.$informe_ant["oponente_nombres"].'</p>
+                                    <p>'.$informe_ant["oponente_rs"].'</p>
+                                    <p>Documento: '.$informe_ant["oponente_dni"].'</p>
+                                    <p>Celular: '.$informe_ant["oponente_celular"].'</p>
+                                </div>					
+                                <div class="panel-body">
+                                    '.$informe_ant["observaciones"].'
+                                    <br>
+                                    '.$informe_ant["ultimas_novedades"].'
+                                </div>
+                           </div>
+                        </div>
+                        ';
+                    $informe_ant=$informe;
+                }
+                else
+                    {
+                        echo '	 
+                        <div class="row"> 
+                           <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <span class="caratula">Carátula:<button type="button" class="btn btn-link btn-lg" onclick="elegirProceso(\''.$informe["cod_persona_cliente"].'\',\''.$informe["cod_proceso"].'\')">'.$informe["proceso"].'</button></span>					
+                                    <br>
+                                    <b>Tipo de proceso: '.$informe["proceso_tipo"].'</b>						
+                                </div>
+                                <div class="panel-body">
+                                    <h4>'.$informe["cliente_persona_condicion"].'</h4>
+                                    <p>'.$informe["cliente_apellido"].' '.$informe["cliente_nombre"].'</p>
+                                    <p>'.$informe["cliente_rs"].'</p>
+                                    <p>Documento: '.$informe["cliente_dni"].'</p>
+                                    <p>Celular: '.$informe["cliente_celular"].'</p>									
+                                </div>					
+                                <div class="panel-body">
+                                    <h4>'.$informe["oponente_persona_condicion"].'</h4>
+                                    <p>'.$informe["oponente_apellidos"].' '.$informe["oponente_nombres"].'</p>
+                                    <p>'.$informe["oponente_rs"].'</p>
+                                    <p>Documento: '.$informe["oponente_dni"].'</p>
+                                    <p>Celular: '.$informe["oponente_celular"].'</p>
+                                </div>	
+                                <div class="panel-body">
+                                    <h4>'.$informe_ant["oponente_persona_condicion"].'</h4>
+                                    <p>'.$informe_ant["oponente_apellidos"].' '.$informe_ant["oponente_nombres"].'</p>
+                                    <p>'.$informe_ant["oponente_rs"].'</p>
+                                    <p>Documento: '.$informe_ant["oponente_dni"].'</p>
+                                    <p>Celular: '.$informe_ant["oponente_celular"].'</p>
+                                </div>						
+                                <div class="panel-body">
+                                    '.$informe["observaciones"].'
+                                    <br>
+                                    '.$informe["ultimas_novedades"].'
+                                </div>
+                           </div>
+                        </div>
+                        ';
+                        $informe_ant=$informe;
+                    }
+        }
+		
 		$db->close();
 	}			
 	
@@ -701,21 +761,15 @@ class Proceso
 		$respuestaBoolean = $buscar[1];
 		$filtroDetalleTipo = $buscar[2];
 		$respuestaTexto = $buscar[3];
-		
+        $informe_ant="";
+        $i=0;
+
 		$db = new database();
 		$db->conectar();
 		
 		////////////////////////////////////////////////////////
 		///// ACA VA LA CONSULTA PARA FILTRAR LOS INFORMES /////
 		////////////////////////////////////////////////////////
-		/*
-		$consulta ="SELECT * 
-					FROM bsd_detalle
-					WHERE (cod_detalle_tipo = $filtroDetalleTipoBoolean
-					AND  valor = '$respuestaBoolean')
-					OR (cod_detalle_tipo = $filtroDetalleTipo
-					AND  valor = '$respuestaTexto');";
-*/
 		$consulta = "SELECT PRO.cod_proceso, PRO.proceso, PRO.observaciones, PRO.ultimas_novedades, PRO.cod_proceso_tipo, PRO_T.proceso_tipo
 							, PCP_CLI.cod_persona AS cod_persona_cliente
                             , PER_CLI.nombres AS cliente_nombre
@@ -770,50 +824,97 @@ class Proceso
 						OR ($filtroDetalleTipoBoolean = null)
 						OR ($filtroDetalleTipo = null)
 						*/
-		
-		
-		//echo $consulta;
+
 		$resultado = mysqli_query($db->conexion, $consulta) or die ("No se pueden filtrar los datos del informe.");
-		
-		if(mysqli_num_rows($resultado)==0)
-		{
-			echo 'No existen informes con estos datos';
-		}		
-		
-		while($datos = mysqli_fetch_assoc($resultado))
-		{
-			echo '	 
-			<div class="row"> 
-			   <div class="panel panel-default">
-					<div class="panel-heading">
-						<span class="caratula">Carátula:<button type="button" class="btn btn-link btn-lg" onclick="elegirProceso(\''.$datos["cod_persona_cliente"].'\',\''.$datos["cod_proceso"].'\')">'.$datos["proceso"].'</button></span>					
-						<br>
-						<b>Tipo de proceso: '.$datos["proceso_tipo"].'</b>						
-					</div>
-					<div class="panel-body">
-						<h4>'.$datos["cliente_persona_condicion"].'</h4>
-						<p>'.$datos["cliente_apellido"].' '.$datos["cliente_nombre"].'</p>
-						<p>'.$datos["cliente_rs"].'</p>
-						<p>Documento: '.$datos["cliente_dni"].'</p>
-						<p>Celular: '.$datos["cliente_celular"].'</p>									
-					</div>					
-					<div class="panel-body">
-						<h4>'.$datos["oponente_persona_condicion"].'</h4>
-						<p>'.$datos["oponente_apellidos"].' '.$datos["oponente_nombres"].'</p>
-						<p>'.$datos["oponente_rs"].'</p>
-						<p>Documento: '.$datos["oponente_dni"].'</p>
-						<p>Celular: '.$datos["oponente_celular"].'</p>
-					</div>					
-					<div class="panel-body">
-						'.$datos["observaciones"].'
-						<br>
-						'.$datos["ultimas_novedades"].'
-					</div>
-			   </div>
-			</div>
-			';
-		}
-		  
+
+        while($datos = mysqli_fetch_assoc($resultado))
+        {
+            $informes[$i]=$datos;
+            $i++;
+        }
+
+        foreach($informes as $informe)
+        {
+            if($informe_ant=="")
+            {
+                $informe_ant=$informe;
+            }
+            else if($informe_ant["cod_proceso"]!=$informe["cod_proceso"])
+            {
+                echo '	 
+                        <div class="row"> 
+                           <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <span class="caratula">Carátula:<button type="button" class="btn btn-link btn-lg" onclick="elegirProceso(\''.$informe_ant["cod_persona_cliente"].'\',\''.$informe_ant["cod_proceso"].'\')">'.$informe_ant["proceso"].'</button></span>					
+                                    <br>
+                                    <b>Tipo de proceso: '.$informe_ant["proceso_tipo"].'</b>						
+                                </div>
+                                <div class="panel-body">
+                                    <h4>'.$informe_ant["cliente_persona_condicion"].'</h4>
+                                    <p>'.$informe_ant["cliente_apellido"].' '.$informe_ant["cliente_nombre"].'</p>
+                                    <p>'.$informe_ant["cliente_rs"].'</p>
+                                    <p>Documento: '.$informe_ant["cliente_dni"].'</p>
+                                    <p>Celular: '.$informe_ant["cliente_celular"].'</p>									
+                                </div>					
+                                <div class="panel-body">
+                                    <h4>'.$informe_ant["oponente_persona_condicion"].'</h4>
+                                    <p>'.$informe_ant["oponente_apellidos"].' '.$informe_ant["oponente_nombres"].'</p>
+                                    <p>'.$informe_ant["oponente_rs"].'</p>
+                                    <p>Documento: '.$informe_ant["oponente_dni"].'</p>
+                                    <p>Celular: '.$informe_ant["oponente_celular"].'</p>
+                                </div>					
+                                <div class="panel-body">
+                                    '.$informe_ant["observaciones"].'
+                                    <br>
+                                    '.$informe_ant["ultimas_novedades"].'
+                                </div>
+                           </div>
+                        </div>
+                        ';
+                $informe_ant=$informe;
+            }
+            else
+            {
+                echo '	 
+                        <div class="row"> 
+                           <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <span class="caratula">Carátula:<button type="button" class="btn btn-link btn-lg" onclick="elegirProceso(\''.$informe["cod_persona_cliente"].'\',\''.$informe["cod_proceso"].'\')">'.$informe["proceso"].'</button></span>					
+                                    <br>
+                                    <b>Tipo de proceso: '.$informe["proceso_tipo"].'</b>						
+                                </div>
+                                <div class="panel-body">
+                                    <h4>'.$informe["cliente_persona_condicion"].'</h4>
+                                    <p>'.$informe["cliente_apellido"].' '.$informe["cliente_nombre"].'</p>
+                                    <p>'.$informe["cliente_rs"].'</p>
+                                    <p>Documento: '.$informe["cliente_dni"].'</p>
+                                    <p>Celular: '.$informe["cliente_celular"].'</p>									
+                                </div>					
+                                <div class="panel-body">
+                                    <h4>'.$informe["oponente_persona_condicion"].'</h4>
+                                    <p>'.$informe["oponente_apellidos"].' '.$informe["oponente_nombres"].'</p>
+                                    <p>'.$informe["oponente_rs"].'</p>
+                                    <p>Documento: '.$informe["oponente_dni"].'</p>
+                                    <p>Celular: '.$informe["oponente_celular"].'</p>
+                                </div>	
+                                <div class="panel-body">
+                                    <h4>'.$informe_ant["oponente_persona_condicion"].'</h4>
+                                    <p>'.$informe_ant["oponente_apellidos"].' '.$informe_ant["oponente_nombres"].'</p>
+                                    <p>'.$informe_ant["oponente_rs"].'</p>
+                                    <p>Documento: '.$informe_ant["oponente_dni"].'</p>
+                                    <p>Celular: '.$informe_ant["oponente_celular"].'</p>
+                                </div>						
+                                <div class="panel-body">
+                                    '.$informe["observaciones"].'
+                                    <br>
+                                    '.$informe["ultimas_novedades"].'
+                                </div>
+                           </div>
+                        </div>
+                        ';
+                $informe_ant=$informe;
+            }
+        }
 		$db->close();
 	}			
 }
