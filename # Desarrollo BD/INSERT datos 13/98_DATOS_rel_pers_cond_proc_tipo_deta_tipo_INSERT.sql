@@ -105,6 +105,8 @@ INSERT INTO `sise_legal`.`rel_pers_cond_proc_tipo_deta_tipo` (`cod_persona_condi
 INSERT INTO `sise_legal`.`rel_pers_cond_proc_tipo_deta_tipo` (`cod_persona_condicion`, `cod_proceso_tipo`, `cod_detalle_tipo`, `orden`, `observaciones`, `usr_ult_modif`, `fec_ult_modif`) VALUES ('2', '4', '64', '020920', 'Despido laboral - Cliente - En negociación', '1', SYSDATE());
 INSERT INTO `sise_legal`.`rel_pers_cond_proc_tipo_deta_tipo` (`cod_persona_condicion`, `cod_proceso_tipo`, `cod_detalle_tipo`, `orden`, `observaciones`, `usr_ult_modif`, `fec_ult_modif`) VALUES ('2', '4', '65', '020990', 'Despido laboral - Cliente - Para armar demanda', '1', SYSDATE());
 INSERT INTO `sise_legal`.`rel_pers_cond_proc_tipo_deta_tipo` (`cod_persona_condicion`, `cod_proceso_tipo`, `cod_detalle_tipo`, `orden`, `observaciones`, `usr_ult_modif`, `fec_ult_modif`) VALUES ('2', '4', '66', '020970', 'Despido laboral - Cliente - Para cobrar', '1', SYSDATE());
+#Solcitado por el cliente el 29/01/2018
+INSERT INTO `sise_legal`.`rel_pers_cond_proc_tipo_deta_tipo` (`cod_persona_condicion`, `cod_proceso_tipo`, `cod_detalle_tipo`, `orden`, `observaciones`, `usr_ult_modif`, `fec_ult_modif`) VALUES ('2', '4', '69', '020995', 'Despido laboral - Cliente - INTERCAMBIO TELEGRÁFICO', '1', SYSDATE());
 
 #Despido laboral - Oponente
 

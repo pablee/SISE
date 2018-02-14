@@ -69,3 +69,6 @@ INSERT INTO `sise_legal`.`ref_detalle_tipo` (`cod_detalle_tipo`, `detalle_tipo`,
 INSERT INTO `sise_legal`.`ref_detalle_tipo` (`cod_detalle_tipo`, `detalle_tipo`, `cod_tipo_dato`, `observaciones`) VALUES (66, 'Para cobrar', '1', 'BIT - Booleano de 0 o 1.');
 INSERT INTO `sise_legal`.`ref_detalle_tipo` (`cod_detalle_tipo`, `detalle_tipo`, `cod_tipo_dato`, `observaciones`) VALUES (67, 'Lugar de primer atención médica', '11', 'VARCHAR - Ocupación variable cuya longitud comprende de 1 a 255 caracteres.');
 INSERT INTO `sise_legal`.`ref_detalle_tipo` (`cod_detalle_tipo`, `detalle_tipo`, `cod_tipo_dato`, `observaciones`) VALUES (68, 'Archivado', '1', 'BIT - Booleano de 0 o 1.');
+
+--Solicitado por el cliente 2018/01/29
+INSERT INTO `sise_legal`.`ref_detalle_tipo` (`cod_detalle_tipo`, `detalle_tipo`, `cod_tipo_dato`, `observaciones`) VALUES (69, 'INTERCAMBIO TELEGRÁFICO', '1', 'BIT - Booleano de 0 o 1.');
